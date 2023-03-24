@@ -1,0 +1,125 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Sky",
+      "lastName": "Pink",
+      "email": "admin@example.com",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "firstName": "Amaya",
+      "lastName": "White",
+      "email": "admin2@example.com",
+      "role": "admin"
+    },
+    {
+      "id": "3",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@example.com",
+      "role": "member"
+    },
+    {
+      "id": "4",
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "email": "jane.doe@example.com",
+      "role": "member"
+    },
+    {
+      "id": "5",
+      "firstName": "Bob",
+      "lastName": "Smith",
+      "email": "bob.smith@example.com",
+      "role": "member"
+    }
+  ],
+
+  "books": [
+    {
+      "id": 1,
+      "ISBN": "9783161484100",
+      "title": "The Catcher in the Rye",
+      "description": "A classic novel about a teenage boy named Holden Caulfield.",
+      "publisher": "Little, Brown and Company",
+      "status": "available",
+      "borrowerId": null,
+      "publishedDate": "1951-07-16",
+      "borrowDate": null,
+      "returnDate": null,
+      "authorIds": [1]
+    },
+    {
+      "id": 2,
+      "ISBN": "9780061120084",
+      "title": "To Kill a Mockingbird",
+      "description": "A Pulitzer Prize-winning novel about racial injustice and the loss of innocence.",
+      "publisher": "HarperCollins",
+      "status": "borrowed",
+      "borrowerId": "user123",
+      "publishedDate": "1960-07-11",
+      "borrowDate": "2022-03-15",
+      "returnDate": "2022-03-25",
+      "authorIds": [2]
+    },
+    {
+      "id": 3,
+      "ISBN": "9780590353427",
+      "title": "Harry Potter and the Philosopher's Stone",
+      "description": "The first book in the Harry Potter series, about a young wizard who discovers his magical heritage.",
+      "publisher": "Bloomsbury Publishing",
+      "status": "available",
+      "borrowerId": null,
+      "publishedDate": "1997-06-26",
+      "borrowDate": null,
+      "returnDate": null,
+      "authorIds": [3]
+    },
+    {
+      "id": 4,
+      "ISBN": "9780446310789",
+      "title": "To Kill a Mockingbird",
+      "description": "A novel about life in the Great Depression era South.",
+      "publisher": "Warner Books",
+      "status": "available",
+      "borrowerId": null,
+      "publishedDate": "1939-04-21",
+      "borrowDate": null,
+      "returnDate": null,
+      "authorIds": [4]
+    },
+    {
+      "id": 5,
+      "ISBN": "9780439064873",
+      "title": "Harry Potter and the Chamber of Secrets",
+      "description": "The second book in the Harry Potter series, about a mysterious chamber at Hogwarts School of Witchcraft and Wizardry.",
+      "publisher": "Scholastic",
+      "status": "borrowed",
+      "borrowerId": "user456",
+      "publishedDate": "1998-07-02",
+      "borrowDate": "2022-03-20",
+      "returnDate": "2022-03-30",
+      "authorIds": [3]
+    }
+  ],
+
+  "authors": [
+    {
+      "id": 1,
+      "name": "J.D. Salinger",
+      "bookIds": [1]
+    },
+    {
+      "id": 2,
+      "name": "Harper Lee",
+      "bookIds": [2, 4]
+    },
+    {
+      "id": 3,
+      "name": "J.K. Rowling",
+      "bookIds": [3, 5]
+    }
+  ]
+}
