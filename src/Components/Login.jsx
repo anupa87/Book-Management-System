@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Grid, TextField, FormControlLabel, Checkbox, Button, Typography, Box } from '@mui/material'
+import {
+  Grid,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  Typography,
+  Box,
+  IconButton,
+  InputAdornment
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const theme = createTheme({
   spacing: 10,
@@ -17,9 +30,15 @@ const theme = createTheme({
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+    navigate('/dashboard')
   }
   return (
     <ThemeProvider theme={theme}>
@@ -44,7 +63,7 @@ const Login = () => {
               <Typography variant="h4" align="center" gutterBottom>
                 Login
               </Typography>
-              <form>
+              <form onSubmit={handleLogin}>
                 <TextField
                   label="Email"
                   fullWidth
@@ -57,25 +76,29 @@ const Login = () => {
                   fullWidth
                   margin="normal"
                   variant="outlined"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'} // toggle password visibility
                   placeholder="Enter your password"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleShowPassword} edge="end">
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
-                <FormControlLabel
-                  control={<Checkbox color="primary" />}
-                  label="Remember me"
-                  sx={{ mt: 1 }}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="primary"
-                      checked={showPassword}
-                      onChange={handleShowPassword}
-                    />
-                  }
-                  label="Show password"
-                  sx={{ mt: 1 }}
-                />
+                <Grid container justifyContent="space-between">
+                  <Grid item>
+                    <FormControlLabel control={<Checkbox color="primary" />} label="Remember me" />
+                  </Grid>
+                  <Grid item sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                      Forgot password?
+                    </Typography>
+                  </Grid>
+                </Grid>
+
                 <Box sx={{ textAlign: 'center' }}>
                   <Button
                     type="submit"
@@ -86,18 +109,6 @@ const Login = () => {
                     Login
                   </Button>
                 </Box>
-                <Grid container justifyContent="flex-end">
-                  <Grid
-                    item
-                    sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ alignItems: 'center' }}>
-                      Forgot password?
-                    </Typography>
-                  </Grid>
-                </Grid>
               </form>
             </Box>
           </Grid>
