@@ -6,8 +6,6 @@ import Dashboard from './components/Dashboard'
 import BooksList from './components/BooksList'
 import MembersList from './components/MembersList'
 
-import './App.css'
-
 function App() {
   return (
     <div className="App">
