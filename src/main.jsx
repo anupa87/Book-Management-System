@@ -18,6 +18,7 @@ import Help from './pages/Help'
 import './index.css'
 import AddUser from './components/forms/AddUser'
 import AddAuthor from './components/forms/AddAuthor'
+import AddBook from './components/forms/AddBook'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -35,6 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/help" element={<Help />} />
             <Route path="/adduser" element={<AddUser />} />
             <Route path="/addauthor" element={<AddAuthor />} />
+            <Route path="/addbook" element={<AddBook />} />
           </Route>
         </Routes>
       </BrowserRouter>
