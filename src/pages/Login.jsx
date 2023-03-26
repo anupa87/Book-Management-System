@@ -28,16 +28,35 @@ const theme = createTheme({
   }
 })
 
+/*
+  //TODO: 
+  Form should be in store, send from data to store
+  IN App Page, get Data for user, using store 
+  if there is data in store, change loggedIn state to true other wise false
+
+
+*/
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const navigate = useNavigate()
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
   }
 
+  const handleInputChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    console.log(name, value)
+    setFormData({ ...formData, [name]: value })
+  }
+
   const handleLogin = (e) => {
     e.preventDefault()
+    console.log(formData)
+
     navigate('/dashboard')
   }
   return (
@@ -65,19 +84,24 @@ const Login = () => {
               </Typography>
               <form onSubmit={handleLogin}>
                 <TextField
+                  name="email"
                   label="Email"
+                  type="email"
                   fullWidth
                   margin="normal"
                   variant="outlined"
                   placeholder="Enter your email"
+                  onChange={handleInputChange}
                 />
                 <TextField
+                  name="password"
                   label="Password"
                   fullWidth
                   margin="normal"
                   variant="outlined"
                   type={showPassword ? 'text' : 'password'} // toggle password visibility
                   placeholder="Enter your password"
+                  onChange={handleInputChange}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

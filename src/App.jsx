@@ -1,26 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import Login from './components/Login'
-import Layout from './pages/Layout'
-import Dashboard from './components/Dashboard'
-import BooksList from './components/BooksList'
-import MembersList from './components/MembersList'
+import Login from './pages/Login'
+import Menu from './components/nav/Menu'
+
+import { Grid } from '@mui/material'
+import theme from './theme'
+import { ThemeProvider } from '@emotion/react'
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Login />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/books" element={<BooksList />} />
-            <Route path="/members" element={<MembersList />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+  const [loggedIn, setLoggedIn] = useState(true)
+  return loggedIn ? (
+    <ThemeProvider theme={theme}>
+      <Grid container>
+        <Menu />
+        <Outlet />
+      </Grid>
+    </ThemeProvider>
+  ) : (
+    <Login />
   )
 }
 
 export default App
+
+/*
+loggedIn ? If true => check Role 
+      if fole= admin => navigate to Dashboard
+      else role= nomral => navigate to user page 
+logged in page 
+
+logged? role ===admin ? dashboard : user : loggedinPage
+
+*/
