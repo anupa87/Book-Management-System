@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Box, Button, Card, CardContent, CardHeader, Grid, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardHeader, Grid, Typography, Modal } from '@mui/material'
+
+import UserAddModal from '../../src/components/modals/UserAddModal'
 
 const Dashboard = (props) => {
   const currentDate = new Date().toLocaleString('en-GB', {
@@ -16,6 +18,20 @@ const Dashboard = (props) => {
   const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' })
   const userName = 'Anupa'
 
+  const [modalOpen, setModalOpen] = useState(false)
+
+  const handleModalOpen = () => {
+    setModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setModalOpen(false)
+  }
+
+  const handleRegisterUser = () => {
+    handleModalOpen()
+  }
+
   return (
     <Grid item xs={8}>
       <Box>
@@ -28,13 +44,29 @@ const Dashboard = (props) => {
         <Grid container spacing={2} sx={{ mt: 3 }}>
           <Grid item xs={12} sm={6} md={3}>
             <Card>
-              <CardHeader title="Total Books" />
+              <CardHeader title="Total Users" />
               <CardContent>
                 <Typography variant="h5" color="text.secondary">
                   100
                 </Typography>
               </CardContent>
             </Card>
+            <Button variant="contained" color="primary" fullWidth onClick={handleRegisterUser}>
+              Add User
+            </Button>
+            <Modal
+              open={modalOpen}
+              onClose={handleModalClose}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '& > *': {
+                  width: '100%'
+                }
+              }}>
+              <UserAddModal closeModal={handleModalClose} />
+            </Modal>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Card>
@@ -68,24 +100,20 @@ const Dashboard = (props) => {
           </Grid>
         </Grid>
         <Grid container spacing={2} sx={{ mt: 3 }}>
+          <Grid item xs={12} md={3}></Grid>
           <Grid item xs={12} md={3}>
             <Button variant="contained" color="primary" fullWidth>
-              Register Member
+              Add Book
             </Button>
           </Grid>
           <Grid item xs={12} md={3}>
             <Button variant="contained" color="primary" fullWidth>
-              Register Book
+              Add Author
             </Button>
           </Grid>
           <Grid item xs={12} md={3}>
             <Button variant="contained" color="primary" fullWidth>
               Issue Book
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Button variant="contained" color="primary" fullWidth>
-              Update
             </Button>
           </Grid>
         </Grid>
