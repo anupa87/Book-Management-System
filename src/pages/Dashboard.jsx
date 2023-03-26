@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Box, Button, Card, CardContent, CardHeader, Grid, Typography, Modal } from '@mui/material'
+import { Button, Typography, Grid, Box, Card, CardContent } from '@mui/material'
 
-import UserAddModal from '../../src/components/modals/UserAddModal'
+import AddUser from '../components/forms/AddUser'
 
-const Dashboard = (props) => {
+const Dashboard = ({ addUser }) => {
+  const navigate = useNavigate()
+  const [showAddUser, setShowAddUser] = useState(false)
+
+  const handleAddUser = () => {
+    navigate('/adduser')
+  }
+
+  // Display current date
   const currentDate = new Date().toLocaleString('en-GB', {
     day: 'numeric',
     month: 'numeric',
@@ -17,106 +26,50 @@ const Dashboard = (props) => {
   })
   const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' })
   const userName = 'Anupa'
-
-  const [modalOpen, setModalOpen] = useState(false)
-
-  const handleModalOpen = () => {
-    setModalOpen(true)
-  }
-
-  const handleModalClose = () => {
-    setModalOpen(false)
-  }
-
-  const handleRegisterUser = () => {
-    handleModalOpen()
-  }
+  const totalUser = 100
+  const totalAuthor = 50
+  const totalBooks = 1000
 
   return (
-    <Grid item xs={8}>
+    <Grid item xs={10}>
       <Box>
-        <Typography variant="h3">Dashboard</Typography>
+        <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
+          Dashboard
+        </Typography>
         <hr />
-        <Typography>
+        <Typography sx={{ mt: 1 }}>
           {currentDate} | {dayOfWeek}, {currentTime}
         </Typography>
-        <Typography>Welcome, {userName}</Typography>
-        <Grid container spacing={2} sx={{ mt: 3 }}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader title="Total Users" />
-              <CardContent>
-                <Typography variant="h5" color="text.secondary">
-                  100
-                </Typography>
-              </CardContent>
-            </Card>
-            <Button variant="contained" color="primary" fullWidth onClick={handleRegisterUser}>
+        <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
+          Welcome, {userName}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center', textAlign: 'center', mt: 5 }}>
+          <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+            <CardContent>
+              <Typography variant="h6">Total Users</Typography>
+              <Typography variant="body1">{totalUser}</Typography>
+            </CardContent>
+            <Button variant="contained" onClick={handleAddUser}>
               Add User
             </Button>
-            <Modal
-              open={modalOpen}
-              onClose={handleModalClose}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                '& > *': {
-                  width: '100%'
-                }
-              }}>
-              <UserAddModal closeModal={handleModalClose} />
-            </Modal>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader title="Borrowed Books" />
-              <CardContent>
-                <Typography variant="h5" color="text.secondary">
-                  10
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader title="Overdue Books" />
-              <CardContent>
-                <Typography variant="h5" color="text.secondary">
-                  2
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card>
-              <CardHeader title="Total Members" />
-              <CardContent>
-                <Typography variant="h5" color="text.secondary">
-                  50
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} sx={{ mt: 3 }}>
-          <Grid item xs={12} md={3}></Grid>
-          <Grid item xs={12} md={3}>
-            <Button variant="contained" color="primary" fullWidth>
-              Add Book
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Button variant="contained" color="primary" fullWidth>
-              Add Author
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Button variant="contained" color="primary" fullWidth>
-              Issue Book
-            </Button>
-          </Grid>
-        </Grid>
+            {showAddUser && <AddUser />}
+          </Card>
+          <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+            <CardContent>
+              <Typography variant="h6">Total Authors</Typography>
+              <Typography variant="body1">{totalAuthor}</Typography>
+            </CardContent>
+            <Button variant="contained">Add Author</Button>
+          </Card>
+          <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+            <CardContent>
+              <Typography variant="h6">Total Books</Typography>
+              <Typography variant="body1">{totalBooks}</Typography>
+            </CardContent>
+
+            <Button variant="contained">Add Book</Button>
+          </Card>
+        </Box>
       </Box>
     </Grid>
   )

@@ -16,6 +16,7 @@ import Setting from './pages/Setting'
 import Help from './pages/Help'
 
 import './index.css'
+import AddUser from './components/forms/AddUser'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -31,6 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/profile" element={<Profile />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/adduser" element={<AddUser />} />
           </Route>
         </Routes>
       </BrowserRouter>
