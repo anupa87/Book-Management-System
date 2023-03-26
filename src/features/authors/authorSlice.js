@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const authorSlice = createSlice({
   name: 'authors',
@@ -19,5 +19,5 @@ const authorSlice = createSlice({
   }
 })
 
-export const { addAuthor, updateAuthor, deleteAuthor } = authorSlice.action
+export const { addAuthor, updateAuthor, deleteAuthor } = authorSlice.actions
 export default authorSlice.reducer

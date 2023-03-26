@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-const userSlice = createSclice({
+const userSlice = createSlice({
   name: 'users',
   initialState: [],
   reducers: {
