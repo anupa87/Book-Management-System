@@ -4,14 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
-const AddUser = () => {
+const AddAuthor = () => {
   const navigate = useNavigate()
-  const [user, setUser] = useState({
+  const [author, setAuthor] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    password: '',
-    role: ''
+    bookId: ''
   })
 
   const formRef = useRef(null)
@@ -21,17 +20,16 @@ const AddUser = () => {
     const name = e.target.name
     const value = e.target.value
     console.log(name, value)
-    setUser({ ...user, [name]: value })
+    setAuthor({ ...author, [name]: value })
   }
 
-  const handleSubmitUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setUser({
+    setAuthor({
       firstName: '',
       lastName: '',
       email: '',
-      password: '',
-      role: ''
+      bookId: ''
     })
     setShowSuccessMessage(true)
     formRef.current.reset()
@@ -41,7 +39,7 @@ const AddUser = () => {
   }
 
   const handleClose = () => {
-    navigate('/users')
+    navigate('/authors')
   }
 
   return (
@@ -55,7 +53,7 @@ const AddUser = () => {
         }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>
-            Add User
+            Add Author
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -65,17 +63,17 @@ const AddUser = () => {
           <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
             <CheckCircleIcon color="success" fontSize="large" />
             <Typography variant="h6" color="success" ml={1}>
-              User added successfully!
+              Author added successfully!
             </Typography>
           </Box>
         )}
-        <form ref={formRef} onSubmit={handleSubmitUser}>
+        <form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 name="firstName"
                 label="First Name"
-                value={user.firstName}
+                value={author.firstName}
                 fullWidth
                 required
                 onChange={handleChange}
@@ -85,7 +83,7 @@ const AddUser = () => {
               <TextField
                 name="lastName"
                 label="Last Name"
-                value={user.lastName}
+                value={author.lastName}
                 fullWidth
                 required
                 onChange={handleChange}
@@ -96,7 +94,7 @@ const AddUser = () => {
                 name="email"
                 label="Email"
                 type="email"
-                value={user.email}
+                value={author.email}
                 fullWidth
                 required
                 onChange={handleChange}
@@ -104,20 +102,9 @@ const AddUser = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="password"
-                label="Password"
-                type="password"
-                value={user.password}
-                fullWidth
-                required
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="role"
-                label="Role"
-                value={user.role}
+                name="bookId"
+                label="Book ID"
+                value={author.bookId}
                 fullWidth
                 required
                 onChange={handleChange}
@@ -135,4 +122,4 @@ const AddUser = () => {
   )
 }
 
-export default AddUser
+export default AddAuthor
