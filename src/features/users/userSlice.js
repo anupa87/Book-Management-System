@@ -16,6 +16,7 @@ const userSlice = createSlice({
       state.users.push(newUser)
       localStorage.setItem('users', JSON.stringify(state.users)) //update local storage with new data
     },
+
     updateUser: (state, action) => {
       const updatedUser = action.payload
       const index = state.users.findIndex((user) => user.id === updatedUser.id)
@@ -24,6 +25,7 @@ const userSlice = createSlice({
       }
       localStorage.setItem('users', JSON.stringify(state.users))
     },
+
     deleteUser: (state, action) => {
       const deletedUser = action.payload
       const index = state.users.findIndex((user) => user.id === deletedUser.id)
