@@ -2,22 +2,27 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const userSlice = createSlice({
   name: 'users',
-  initialState: [],
+  initialState: { users: [] },
+
   reducers: {
     addUser: (state, action) => {
-      state.push(action.payload)
+      const newUser = {
+        id: Math.random(),
+        ...action.payload
+      }
+      state.users.push(newUser)
     },
     updateUser: (state, action) => {
-      const { id, ...updatedUser } = action.payload
-      const index = state.findIndex((user) => user.id === id)
-      state[index] = updatedUser
+      const updatedUser = action.payload
+      const index = state.users.findIndex((user) => user.id === updatedUser.id)
+      state.users.splice(index, 1, updatedUser)
     },
     deleteUser: (state, action) => {
-      const index = state.findIndex((user) => user.id === action.payload)
-      state.splice(index, 1)
+      const deletedUser = action.payload
+      const index = state.users.findIndex((user) => user.id === deletedUser.id)
+      state.users.splice(index, 1)
     }
   }
 })
-
 export const { addUser, updateUser, deleteUser } = userSlice.actions
 export default userSlice.reducer

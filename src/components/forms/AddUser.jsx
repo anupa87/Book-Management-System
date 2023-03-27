@@ -23,12 +23,13 @@ const AddUser = () => {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log(name, value)
     setUser({ ...user, [name]: value })
   }
 
   const handleSubmitUser = (e) => {
     e.preventDefault()
+    console.log(user)
+    dispatch(addUser(user)) //dispatch the addUser action with the user data
     setUser({
       firstName: '',
       lastName: '',
@@ -41,6 +42,7 @@ const AddUser = () => {
     setTimeout(() => {
       setShowSuccessMessage(false)
     }, 1000)
+    navigate('/users')
   }
 
   const handleClose = () => {

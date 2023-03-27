@@ -25,6 +25,7 @@ const Dashboard = ({ addUser }) => {
     hour12: true
   })
   const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' })
+
   const userName = 'Anupa'
   const totalUser = 100
   const totalAuthor = 50
