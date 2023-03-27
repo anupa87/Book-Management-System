@@ -1,16 +1,8 @@
+// users data storage
 const saveUser = (user) => {
   const users = getUsers()
-  console.log('users before:', users)
-
-  //check if the user already exists
-  const existingUser = users.find((u) => u.id === user.id)
-  if (existingUser) {
-    Object.assign(existingUser, user) //update exisitng user
-  } else {
-    users.push(user)
-  }
+  users.push(user)
   localStorage.setItem('users', JSON.stringify(users))
-  console.log('users after:', getUsers())
 }
 
 const getUsers = () => {
@@ -18,4 +10,29 @@ const getUsers = () => {
   return users ? JSON.parse(users) : []
 }
 
-export { saveUser, getUsers }
+// authors data storage
+
+const saveAuthor = (author) => {
+  const authors = getAuthors()
+  authors.push(author)
+  localStorage.setItem('authors', JSON.stringify(authors))
+}
+
+const getAuthors = () => {
+  const authors = localStorage.getItem('authors')
+  return authors ? JSON.parse(authors) : []
+}
+
+// books data storage
+const saveBooks = (book) => {
+  const books = getBooks()
+  books.push(book)
+  localStorage.setItem('books', JSON.stringify(books))
+}
+
+const getBooks = () => {
+  const books = localStorage.getItem('books')
+  return books ? JSON.parse(books) : []
+}
+
+export { saveUser, getUsers, saveAuthor, getAuthors, saveBooks, getBooks }
