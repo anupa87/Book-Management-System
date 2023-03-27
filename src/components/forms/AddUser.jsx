@@ -1,10 +1,13 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
+import { addUser } from '../../features/users/userSlice'
 const AddUser = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [user, setUser] = useState({
     firstName: '',
