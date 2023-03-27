@@ -1,20 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
+
+import { getBooks } from '../../services/services'
 
 const bookSlice = createSlice({
   name: 'books',
-  initialState: [],
+  initialState: { books: getBooks() }, //get books from local storage
+
   reducers: {
     addBook: (state, action) => {
-      state.push(action.payload)
+      const newBook = {
+        id: uuidv4(),
+        ...action.payload
+      }
+      state.books.push(newBook)
+      localStorage.setItem('books', JSON.stringify(state.books))
     },
+
     updateBook: (state, action) => {
-      const { id, ...updatedBook } = action.payload
-      const index = state.findIndex((book) => book.id === id)
+      const updatedBook = action.payload
+      const index = state.books.findIndex((book) => book.id === updatedBook.id)
       state[index] = updatedBook
+      localStorage.setItem('books', JSON.stringify(state.books))
     },
+
     deleteBook: (state, action) => {
-      const index = state.findIndex((book) => book.id === action.payload)
-      state.splice(index, 1)
+      const deletedBook = action.payload
+      const index = state.books.findIndex((book) => book.id === deletedBook.id)
+      state.books.splice(index, 1)
+      localStorage.setItem('books', JSON.stringify(state.books))
     }
   }
 })
