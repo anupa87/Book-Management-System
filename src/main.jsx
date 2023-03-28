@@ -22,6 +22,7 @@ import AddBook from './components/admin/AddBook'
 import IssueBook from './components/admin/IssueBook'
 
 import './index.css'
+import UserProfile from './components/users/UserProfile'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -42,6 +43,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/addbook" element={<AddBook />} />
             <Route path="/updateuser/:id" element={<UpdateUser />} />
             <Route path="/issuebook" element={<IssueBook />} />
+            <Route path="/userprofile" element={<UserProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

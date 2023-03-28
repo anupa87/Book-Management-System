@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
-import { updateUser } from '../../features/users/userSlice'
+import { updateUser, addUser } from '../../features/users/userSlice'
 
 const UpdateUser = () => {
   const { userId } = useParams()
@@ -27,10 +27,16 @@ const UpdateUser = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    dispatch(updateUser({ ...user, [name]: value })) //update the user in the store
+  const handleChange = (event) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const handleUpdateUser = (event) => {
+    event.preventDefault()
+    dispatch(updateUser(user))
   }
 
   const handleSubmitUser = (e) => {
@@ -131,8 +137,8 @@ const UpdateUser = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <Button variant="contained" color="primary" type="submit">
-                Add
+              <Button variant="contained" color="primary" onClick={handleUpdateUser}>
+                Update
               </Button>
             </Grid>
           </Grid>
