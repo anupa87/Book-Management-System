@@ -19,6 +19,7 @@ import AddUser from './components/admin/AddUser'
 import UpdateUser from './components/admin/UpdateUser'
 import AddAuthor from './components/admin/AddAuthor'
 import AddBook from './components/admin/AddBook'
+import IssueBook from './components/admin/IssueBook'
 
 import './index.css'
 
@@ -39,7 +40,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/adduser" element={<AddUser />} />
             <Route path="/addauthor" element={<AddAuthor />} />
             <Route path="/addbook" element={<AddBook />} />
-            <Route path="/updateuser" element={<UpdateUser />} />
+            <Route path="/updateuser/:id" element={<UpdateUser />} />
+            <Route path="/issuebook" element={<IssueBook />} />
           </Route>
         </Routes>
       </BrowserRouter>

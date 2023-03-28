@@ -21,12 +21,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 const Users = () => {
   const users = useSelector((state) => state.users.users) // get the users array from the Redux store
-  console.log(users)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleUpdateUser = (user) => {
-    const updateUserUrl = `/update/${user.id}`
-    navigate(updateUserUrl, { state: user })
+
+  const handleUpdateUser = (userId) => {
+    navigate(`/updateuser/${userId}`)
   }
 
   const handleDeleteUser = (userId) => {
@@ -63,7 +62,7 @@ const Users = () => {
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => handleUpdateUser(user)}>
+                      <IconButton onClick={() => handleUpdateUser(user.id)}>
                         <EditIcon />
                       </IconButton>
                     </TableCell>

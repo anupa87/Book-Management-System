@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
 
-import BooksIssue from '../components/admin/BooksIssue'
+import IssueBook from '../components/admin/IssueBook'
 import CardsDashboard from '../components/cards/CardsDashboard'
 
 const Dashboard = () => {
@@ -28,7 +28,7 @@ const Dashboard = () => {
           Welcome, {userName}
         </Typography>
         <CardsDashboard />
-        <BooksIssue />
+        <IssueBook />
       </Box>
     </Grid>
   )

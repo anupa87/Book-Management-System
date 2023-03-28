@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
@@ -7,47 +7,49 @@ import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-m
 
 import { updateUser } from '../../features/users/userSlice'
 
-const UpdateUser = ({ userId }) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const users = useSelector((state) => state.users.users)
-  const [user, setUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    role: ''
-  })
+const UpdateUser = () => {
+  const { userId } = useParams()
+
+  const foundUser = useSelector((state) => state.users.users.find((user) => user.id === userId))
+  const [user, setUser] = useState(
+    foundUser || {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      role: ''
+    }
+  )
+  console.log('founduser', foundUser)
   const formRef = useRef(null)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    setUser({ ...user, [name]: value })
+    dispatch(updateUser({ ...user, [name]: value })) //update the user in the store
   }
 
   const handleSubmitUser = (e) => {
     e.preventDefault()
-    console.log(user)
-    dispatch(updateUser(user)) //dispatch the updateUser action with the updated user data
-    setShowSuccessMessage(true)
+
     setTimeout(() => {
-      setShowSuccessMessage(false)
+      if (foundUser) {
+        dispatch(updateUser(user))
+        setShowSuccessMessage(true)
+      } else {
+        dispatch(addUser(user))
+      }
+      navigate('/users', { replace: 'true' })
     }, 1000)
-    navigate('/users')
   }
 
   const handleClose = () => {
-    navigate('/dashboard')
+    navigate('/users')
   }
-
-  useEffect(() => {
-    const foundUser = users.find((user) => user.id === userId)
-    if (foundUser) {
-      setUser(foundUser)
-    }
-  }, [users, userId])
 
   return (
     <Container maxWidth="sm">
@@ -60,7 +62,7 @@ const UpdateUser = ({ userId }) => {
         }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>
-            Add User
+            Update User
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
