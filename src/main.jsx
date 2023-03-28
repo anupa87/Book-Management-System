@@ -16,7 +16,7 @@ import Setting from './pages/Setting'
 import Help from './pages/Help'
 
 import './index.css'
-import AddUser from './components/forms/AddUser'
+import AddUser from './components/users/AddUser'
 import AddAuthor from './components/forms/AddAuthor'
 import AddBook from './components/forms/AddBook'
 

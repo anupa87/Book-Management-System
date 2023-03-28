@@ -13,7 +13,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
   IconButton
 } from '@mui/material'
 
@@ -25,7 +24,6 @@ const Users = () => {
   console.log(users)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const handleUpdateUser = (user) => {
     const updateUserUrl = `/update/${user.id}`
     navigate(updateUserUrl, { state: user })
@@ -34,8 +32,6 @@ const Users = () => {
   const handleDeleteUser = (userId) => {
     dispatch(deleteUser(userId))
   }
-
-  const dayOfWeek = new Date().toLocaleString('en-US', { weekday: 'long' })
 
   return (
     <Grid item xs={10}>

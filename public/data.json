@@ -56,13 +56,13 @@
       "ISBN": "9780061120084",
       "title": "To Kill a Mockingbird",
       "description": "A Pulitzer Prize-winning novel about racial injustice and the loss of innocence.",
+      "authorIds": [2],
       "publisher": "HarperCollins",
-      "status": "borrowed",
+      "publishedDate": "11-07-1960",
       "borrowerId": "user123",
-      "publishedDate": "1960-07-11",
-      "borrowDate": "2022-03-15",
-      "returnDate": "2022-03-25",
-      "authorIds": [2]
+      "borrowDate": "15-03-2022",
+      "returnDate": "25-03-2022",
+      "status": "borrowed"
     },
     {
       "id": 3,

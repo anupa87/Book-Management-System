@@ -16,7 +16,7 @@ const Menu = ({ role }) => {
       <Box sx={{ display: 'flex' }}>
         <Drawer variant="permanent" anchor="left" sx={{ bgcolor: theme.palette.primary.main }}>
           <Box sx={{ p: 2 }}>
-            <img src={logo} alt="Logo" height={100} />
+            <img src={logo} alt="Logo" height={80} />
           </Box>
           <List sx={{ mt: 10, ml: 3 }}>
             {filteredMenuItems.map((item) => (

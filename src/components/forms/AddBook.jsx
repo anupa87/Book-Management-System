@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
-import { AddBook } from '../../features/books/bookSlice'
+import { addBook } from '../../features/books/bookSlice'
 
 const AddBook = () => {
   const navigate = useNavigate()
@@ -36,15 +36,15 @@ const AddBook = () => {
   const handleSubmitBook = (e) => {
     e.preventDefault()
     console.log(book)
-    dispatch(addUser(book)) //dispatch the addBook action with the book data
+    dispatch(addBook(book)) //dispatch the addBook action with the book data
     setBook({
       ISBN: '',
       title: '',
       description: '',
       publisher: '',
+      publishedDate: '',
       status: '',
       borrowerId: '',
-      publishedDate: '',
       borrowDate: '',
       returnDate: '',
       authorIds: []
@@ -58,7 +58,7 @@ const AddBook = () => {
   }
 
   const handleClose = () => {
-    navigate('/books')
+    navigate('/dashboard')
   }
 
   return (
@@ -120,29 +120,19 @@ const AddBook = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                name="authorIds"
+                label="Author Id/s"
+                value={book.authorIds}
+                fullWidth
+                required
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 name="publisher"
                 label="Publisher"
                 value={book.publisher}
-                fullWidth
-                required
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="status"
-                label="status"
-                value={book.status}
-                fullWidth
-                required
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                name="borrowerId"
-                label="Borrower Id"
-                value={book.borrowerId}
                 fullWidth
                 required
                 onChange={handleChange}
@@ -160,11 +150,19 @@ const AddBook = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                name="borrowerId"
+                label="Borrower Id"
+                value={book.borrowerId}
+                fullWidth
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 name="borrowDate"
                 label="Borrow Date"
                 value={book.borrowDate}
                 fullWidth
-                required
                 onChange={handleChange}
               />
             </Grid>
@@ -174,15 +172,14 @@ const AddBook = () => {
                 label="Return Date"
                 value={book.returnDate}
                 fullWidth
-                required
                 onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                name="authorIds"
-                label="Author Id/s"
-                value={book.authorIds}
+                name="status"
+                label="status"
+                value={book.status}
                 fullWidth
                 required
                 onChange={handleChange}

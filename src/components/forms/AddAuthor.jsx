@@ -39,7 +39,7 @@ const AddAuthor = () => {
   }
 
   const handleClose = () => {
-    navigate('/authors')
+    navigate('/dashboard')
   }
 
   return (

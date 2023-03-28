@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Grid, Box, IconButton, Typography, Card, CardContent } from '@mui/material'
+import { Box, IconButton, Typography, Card, CardContent } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import AddUser from '../forms/AddUser'
-// import AddAuthor from '../components/forms/AddAuthor'
-// import AddBook from '../components/forms/AddBook'
+import AddUser from '../users/AddUser'
+import AddAuthor from '../forms/AddAuthor'
+import AddBook from '../forms/AddBook'
 
 const CardsDashboard = () => {
+  const navigate = useNavigate()
   const [showAddUser, setShowAddUser] = useState(false)
 
-  const handleAddUser = ({ addUser }) => {
+  const handleAddUser = ({ addUser, addAuthor, addBook }) => {
     navigate('/adduser')
   }
   const handleAddAuthor = () => {

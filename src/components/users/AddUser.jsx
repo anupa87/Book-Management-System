@@ -47,7 +47,7 @@ const AddUser = () => {
   }
 
   const handleClose = () => {
-    navigate('/users')
+    navigate('/dashboard')
   }
 
   return (

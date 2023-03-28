@@ -8,14 +8,10 @@ import BooksIssue from '../components/books/BooksIssue'
 import CardsDashboard from '../components/cards/CardsDashboard'
 
 const Dashboard = () => {
-  const navigate = useNavigate()
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')
   const day = moment().format('dddd')
   const userName = 'Anupa'
-  // const totalUser = 100
-  // const totalAuthor = 50
-  // const totalBooks = 1000
 
   return (
     <Grid item xs={10}>
