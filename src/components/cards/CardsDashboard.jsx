@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { Box, IconButton, Typography, Card, CardContent } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import AddUser from '../users/AddUser'
-import AddAuthor from '../forms/AddAuthor'
-import AddBook from '../forms/AddBook'
+import AddUser from '../admin/AddUser'
+import AddAuthor from '../admin/AddAuthor'
+import AddBook from '../admin/AddBook'
 
 const CardsDashboard = () => {
   const navigate = useNavigate()

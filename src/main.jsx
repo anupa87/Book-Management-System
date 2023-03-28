@@ -15,10 +15,12 @@ import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
 
+import AddUser from './components/admin/AddUser'
+import UpdateUser from './components/admin/UpdateUser'
+import AddAuthor from './components/admin/AddAuthor'
+import AddBook from './components/admin/AddBook'
+
 import './index.css'
-import AddUser from './components/users/AddUser'
-import AddAuthor from './components/forms/AddAuthor'
-import AddBook from './components/forms/AddBook'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -37,6 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/adduser" element={<AddUser />} />
             <Route path="/addauthor" element={<AddAuthor />} />
             <Route path="/addbook" element={<AddBook />} />
+            <Route path="/updateuser" element={<UpdateUser />} />
           </Route>
         </Routes>
       </BrowserRouter>

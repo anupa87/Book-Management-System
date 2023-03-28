@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
 
-import BooksIssue from '../components/books/BooksIssue'
+import BooksIssue from '../components/admin/BooksIssue'
 import CardsDashboard from '../components/cards/CardsDashboard'
 
 const Dashboard = () => {
