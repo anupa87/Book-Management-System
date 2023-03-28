@@ -6,6 +6,7 @@ import { Button, Container, TextField, Typography, Grid, Box, IconButton } from 
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
 import { addUser } from '../../features/users/userSlice'
+
 const AddUser = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()

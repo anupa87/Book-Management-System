@@ -1,11 +1,15 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { Button, Container, TextField, Typography, Grid, Box, IconButton } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
+import { AddBook } from '../../features/books/bookSlice'
+
 const AddBook = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [book, setBook] = useState({
     ISBN: '',
     title: '',
@@ -29,8 +33,10 @@ const AddBook = () => {
     setBook({ ...book, [name]: value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmitBook = (e) => {
     e.preventDefault()
+    console.log(book)
+    dispatch(addUser(book)) //dispatch the addBook action with the book data
     setBook({
       ISBN: '',
       title: '',
@@ -48,6 +54,7 @@ const AddBook = () => {
     setTimeout(() => {
       setShowSuccessMessage(false)
     }, 1000)
+    navigate('/books')
   }
 
   const handleClose = () => {
@@ -79,7 +86,7 @@ const AddBook = () => {
             </Typography>
           </Box>
         )}
-        <form ref={formRef} onSubmit={handleSubmit}>
+        <form ref={formRef} onSubmit={handleSubmitBook}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
