@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { ThemeProvider } from '@emotion/react'
 import { Box, List, ListItemIcon, ListItemText, Drawer, ListItemButton } from '@mui/material'
 import menuItems from './constant/menuItem'
