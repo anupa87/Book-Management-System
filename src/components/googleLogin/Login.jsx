@@ -41,13 +41,16 @@ const Login = () => {
     console.log(loggedUser)
     if (loggedUser) {
       const role = loggedUser.role
+      console.log(role)
 
       dispatch(loginSuccess(loggedUser)) // Dispatch action to update Redux store with logged-in user information
 
-      if (role === 'admin') {
+      if (role === 'Admin') {
         navigate('/dashboard')
-      } else {
+      } else if (role === 'User') {
         navigate('/homepage')
+      }
+      {
       }
     } else {
       console.log('User not found')

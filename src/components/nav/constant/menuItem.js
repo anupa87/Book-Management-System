@@ -13,15 +13,15 @@ const menuItems = [
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
     path: '/dashboard',
-    role: 'admin'
+    role: 'Admin'
   },
-  { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'user' },
-  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'both' },
-  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },
-  { label: 'Profile', icon: React.createElement(PersonIcon), path: '/profile', role: 'user' },
-  { label: 'Settings', icon: React.createElement(SettingsIcon), path: '/setting', role: 'both' },
-  { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'both' },
-  { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'both' }
+  { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'User' },
+  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'Both' },
+  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'Admin' },
+  { label: 'Profile', icon: React.createElement(PersonIcon), path: '/profile', role: 'User' },
+  { label: 'Settings', icon: React.createElement(SettingsIcon), path: '/setting', role: 'Both' },
+  { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'Both' },
+  { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'Both' }
 ]
 
 export default menuItems

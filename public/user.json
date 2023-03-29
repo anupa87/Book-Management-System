@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Anupa",
+      "lastName": "Thapa",
+      "email": "thaapanupa@gmail.com",
+      "role": "Admin"
+    },
+    {
+      "id": "2",
+      "firstName": "Prak",
+      "lastName": "Link",
+      "email": "link.prak@gmail.com",
+      "role": "User"
+    }
+  ]
+}

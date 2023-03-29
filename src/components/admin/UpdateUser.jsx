@@ -34,8 +34,8 @@ const UpdateUser = () => {
     })
   }
 
-  const handleUpdateUser = (event) => {
-    event.preventDefault()
+  const handleUpdateUser = (id) => {
+    console.log(id)
     dispatch(updateUser(user))
   }
 

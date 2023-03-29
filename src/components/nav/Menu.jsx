@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux'
+
 import { ThemeProvider } from '@emotion/react'
 import { Box, List, ListItemIcon, ListItemText, Drawer, ListItemButton } from '@mui/material'
 import menuItems from './constant/menuItem'
@@ -5,9 +7,15 @@ import menuItems from './constant/menuItem'
 import theme from '../../theme'
 import logo from '../../assests/logo.png'
 
-const Menu = ({ role }) => {
+const Menu = () => {
+  const user = useSelector((state) => (state.auth.role ? state.auth : null)) // get the users array from the Redux store
+  console.log(user)
+  const role = user && user.role // get user's role from the the user object
+  console.log(role)
+
   // Filter menu items based on user's role
-  const filteredMenuItems = menuItems.filter((item) => item.role === role || item.role === 'both')
+  const filteredMenuItems = menuItems.filter((item) => item.role === role || item.role === 'Both')
+  console.log(filteredMenuItems)
 
   return (
     <ThemeProvider theme={theme}>
