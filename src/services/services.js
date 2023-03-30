@@ -1,4 +1,6 @@
 // users data storage
+import data from '../data.json'
+
 const saveUser = (user) => {
   const users = getUsers()
   users.push(user)
@@ -7,6 +9,10 @@ const saveUser = (user) => {
 
 const getUsers = () => {
   const users = localStorage.getItem('users')
+  if (!users) {
+    localStorage.setItem('users', JSON.stringify(data.users))
+    return data.users
+  }
   return users ? JSON.parse(users) : []
 }
 
@@ -32,6 +38,10 @@ const saveBooks = (book) => {
 
 const getBooks = () => {
   const books = localStorage.getItem('books')
+  if (!books) {
+    localStorage.setItem('books', JSON.stringify(data.books))
+    return data.books
+  }
   return books ? JSON.parse(books) : []
 }
 

@@ -12,16 +12,21 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
   IconButton,
   Link
 } from '@mui/material'
 
 const Homepage = () => {
-  const userName = 'John'
-  const books = useSelector((state) => state.books.books)
-  console.log(books)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const allBooks = useSelector((state) => state.books.books)
+  const allUsers = useSelector((state) => state.users.users)
+  console.log({ allBooks })
+  console.log({ allUsers })
+
+  //const borrowedBooks = loggedUser.id ===borrowedBooks.borrower.id
+
   return (
     <Grid item xs={10}>
       <Box>
@@ -32,7 +37,7 @@ const Homepage = () => {
       </Box>
       <Box>
         <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
-          Welcome, {userName}
+          {/* Welcome, {loggedUser.firstName} {loggedUser.lastName} */}
         </Typography>
       </Box>
       <Box sx={{ mt: 4, mb: 4 }}>
@@ -49,13 +54,13 @@ const Homepage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {books &&
-                books.map((book) => (
-                  <TableRow key={book.id}>
-                    <TableCell>{book.title}</TableCell>
-                    <TableCell>{book.borrowedDate}</TableCell>
-                    <TableCell>{book.returnDate}</TableCell>
-                    <TableCell>{book.status}</TableCell>
+              {borrowedBooks &&
+                borrowedBooks.map((book) => (
+                  <TableRow key={borrowedBooks.id}>
+                    <TableCell>{borrowedBooks.title}</TableCell>
+                    <TableCell>{borrowedBooks.borrowedDate}</TableCell>
+                    <TableCell>{borrowedBooks.returnDate}</TableCell>
+                    <TableCell>{borrowedBooks.status}</TableCell>
                     <TableCell>
                       <Button onClick={() => handleUpdateBook(book)}>Renew</Button>
                     </TableCell>

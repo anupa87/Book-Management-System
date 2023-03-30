@@ -1,4 +1,4 @@
-import Login from '../components/googleLogin/Login'
+import Login from '../components/login/Login'
 import Dashboard from '../pages/Dashboard'
 import Homepage from '../pages/Homepage'
 import Books from '../pages/Books'
@@ -13,7 +13,7 @@ import AddUser from '../components/admin/AddUser'
 import UpdateUser from '../components/admin/UpdateUser'
 import AddAuthor from '../components/admin/AddAuthor'
 import AddBook from '../components/admin/AddBook'
-import IssueBook from '../components/admin/IssueBook'
+import IssueBook from '../components/admin/IssuedBooks'
 import UserProfile from '../components/users/UserProfile'
 
 const routes = [

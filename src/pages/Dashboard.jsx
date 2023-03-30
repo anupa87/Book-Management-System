@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
 
-import IssueBook from '../components/admin/IssueBook'
+import IssueBook from '../components/admin/IssuedBooks'
 import CardsDashboard from '../components/cards/CardsDashboard'
 
 const Dashboard = () => {

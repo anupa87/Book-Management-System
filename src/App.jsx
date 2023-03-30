@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Layout from './pages/Layout'
-import Login from './components/googleLogin/Login'
+import Login from './components/login/Login'
 import Dashboard from './pages/Dashboard'
 import Homepage from './pages/Homepage'
 import Books from './pages/Books'
@@ -17,7 +17,7 @@ import AddUser from './components/admin/AddUser'
 import UpdateUser from './components/admin/UpdateUser'
 import AddAuthor from './components/admin/AddAuthor'
 import AddBook from './components/admin/AddBook'
-import IssueBook from './components/admin/IssueBook'
+import IssueBook from './components/admin/IssuedBooks'
 import UserProfile from './components/users/UserProfile'
 
 function App() {
@@ -33,9 +33,9 @@ function App() {
             <Route path="/books" element={<Books />} />
             <Route path="/users" element={<Users />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/adduser" element={<AddUser />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/help" element={<Help />} />
-            <Route path="/adduser" element={<AddUser />} />
             <Route path="/addauthor" element={<AddAuthor />} />
             <Route path="/addbook" element={<AddBook />} />
             <Route path="/updateuser/:id" element={<UpdateUser />} />

@@ -1,4 +1,6 @@
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { ThemeProvider } from '@emotion/react'
 import { Box, List, ListItemIcon, ListItemText, Drawer, ListItemButton } from '@mui/material'
@@ -7,15 +9,16 @@ import menuItems from './constant/menuItem'
 import theme from '../../theme'
 import logo from '../../assests/logo.png'
 
-const Menu = () => {
+import { logoutSuccess } from '../../features/auth/authSlice'
+
+const Menu = (props) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const user = useSelector((state) => (state.auth.role ? state.auth : null)) // get the users array from the Redux store
-  console.log(user)
   const role = user && user.role // get user's role from the the user object
-  console.log(role)
 
   // Filter menu items based on user's role
-  const filteredMenuItems = menuItems.filter((item) => item.role === role || item.role === 'Both')
-  console.log(filteredMenuItems)
+  const filteredMenuItems = menuItems.filter((item) => item.role === role || item.role === 'both')
 
   return (
     <ThemeProvider theme={theme}>
@@ -26,7 +29,17 @@ const Menu = () => {
           </Box>
           <List sx={{ mt: 10, ml: 3 }}>
             {filteredMenuItems.map((item) => (
-              <ListItemButton key={item.label} component="a" href={item.path} sx={{ mb: 2 }}>
+              <ListItemButton
+                key={item.label}
+                onClick={() => {
+                  if (item.path === '/logout') {
+                    dispatch(logoutSuccess())
+                    navigate('/')
+                  } else {
+                    navigate(item.path)
+                  }
+                }}
+                sx={{ mb: 2 }}>
                 <ListItemIcon>
                   <i className="material-icons">{item.icon}</i>
                 </ListItemIcon>

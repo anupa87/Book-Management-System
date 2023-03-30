@@ -22,8 +22,9 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [formData, setFormData] = useState({ email: 'thapaanupa@gmail.com', password: '12345' })
   const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState()
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -37,23 +38,28 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    const loggedUser = users.find((user) => user.email === formData.email)
-    console.log(loggedUser)
-    if (loggedUser) {
-      const role = loggedUser.role
+    setError()
+    const foundUser = users && users.find((user) => user.email === formData.email)
+    if (foundUser) {
+      if (foundUser.password !== formData.password) {
+        setError('Incorrect password')
+        return
+      }
+
+      const role = foundUser.role
       console.log(role)
 
-      dispatch(loginSuccess(loggedUser)) // Dispatch action to update Redux store with logged-in user information
+      dispatch(loginSuccess(foundUser)) // Dispatch action to update Redux store with logged-in user information
 
       if (role === 'Admin') {
-        navigate('/dashboard')
+        navigate('dashboard')
       } else if (role === 'User') {
-        navigate('/homepage')
+        navigate('homepage')
       }
       {
       }
     } else {
-      console.log('User not found')
+      setError('User not found')
     }
   }
   return (
@@ -78,6 +84,7 @@ const Login = () => {
             <Typography variant="h4" align="center" gutterBottom>
               Login
             </Typography>
+            {error?.length && <div>{error}</div>}
             <form onSubmit={handleLogin}>
               <TextField
                 name="email"

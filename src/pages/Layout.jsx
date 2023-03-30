@@ -6,7 +6,7 @@ import { Grid } from '@mui/material'
 import { ThemeProvider } from '@emotion/react'
 
 import theme from '../theme'
-import Login from '../components/googleLogin/Login'
+import Login from '../components/login/Login'
 import Menu from '../components/nav/Menu'
 import Homepage from './Homepage'
 import Dashboard from './Dashboard'

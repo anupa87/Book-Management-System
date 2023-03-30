@@ -4,15 +4,25 @@
       "id": "1",
       "firstName": "Anupa",
       "lastName": "Thapa",
-      "email": "thaapanupa@gmail.com",
-      "role": "Admin"
+      "email": "thapaanupa@gmail.com",
+      "password": "12345",
+      "role": "admin"
     },
     {
       "id": "2",
       "firstName": "Prak",
       "lastName": "Link",
       "email": "link.prak@gmail.com",
-      "role": "User"
+      "password": "12345",
+      "role": "user"
+    },
+    {
+      "id": "3",
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "password": "12345",
+      "role": "user"
     }
   ],
 
@@ -22,13 +32,14 @@
       "ISBN": "9783161484100",
       "title": "The Catcher in the Rye",
       "description": "A classic novel about a teenage boy named Holden Caulfield.",
+      "authorIds": [1],
       "publisher": "Little, Brown and Company",
-      "status": "available",
-      "borrowerId": null,
       "publishedDate": "1951-07-16",
-      "borrowDate": null,
-      "returnDate": null,
-      "authorIds": [1]
+      "borrowerId": "2",
+      "borrowerName": "",
+      "borrowDate": "03-25-2023",
+      "returnDate": "04-05-2023",
+      "status": "borrowed"
     },
     {
       "id": 2,
@@ -38,49 +49,53 @@
       "authorIds": [2],
       "publisher": "HarperCollins",
       "publishedDate": "11-07-1960",
-      "borrowerId": "user123",
-      "borrowDate": "15-03-2022",
-      "returnDate": "25-03-2022",
-      "status": "borrowed"
+      "borrowerId": "2",
+      "borrowerName": "",
+      "borrowDate": "03-15-2023",
+      "returnDate": "03-25-2023",
+      "status": "overdue"
     },
     {
       "id": 3,
       "ISBN": "9780590353427",
       "title": "Harry Potter and the Philosopher's Stone",
       "description": "The first book in the Harry Potter series, about a young wizard who discovers his magical heritage.",
+      "authorIds": [3],
       "publisher": "Bloomsbury Publishing",
-      "status": "available",
+      "publishedDate": "06-26-2004",
       "borrowerId": null,
-      "publishedDate": "1997-06-26",
+      "borrowerName": "",
       "borrowDate": null,
       "returnDate": null,
-      "authorIds": [3]
+      "status": "available"
     },
     {
       "id": 4,
       "ISBN": "9780446310789",
       "title": "To Kill a Mockingbird",
       "description": "A novel about life in the Great Depression era South.",
+      "authorIds": [4],
       "publisher": "Warner Books",
-      "status": "available",
+      "publishedDate": "04-21-1998",
       "borrowerId": null,
-      "publishedDate": "1939-04-21",
+      "borrowerName": "",
       "borrowDate": null,
       "returnDate": null,
-      "authorIds": [4]
+      "status": "available"
     },
     {
       "id": 5,
       "ISBN": "9780439064873",
       "title": "Harry Potter and the Chamber of Secrets",
       "description": "The second book in the Harry Potter series, about a mysterious chamber at Hogwarts School of Witchcraft and Wizardry.",
+      "authorIds": [3],
       "publisher": "Scholastic",
-      "status": "borrowed",
-      "borrowerId": "user456",
       "publishedDate": "1998-07-02",
-      "borrowDate": "2022-03-20",
-      "returnDate": "2022-03-30",
-      "authorIds": [3]
+      "borrowerId": "3",
+      "borrowerName": "",
+      "borrowDate": "03-20-2023",
+      "returnDate": "04-04-2023",
+      "status": "borrowed"
     }
   ],
 
