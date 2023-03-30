@@ -13,7 +13,7 @@ const menuItems = [
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
     path: '/dashboard',
-    role: 'Admin'
+    role: 'admin'
   },
   { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'user' },
   { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'both' },

@@ -7,7 +7,7 @@ import { Box, List, ListItemIcon, ListItemText, Drawer, ListItemButton } from '@
 import menuItems from './constant/menuItem'
 
 import theme from '../../theme'
-import logo from '../../assests/logo.png'
+import logo from '../../../public/assests/logo.png'
 
 import { logoutSuccess } from '../../features/auth/authSlice'
 
@@ -18,7 +18,9 @@ const Menu = (props) => {
   const role = user && user.role // get user's role from the the user object
 
   // Filter menu items based on user's role
-  const filteredMenuItems = menuItems.filter((item) => item.role === role || item.role === 'both')
+  const filteredMenuItems = menuItems.filter(
+    (item) => item.role === role.toLowerCase() || item.role === 'both'
+  )
 
   return (
     <ThemeProvider theme={theme}>

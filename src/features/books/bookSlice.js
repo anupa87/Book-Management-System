@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import data from '../../data.json'
+import data from '../../../public/data/data.json'
 
 import { v4 as uuidv4 } from 'uuid'
 
@@ -9,11 +9,10 @@ const bookSlice = createSlice({
 
   reducers: {
     addBook: (state, action) => {
-      const newBook = {
-        id: uuidv4(),
+      const addedBook = {
         ...action.payload
       }
-      state.books.push(newBook)
+      state.books.push(addedBook)
       localStorage.setItem('books', JSON.stringify(state.books))
     },
 

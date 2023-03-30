@@ -19,7 +19,7 @@ const Help = () => {
   }
 
   return (
-    <Grid container xs={10} spacing={2}>
+    <Grid container item xs={10} spacing={2}>
       <Grid item xs={10}>
         <Box>
           <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>

@@ -22,7 +22,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({ email: 'thapaanupa@gmail.com', password: '12345' })
+  const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState()
 

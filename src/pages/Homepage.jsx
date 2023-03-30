@@ -25,7 +25,7 @@ const Homepage = () => {
   console.log({ allBooks })
   console.log({ allUsers })
 
-  //const borrowedBooks = loggedUser.id ===borrowedBooks.borrower.id
+  const borrowedBooks = loggedUser.id === borrowedBooks.borrower.id
 
   return (
     <Grid item xs={10}>

@@ -1,5 +1,5 @@
 // users data storage
-import data from '../data.json'
+import data from '../../public/data/data.json'
 
 const saveUser = (user) => {
   const users = getUsers()

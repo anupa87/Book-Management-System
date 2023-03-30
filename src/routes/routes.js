@@ -9,13 +9,6 @@ import Setting from '../pages/Setting'
 import Help from '../pages/Help'
 import ErrorPage from '../pages/ErrorPage'
 
-import AddUser from '../components/admin/AddUser'
-import UpdateUser from '../components/admin/UpdateUser'
-import AddAuthor from '../components/admin/AddAuthor'
-import AddBook from '../components/admin/AddBook'
-import IssueBook from '../components/admin/IssuedBooks'
-import UserProfile from '../components/users/UserProfile'
-
 const routes = [
   {
     path: '/',

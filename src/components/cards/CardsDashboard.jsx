@@ -1,25 +1,27 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Box, IconButton, Typography, Card, CardContent } from '@mui/material'
+import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
 import AddUser from '../admin/AddUser'
-import AddAuthor from '../admin/AddAuthor'
 import AddBook from '../admin/AddBook'
 
 const CardsDashboard = () => {
   const navigate = useNavigate()
   const [showAddUser, setShowAddUser] = useState(false)
+  const [showAddBook, setShowAddBook] = useState(false)
+  const [openUserModal, setOpenUserModal] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleAddUser = ({ addUser, addAuthor, addBook }) => {
-    navigate('/adduser')
+  const handleAddUser = () => {
+    setShowAddUser(true)
+    setOpenUserModal(true)
   }
-  const handleAddAuthor = () => {
-    navigate('/addauthor')
-  }
+
   const handleAddBook = () => {
-    navigate('/addbook')
+    setShowAddBook(true)
+    setOpen(true)
   }
 
   return (
@@ -34,16 +36,7 @@ const CardsDashboard = () => {
           </CardContent>
         </Box>
       </Card>
-      <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <IconButton sx={{ color: 'white' }} onClick={handleAddAuthor}>
-            <AddIcon />
-          </IconButton>
-          <CardContent sx={{ mt: 1 }}>
-            <Typography variant="h6">Add Authors</Typography>
-          </CardContent>
-        </Box>
-      </Card>
+
       <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <IconButton sx={{ color: 'white' }} onClick={handleAddBook}>
@@ -53,8 +46,16 @@ const CardsDashboard = () => {
             <Typography variant="h6">Add Books</Typography>
           </CardContent>
         </Box>
-        {showAddUser && <AddUser />}
       </Card>
+      <Dialog
+        open={openUserModal}
+        onClose={() => setOpen(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <AddUser open={openUserModal} onClose={() => setOpen(false)} setOpen={setOpen} />
+      </Dialog>
+      <Dialog open={open} onClose={() => setOpen(false)} PaperProps={{ style: { width: '80%' } }}>
+        <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
+      </Dialog>
     </Box>
   )
 }
