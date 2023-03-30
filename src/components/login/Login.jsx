@@ -52,14 +52,13 @@ const Login = () => {
       }
 
       const role = foundUser.role
-      console.log(role)
 
       dispatch(loginSuccess(foundUser)) // Dispatch action to update Redux store with logged-in user information
       localStorage.setItem('loggedUser', JSON.stringify(foundUser))
 
       navigate(currentRoute === '' ? (role === 'admin' ? 'dashboard' : 'home') : currentRoute)
     } else {
-      setError('User not found')
+      setError('Please login')
     }
   }
   useEffect(() => {
