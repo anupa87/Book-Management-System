@@ -18,8 +18,8 @@ import {
 } from '@mui/material'
 
 const Homepage = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
 
   const allBooks = useSelector((state) => state.books.books)
   const allUsers = useSelector((state) => state.users.users)
@@ -49,8 +49,8 @@ const Homepage = () => {
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
                 <TableCell sx={{ color: 'white' }}>Book Title</TableCell>
-                <TableCell sx={{ color: 'white' }}>Borrowed Date</TableCell>
-                <TableCell sx={{ color: 'white' }}>Return Date</TableCell>
+                {/* <TableCell sx={{ color: 'white' }}>Borrowed Date</TableCell>
+                <TableCell sx={{ color: 'white' }}>Return Date</TableCell> */}
                 <TableCell sx={{ color: 'white' }}>Status</TableCell>
                 <TableCell sx={{ color: 'white' }}>Renew</TableCell>
                 <TableCell sx={{ color: 'white' }}>Return</TableCell>
@@ -61,8 +61,8 @@ const Homepage = () => {
                 borrowedBooks.map((book) => (
                   <TableRow key={book.id}>
                     <TableCell>{book.title}</TableCell>
-                    <TableCell>{book.borrowedDate}</TableCell>
-                    <TableCell>{book.returnDate}</TableCell>
+                    {/* <TableCell>{book.borrowedDate}</TableCell>
+                    <TableCell>{book.returnDate}</TableCell> */}
                     <TableCell>{book.status}</TableCell>
                     <TableCell>
                       <Button onClick={() => handleUpdateBook(book)}>Renew</Button>
