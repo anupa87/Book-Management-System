@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 const bookSlice = createSlice({
   name: 'books',
-  initialState: { books: data.books, issuedBooks: [] },
+  initialState: { books: data.books },
 
   reducers: {
     addBook: (state, action) => {
@@ -32,32 +32,21 @@ const bookSlice = createSlice({
 
     issueBook: (state, action) => {
       const { bookId, borrowerId } = action.payload
-      const issuedBook = state.books.find((book) => book.id === bookId)
-      issuedBook.status = 'issued'
-      issuedBook.borrowerId = borrowerId
-      issuedBook.issueDate = new Date().toISOString()
-      state.issuedBooks.push(issuedBook)
-      localStorage.setItem('issuedBooks', JSON.stringify(state.issuedBooks))
+      const issuedBook = state.books.find((book) => book.id === bookId + '')
+      console.log(state.books)
+      console.log(issuedBook)
+      // state.books = [
+      //   { ...issuedBook, status: 'issued', borrowerId, issueDate: new Date().toISOString() },
+      //   ...state.books.filter((book) => book.id !== bookId + '')
+      // ]
       localStorage.setItem('books', JSON.stringify(state.books))
-    },
-
-    renewBook: (state, action) => {
-      const { id, newReturnDate } = action.payload
-      const renewedBook = state.issuedBooks.find((book) => book.id === id)
-      renewedBook.returnDate = newReturnDate
-      localStorage.setItem('issuedBooks', JSON.stringify(state.issuedBooks))
-    },
-
-    returnBook: (state, action) => {
-      const { id, newStatus } = action.payload
-      const returnedBook = state.issuedBooks.find((book) => book.id === id)
-      returnedBook.status = newStatus
-      returnedBook.borrowerId = ''
-      returnedBook.issueDate = ''
-      returnedBook.returnDate = ''
-      state.issuedBooks = state.issuedBooks.filter((book) => book.id !== id)
-      localStorage.setItem('issuedBooks', JSON.stringify(state.issuedBooks))
-      localStorage.setItem('books', JSON.stringify(state.books))
+      return {
+        ...state,
+        books: [
+          { ...issuedBook, status: 'issued', borrowerId, issueDate: new Date().toISOString() },
+          ...state.books.filter((book) => book.id !== bookId + '')
+        ]
+      }
     }
   }
 })

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   Box,
@@ -13,7 +14,6 @@ import {
   MenuItem,
   Select
 } from '@mui/material'
-
 import { issueBook } from '../../features/books/bookSlice'
 
 const IssueForm = ({ open, handleClose, books }) => {
@@ -23,6 +23,7 @@ const IssueForm = ({ open, handleClose, books }) => {
   const dispatch = useDispatch()
 
   const handleBookChange = (event) => {
+    console.log(event.target.value)
     setSelectedBook(event.target.value)
   }
 
@@ -30,18 +31,17 @@ const IssueForm = ({ open, handleClose, books }) => {
     setSelectedUser(event.target.value)
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const book = books.find((book) => book.id === selectedBook)
-    dispatch(issueBook({ bookId: book.id, borrowerId: selectedUser }))
-    handleClose(selectedBook)
+  const handleSubmit = () => {
+    console.log(selectedBook, selectedUser)
+    dispatch(issueBook({ bookId: selectedBook, borrowerId: selectedUser }))
+    handleClose()
   }
 
   return (
     <Dialog open={open} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
       <DialogTitle>Issue Book</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <form style={{ width: '100%' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <FormControl sx={{ minWidth: '200px' }}>
               <InputLabel id="book-label">Select Book</InputLabel>
@@ -51,11 +51,14 @@ const IssueForm = ({ open, handleClose, books }) => {
                 onChange={handleBookChange}
                 required>
                 open={selectedBook}
-                {books.map((book) => (
-                  <MenuItem key={book.id} value={book.id}>
-                    {book.title}
-                  </MenuItem>
-                ))}
+                {books
+                  .filter((user) => user?.id)
+                  .filter((book) => ['available'].includes(book.status))
+                  .map((book) => (
+                    <MenuItem key={uuidv4()} value={book.id}>
+                      {book.title}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
             <FormControl>
@@ -65,11 +68,13 @@ const IssueForm = ({ open, handleClose, books }) => {
                 value={selectedUser}
                 onChange={handleUserChange}
                 required>
-                {users.map((user) => (
-                  <MenuItem key={user.id} value={user.id}>
-                    {`${user.firstName} ${user.lastName}`}
-                  </MenuItem>
-                ))}
+                {users
+                  .filter((user) => user?.id)
+                  .map((user) => (
+                    <MenuItem key={uuidv4()} value={user.id}>
+                      {`${user.firstName} ${user.lastName}`}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Box>
@@ -77,9 +82,7 @@ const IssueForm = ({ open, handleClose, books }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button type="submit" onClick={handleSubmit}>
-          Issue
-        </Button>
+        <Button onClick={handleSubmit}>Issue</Button>
       </DialogActions>
     </Dialog>
   )

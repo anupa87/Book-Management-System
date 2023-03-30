@@ -16,20 +16,10 @@ import { issueBook } from '../../features/books/bookSlice'
 import IssueForm from '../forms/IssueForm'
 
 const IssuedBooks = () => {
-  const [filteredBooks, setFilteredBooks] = useState([])
-  const issuedBooks = useSelector((state) => state.books.issuedBooks)
   const books = useSelector((state) => state.books.books)
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const filtered = issuedBooks.map((issuedBook) => {
-      const book = books.find((book) => book.id === issuedBook.bookId)
-      return { ...issuedBook, book }
-    })
-    setFilteredBooks(filtered)
-  }, [issuedBooks, books])
 
   const handleOpen = () => {
     setOpen(true)
@@ -55,7 +45,6 @@ const IssuedBooks = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID</TableCell>
             <TableCell>Title</TableCell>
             <TableCell>Borrower Name</TableCell>
             <TableCell>Borrow Date</TableCell>
@@ -64,19 +53,20 @@ const IssuedBooks = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {filteredBooks.map((issuedBook) => (
-            <TableRow key={issuedBook.id}>
-              <TableCell>{issuedBook.id}</TableCell>
-              <TableCell>{issuedBook.title}</TableCell>
-              <TableCell>{issuedBook.borrowerName}</TableCell>
-              <TableCell>{new Date(issuedBook.borrowDate).toLocaleDateString()}</TableCell>
-              <TableCell>{new Date(issuedBook.returnDate).toLocaleDateString()}</TableCell>
-              <TableCell
-                sx={issuedBook && issuedBook.status === 'Overdue' ? { color: 'red' } : null}>
-                {issuedBook && issuedBook.status}
-              </TableCell>
-            </TableRow>
-          ))}
+          {books
+            .filter((book) => ['borrowed', 'overdue'].includes(book.status))
+            .map((issuedBook) => (
+              <TableRow key={issuedBook.id}>
+                <TableCell>{issuedBook.title}</TableCell>
+                <TableCell>{issuedBook.borrowerName}</TableCell>
+                <TableCell>{new Date(issuedBook.borrowDate).toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(issuedBook.returnDate).toLocaleDateString()}</TableCell>
+                <TableCell
+                  sx={issuedBook && issuedBook.status === 'Overdue' ? { color: 'red' } : null}>
+                  {issuedBook && issuedBook.status}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       <Box>

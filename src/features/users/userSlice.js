@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuidv4 } from 'uuid'
 
 import { getUsers } from '../../services/services'
 
@@ -9,6 +10,7 @@ const userSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       const newUser = {
+        id: uuidv4(), // generate a unique id
         ...action.payload
       }
       state.users.push(newUser)
@@ -17,17 +19,19 @@ const userSlice = createSlice({
 
     updateUser: (state, action) => {
       const updatedUser = action.payload
-      const index = state.users.findIndex((user) => user.id === updatedUser.id)
-      if (index >= 0) {
-        state.users[index] = updatedUser
-      }
+      const user = state.users.find((user) => user.id === updatedUser.id)
+
+      state.users = [
+        { ...user, ...updatedUser },
+        ...state.users.filter((user) => user.id !== updateUser.id)
+      ]
+
       localStorage.setItem('users', JSON.stringify(state.users))
     },
 
     deleteUser: (state, action) => {
       const deletedUser = action.payload
-      const index = state.users.findIndex((user) => user.id === deletedUser.id)
-      state.users.splice(index, 1)
+      state.users = state.users.filter((user) => user.id !== deletedUser.id)
       localStorage.setItem('users', JSON.stringify(state.users))
     }
   }

@@ -16,19 +16,6 @@ const getUsers = () => {
   return users ? JSON.parse(users) : []
 }
 
-// authors data storage
-
-const saveAuthor = (author) => {
-  const authors = getAuthors()
-  authors.push(author)
-  localStorage.setItem('authors', JSON.stringify(authors))
-}
-
-const getAuthors = () => {
-  const authors = localStorage.getItem('authors')
-  return authors ? JSON.parse(authors) : []
-}
-
 // books data storage
 const saveBooks = (book) => {
   const books = getBooks()
@@ -45,4 +32,4 @@ const getBooks = () => {
   return books ? JSON.parse(books) : []
 }
 
-export { saveUser, getUsers, saveAuthor, getAuthors, saveBooks, getBooks }
+export { saveUser, getUsers, saveBooks, getBooks }

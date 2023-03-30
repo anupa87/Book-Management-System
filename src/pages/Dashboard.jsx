@@ -1,3 +1,4 @@
+import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
@@ -6,10 +7,14 @@ import IssueBook from '../components/admin/IssuedBooks'
 import AddCards from '../components/admin/AddCards'
 
 const Dashboard = () => {
+  const authUserId = useSelector((state) => state.auth.id)
+  const allUsers = useSelector((state) => state.users.users)
+  const loggedUser = allUsers.find((user) => user.id === authUserId)
+  console.log({ loggedUser })
+
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')
   const day = moment().format('dddd')
-  const userName = 'Anupa'
 
   return (
     <Grid item xs={10}>
@@ -23,7 +28,7 @@ const Dashboard = () => {
           {moment().format('h:mm:ss a')}
         </Typography>
         <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
-          Welcome, {userName}
+          Welcome, {loggedUser.firstName}
         </Typography>
         <AddCards />
         <IssueBook />

@@ -25,7 +25,7 @@ const Users = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleUpdateUser = (id) => {
+  const showDetail = (id) => {
     const userToEdit = users && users.find((user) => user.id === id)
     navigate(`/users/${id}`)
   }
@@ -50,24 +50,18 @@ const Users = () => {
                 <TableCell sx={{ color: 'white' }}>Name</TableCell>
                 <TableCell sx={{ color: 'white' }}>Email</TableCell>
                 <TableCell sx={{ color: 'white' }}>Role</TableCell>
-                <TableCell sx={{ color: 'white' }}>Update</TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users &&
                 users.map((user) => (
-                  <TableRow key={user.id}>
-                    <TableCell component="th" scope="row">
+                  <TableRow key={user.id} style={{ cursor: 'pointer' }}>
+                    <TableCell component="th" scope="row" onClick={() => showDetail(user.id)}>
                       {user.firstName} {user.lastName}
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleUpdateUser(user.id)}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell onClick={() => showDetail(user.id)}>{user.email} </TableCell>
+                    <TableCell onClick={() => showDetail(user.id)}>{user.role}</TableCell>
                     <TableCell>
                       <IconButton onClick={() => handleDeleteUser(user.id)}>
                         <DeleteIcon />

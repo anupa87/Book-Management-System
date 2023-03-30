@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import Snackbar from '@mui/material/Snackbar'
 
 import { updateUser } from '../features/users/userSlice'
 
@@ -19,9 +20,11 @@ const User = () => {
   const [email, setEmail] = useState(userToUpdate.email)
   const [role, setRole] = useState(userToUpdate.role)
   const [isEdit, setIsEdit] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
-  const handleUpdate = () => {
+  const handleEdit = () => {
     setIsEdit(true)
+    setShowSuccessMessage(false)
   }
 
   const handleSave = () => {
@@ -32,6 +35,7 @@ const User = () => {
     setLastName(updatedUser.lastName)
     setEmail(updatedUser.email)
     setRole(updatedUser.role)
+    setShowSuccessMessage(true)
   }
 
   return (
@@ -53,11 +57,24 @@ const User = () => {
         }}>
         <Box direction="row" spacing={1} alignItems="center">
           <AccountCircleIcon sx={{ fontSize: 100 }} />
+
           <Typography variant="h6">
             {userToUpdate.firstName} {userToUpdate.lastName}
           </Typography>
         </Box>
-
+        {showSuccessMessage && (
+          <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+            <Snackbar
+              open={showSuccessMessage}
+              autoHideDuration={6000}
+              message="User updated successfully"
+            />
+            {/* <CheckCircle color="success" fontSize="large" /> */}
+            <Typography variant="h6" color="success" ml={1}>
+              User updated successfully!
+            </Typography>
+          </Box>
+        )}
         <Box sx={{ mt: 2 }}>
           <TextField
             label="First Name"
@@ -100,8 +117,8 @@ const User = () => {
         </Box>
         <Box sx={{ mt: 2 }}>
           {!isEdit ? (
-            <Button variant="contained" onClick={handleUpdate}>
-              Update
+            <Button variant="contained" onClick={handleEdit}>
+              Edit
             </Button>
           ) : (
             <>
