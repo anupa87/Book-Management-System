@@ -1,22 +1,37 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-const UserProfile = () => {
+import { updateUser } from '../features/users/userSlice'
+
+const User = () => {
+  const { id: userId } = useParams()
+  const dispatch = useDispatch()
   const users = useSelector((state) => state.users.users)
-  const currentUser = users[0]
-  const [firstName, setFirstName] = useState(currentUser.firstName)
-  const [lastName, setLastName] = useState(currentUser.lastName)
-  const [email, setEmail] = useState(currentUser.email)
-  const [role, setRole] = useState(currentUser.role)
+
+  const userToUpdate = users.find((user) => user.id === userId)
+  console.log({ userToUpdate })
+
+  const [firstName, setFirstName] = useState(userToUpdate.firstName)
+  const [lastName, setLastName] = useState(userToUpdate.lastName)
+  const [email, setEmail] = useState(userToUpdate.email)
+  const [role, setRole] = useState(userToUpdate.role)
+  const [isEdit, setIsEdit] = useState(false)
 
   const handleUpdate = () => {
-    // dispatch update action to update user info in store
+    setIsEdit(true)
   }
 
   const handleSave = () => {
-    // dispatch save action to save user info to server
+    const updatedUser = { id: userId, firstName, lastName, email, role }
+    dispatch(updateUser(updatedUser))
+    setIsEdit(false)
+    setFirstName(updatedUser.firstName)
+    setLastName(updatedUser.lastName)
+    setEmail(updatedUser.email)
+    setRole(updatedUser.role)
   }
 
   return (
@@ -39,7 +54,7 @@ const UserProfile = () => {
         <Box direction="row" spacing={1} alignItems="center">
           <AccountCircleIcon sx={{ fontSize: 100 }} />
           <Typography variant="h6">
-            {users.firstname?.value} {users.lastname?.value}
+            {userToUpdate.firstName} {userToUpdate.lastName}
           </Typography>
         </Box>
 
@@ -50,6 +65,7 @@ const UserProfile = () => {
             fullWidth
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            disabled={!isEdit}
           />
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -59,6 +75,7 @@ const UserProfile = () => {
             fullWidth
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            disabled={!isEdit}
           />
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -68,6 +85,7 @@ const UserProfile = () => {
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={!isEdit}
           />
         </Box>
         <Box sx={{ mt: 2 }}>
@@ -77,20 +95,29 @@ const UserProfile = () => {
             fullWidth
             value={role}
             onChange={(e) => setRole(e.target.value)}
+            disabled={!isEdit}
           />
         </Box>
         <Box sx={{ mt: 2 }}>
-          <Button variant="contained" onClick={handleUpdate}>
-            Update
-          </Button>
-          <Box sx={{ display: 'inline-block', width: '16px' }} />
-          <Button variant="contained" color="primary" onClick={handleSave}>
-            Save
-          </Button>
+          {!isEdit ? (
+            <Button variant="contained" onClick={handleUpdate}>
+              Update
+            </Button>
+          ) : (
+            <>
+              <Button variant="contained" onClick={() => setIsEdit(false)}>
+                Cancel
+              </Button>
+              <Box sx={{ display: 'inline-block', width: '16px' }} />
+              <Button variant="contained" color="primary" onClick={handleSave}>
+                Save
+              </Button>
+            </>
+          )}
         </Box>
       </Container>
     </Grid>
   )
 }
 
-export default UserProfile
+export default User

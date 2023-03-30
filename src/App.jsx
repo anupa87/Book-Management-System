@@ -7,43 +7,37 @@ import Dashboard from './pages/Dashboard'
 import Homepage from './pages/Homepage'
 import Books from './pages/Books'
 import Users from './pages/Users'
-import Profile from './pages/Profile'
+import User from './pages/User'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
 import ErrorPage from './pages/ErrorPage'
 
 import AddUser from './components/forms/AddUserForm'
 import UpdateUser from './components/admin/UpdateUser'
-
 import AddBook from './components/forms/AddBookForm'
 import IssueBook from './components/admin/IssuedBooks'
-import UserProfile from './components/users/UserProfile'
 
 function App() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+  const { isLoggedIn, role } = useSelector((state) => state.auth)
 
   return (
     <BrowserRouter>
       <Routes>
         {isLoggedIn ? (
           <Route path="/" element={<Layout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/homepage" element={<Homepage />} />
+            {role === 'admin' && <Route path="/dashboard" element={<Dashboard />} />}
+            <Route path="/home" element={<Homepage />} />
             <Route path="/books" element={<Books />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/adduser" element={<AddUser />} />
+            <Route path="/updateuser" element={<UpdateUser />} />
+            <Route path="/users/:id" element={<User />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/help" element={<Help />} />
-            <Route path="/addbook" element={<AddBook />} />
-            <Route path="/updateuser/:id" element={<UpdateUser />} />
-            <Route path="/issuebook" element={<IssueBook />} />
-            <Route path="/userprofile" element={<UserProfile />} />
           </Route>
         ) : (
-          <Route index element={<Login />} />
+          <Route path="/*" element={<Login />} />
         )}
-        <Route path="/*" element={<ErrorPage />} />
+        {/* <Route path="/*" element={<ErrorPage />} /> */}
       </Routes>
     </BrowserRouter>
   )

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -25,6 +25,10 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState()
+  const { isLoggedIn } = useSelector((state) => state.auth)
+
+  const currentRoute = window.location.href.split('/').reverse()[0]
+  console.log(currentRoute, window.location.href)
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -36,10 +40,11 @@ const Login = () => {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = (formData) => {
     setError()
     const foundUser = users && users.find((user) => user.email === formData.email)
+    localStorage.removeItem('loggedUser')
+
     if (foundUser) {
       if (foundUser.password !== formData.password) {
         setError('Incorrect password')
@@ -50,18 +55,19 @@ const Login = () => {
       console.log(role)
 
       dispatch(loginSuccess(foundUser)) // Dispatch action to update Redux store with logged-in user information
+      localStorage.setItem('loggedUser', JSON.stringify(foundUser))
 
-      if (role === 'Admin') {
-        navigate('dashboard')
-      } else if (role === 'User') {
-        navigate('homepage')
-      }
-      {
-      }
+      navigate(currentRoute === '' ? (role === 'admin' ? 'dashboard' : 'home') : currentRoute)
     } else {
       setError('User not found')
     }
   }
+  useEffect(() => {
+    const user = localStorage.getItem('loggedUser')
+    if (user && !isLoggedIn) {
+      handleLogin(JSON.parse(user))
+    }
+  }, [isLoggedIn])
   return (
     <Box sx={{ p: 4 }}>
       <Grid container alignItems="center">
@@ -85,7 +91,11 @@ const Login = () => {
               Login
             </Typography>
             {error?.length && <div>{error}</div>}
-            <form onSubmit={handleLogin}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleLogin(formData)
+              }}>
               <TextField
                 name="email"
                 label="Email"

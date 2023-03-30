@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid'
 
 import { getUsers } from '../../services/services'
 
@@ -10,7 +9,6 @@ const userSlice = createSlice({
   reducers: {
     addUser: (state, action) => {
       const newUser = {
-        id: uuidv4(), // generate a unique id
         ...action.payload
       }
       state.users.push(newUser)

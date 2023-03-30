@@ -36,6 +36,7 @@ const Menu = (props) => {
                 onClick={() => {
                   if (item.path === '/logout') {
                     dispatch(logoutSuccess())
+                    localStorage.removeItem('loggedUser')
                     navigate('/')
                   } else {
                     navigate(item.path)

@@ -25,8 +25,9 @@ const Users = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleUpdateUser = (userId) => {
-    navigate(`/updateuser/${userId}`)
+  const handleUpdateUser = (id) => {
+    const userToEdit = users && users.find((user) => user.id === id)
+    navigate(`/users/${id}`)
   }
 
   const handleDeleteUser = (userId) => {

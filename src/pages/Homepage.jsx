@@ -20,12 +20,15 @@ import {
 const Homepage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const allBooks = useSelector((state) => state.books.books)
   const allUsers = useSelector((state) => state.users.users)
+  const authUserId = useSelector((state) => state.auth.id)
+
   console.log({ allBooks })
   console.log({ allUsers })
 
-  const borrowedBooks = loggedUser.id === borrowedBooks.borrower.id
+  const borrowedBooks = allBooks.filter((book) => book.borrowerId === authUserId)
 
   return (
     <Grid item xs={10}>
@@ -56,11 +59,11 @@ const Homepage = () => {
             <TableBody>
               {borrowedBooks &&
                 borrowedBooks.map((book) => (
-                  <TableRow key={borrowedBooks.id}>
-                    <TableCell>{borrowedBooks.title}</TableCell>
-                    <TableCell>{borrowedBooks.borrowedDate}</TableCell>
-                    <TableCell>{borrowedBooks.returnDate}</TableCell>
-                    <TableCell>{borrowedBooks.status}</TableCell>
+                  <TableRow key={book.id}>
+                    <TableCell>{book.title}</TableCell>
+                    <TableCell>{book.borrowedDate}</TableCell>
+                    <TableCell>{book.returnDate}</TableCell>
+                    <TableCell>{book.status}</TableCell>
                     <TableCell>
                       <Button onClick={() => handleUpdateBook(book)}>Renew</Button>
                     </TableCell>

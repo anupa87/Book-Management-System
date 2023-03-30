@@ -8,8 +8,6 @@ import { ThemeProvider } from '@emotion/react'
 import theme from '../theme'
 import Login from '../components/login/Login'
 import Menu from '../components/nav/Menu'
-import Homepage from './Homepage'
-import Dashboard from './Dashboard'
 
 const Layout = () => {
   const role = useSelector((state) => state.auth.role)
@@ -21,8 +19,6 @@ const Layout = () => {
         </Grid>
         <Grid item xs={10}>
           <Outlet />
-          {role === 'user' && <Homepage />}
-          {role === 'admin' && <Dashboard />}
         </Grid>
       </Grid>
       {role ? null : <Login />}

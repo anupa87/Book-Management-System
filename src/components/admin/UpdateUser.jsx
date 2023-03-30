@@ -8,7 +8,11 @@ import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-m
 import { updateUser, addUser } from '../../features/users/userSlice'
 
 const UpdateUser = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { userId } = useParams()
+  const formRef = useRef(null)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const foundUser = useSelector((state) => state.users.users.find((user) => user.id === userId))
   const [user, setUser] = useState(
@@ -21,11 +25,6 @@ const UpdateUser = () => {
     }
   )
   console.log('founduser', foundUser)
-  const formRef = useRef(null)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const handleChange = (event) => {
     setUser({
@@ -34,14 +33,12 @@ const UpdateUser = () => {
     })
   }
 
-  const handleUpdateUser = (id) => {
-    console.log('id', id)
+  const handleUpdateUser = () => {
     dispatch(updateUser(user))
   }
 
   const handleSubmitUser = (e) => {
     e.preventDefault()
-
     setTimeout(() => {
       if (foundUser) {
         dispatch(updateUser(user))
