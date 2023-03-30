@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Snackbar from '@mui/material/Snackbar'
@@ -8,8 +8,9 @@ import Snackbar from '@mui/material/Snackbar'
 import { updateUser } from '../features/users/userSlice'
 
 const User = () => {
-  const { id: userId } = useParams()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { id: userId } = useParams()
   const users = useSelector((state) => state.users.users)
 
   const userToUpdate = users.find((user) => user.id === userId)
@@ -36,6 +37,9 @@ const User = () => {
     setEmail(updatedUser.email)
     setRole(updatedUser.role)
     setShowSuccessMessage(true)
+    setTimeout(() => {
+      navigate('/users')
+    }, 2000)
   }
 
   return (
@@ -69,7 +73,7 @@ const User = () => {
               autoHideDuration={6000}
               message="User updated successfully"
             />
-            {/* <CheckCircle color="success" fontSize="large" /> */}
+
             <Typography variant="h6" color="success" ml={1}>
               User updated successfully!
             </Typography>
