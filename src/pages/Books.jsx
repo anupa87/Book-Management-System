@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteBook } from '../features/books/bookSlice'
@@ -14,17 +15,44 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Link
+  Button,
+  Link,
+  TableSortLabel
 } from '@mui/material'
 
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 
 const Books = () => {
   const books = useSelector((state) => state.books.books)
-  console.log(books)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [sortOrder, setSortOrder] = useState('asc')
+  const [sortColumn, setSortColumn] = useState('title')
+  const sortDirection = sortOrder === 'asc' ? 'desc' : 'asc'
+  const sortIcon = sortOrder === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />
+
+  const sortedBooks = [...books].sort((a, b) => {
+    const aValue = a[sortColumn]
+    const bValue = b[sortColumn]
+
+    if (sortOrder === 'asc') {
+      return aValue.localeCompare(bValue)
+    } else {
+      return bValue.localeCompare(aValue)
+    }
+  })
+
+  const handleSortClick = (column) => {
+    if (column === sortColumn) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortColumn(column)
+      setSortOrder('asc')
+    }
+  }
 
   const handleUpdateBook = (book) => {
     const updateUserUrl = `/update/${book.id}`
@@ -35,8 +63,12 @@ const Books = () => {
     dispatch(deleteBook(bookId))
   }
 
+  const handleTitleLink = (borrowerId) => {
+    navigate(`/books/${id}`)
+  }
+
   const handleStatusLink = (borrowerId) => {
-    navigate(`/issuedBooks/${borrowerId}`)
+    navigate(`/users/${borrowerId}`)
   }
   return (
     <Grid item xs={10}>
@@ -52,7 +84,15 @@ const Books = () => {
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
                 <TableCell sx={{ color: 'white' }}>ISBN</TableCell>
-                <TableCell sx={{ color: 'white' }}>Title</TableCell>
+                <TableCell sx={{ color: 'white' }}>
+                  <TableSortLabel
+                    active={sortColumn === 'title'}
+                    direction={sortDirection}
+                    onClick={() => handleSortClick('title')}
+                    sx={{ color: 'white' }}>
+                    Title {sortColumn === 'title' ? sortIcon : null}
+                  </TableSortLabel>
+                </TableCell>
                 <TableCell sx={{ color: 'white' }}>Description</TableCell>
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
@@ -63,13 +103,17 @@ const Books = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {books &&
-                books.map((book) => (
+              {sortedBooks &&
+                sortedBooks.map((book) => (
                   <TableRow key={book.id}>
                     <TableCell component="th" scope="row">
                       {book.ISBN}
                     </TableCell>
-                    <TableCell>{book.title}</TableCell>
+                    <TableCell>
+                      <Link component="button" onClick={() => handleTitleLink(book.borrowerId)}>
+                        {book.title}
+                      </Link>
+                    </TableCell>
                     <TableCell>{book.description}</TableCell>
                     <TableCell>{book.authorId}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
@@ -94,6 +138,14 @@ const Books = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </Box>
+      <Box>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: 'secondary.main', ml: 0 }}
+          onClick={() => navigate('/dashboard')}>
+          Back to dashboard
+        </Button>
       </Box>
     </Grid>
   )

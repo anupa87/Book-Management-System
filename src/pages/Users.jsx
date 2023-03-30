@@ -13,7 +13,8 @@ import {
   TableHead,
   TableRow,
   Paper,
-  IconButton
+  IconButton,
+  Button
 } from '@mui/material'
 
 import EditIcon from '@mui/icons-material/Edit'
@@ -76,6 +77,14 @@ const Users = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </Box>
+      <Box>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: 'secondary.main', ml: 0 }}
+          onClick={() => navigate('/dashboard')}>
+          Back to dashboard
+        </Button>
       </Box>
     </Grid>
   )
