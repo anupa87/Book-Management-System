@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
 
-import IssueBook from '../components/admin/IssuedBooks'
+import IssuedBook from '../components/admin/IssuedBooks'
 import AddCards from '../components/admin/AddCards'
 
 const Dashboard = () => {
@@ -31,7 +31,7 @@ const Dashboard = () => {
           Welcome, {loggedUser.firstName}
         </Typography>
         <AddCards />
-        <IssueBook />
+        <IssuedBook />
       </Box>
     </Grid>
   )
