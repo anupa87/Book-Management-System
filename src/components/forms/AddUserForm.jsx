@@ -19,7 +19,7 @@ import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-m
 
 import { addUser } from '../../features/users/userSlice'
 
-const AddUser = () => {
+const AddUserForm = ({ setOpenUserModal, openUserModal }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -60,12 +60,12 @@ const AddUser = () => {
   }
 
   const handleClose = () => {
-    setUserModalOpen(false)
+    setOpenUserModal(false)
   }
 
   return (
     <Container maxWidth="sm">
-      <Dialog open={open} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+      <Dialog open={openUserModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
         <DialogTitle>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="h4" gutterBottom>
@@ -154,4 +154,4 @@ const AddUser = () => {
   )
 }
 
-export default AddUser
+export default AddUserForm

@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import AddUser from '../admin/AddUser'
-import AddBook from '../admin/AddBook'
+import AddUser from '../forms/AddUserForm'
+import AddBook from '../forms/AddBookForm'
 
-const CardsDashboard = () => {
+const AddCards = () => {
   const navigate = useNavigate()
   const [showAddUser, setShowAddUser] = useState(false)
   const [showAddBook, setShowAddBook] = useState(false)
@@ -49,9 +49,13 @@ const CardsDashboard = () => {
       </Card>
       <Dialog
         open={openUserModal}
-        onClose={() => setOpen(false)}
+        onClose={() => setOpenUserModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
-        <AddUser open={openUserModal} onClose={() => setOpen(false)} setOpen={setOpen} />
+        <AddUser
+          openUserModal={openUserModal}
+          onClose={() => setOpenUserModal(false)}
+          setOpenUserModal={setOpenUserModal}
+        />
       </Dialog>
       <Dialog open={open} onClose={() => setOpen(false)} PaperProps={{ style: { width: '80%' } }}>
         <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
@@ -60,4 +64,4 @@ const CardsDashboard = () => {
   )
 }
 
-export default CardsDashboard
+export default AddCards

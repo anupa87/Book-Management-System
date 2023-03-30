@@ -7,16 +7,15 @@ import Dashboard from './pages/Dashboard'
 import Homepage from './pages/Homepage'
 import Books from './pages/Books'
 import Users from './pages/Users'
-import Authors from './pages/Authors'
 import Profile from './pages/Profile'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
 import ErrorPage from './pages/ErrorPage'
 
-import AddUser from './components/admin/AddUser'
+import AddUser from './components/forms/AddUserForm'
 import UpdateUser from './components/admin/UpdateUser'
-import AddAuthor from './components/admin/AddAuthor'
-import AddBook from './components/admin/AddBook'
+
+import AddBook from './components/forms/AddBookForm'
 import IssueBook from './components/admin/IssuedBooks'
 import UserProfile from './components/users/UserProfile'
 
@@ -36,7 +35,6 @@ function App() {
             <Route path="/adduser" element={<AddUser />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/help" element={<Help />} />
-            <Route path="/addauthor" element={<AddAuthor />} />
             <Route path="/addbook" element={<AddBook />} />
             <Route path="/updateuser/:id" element={<UpdateUser />} />
             <Route path="/issuebook" element={<IssueBook />} />

@@ -19,7 +19,7 @@ import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-m
 
 import { addBook } from '../../features/books/bookSlice'
 
-const AddBook = ({ open, onClose, setOpen }) => {
+const AddBookForm = ({ open, onClose, setOpen }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -210,4 +210,4 @@ const AddBook = ({ open, onClose, setOpen }) => {
   )
 }
 
-export default AddBook
+export default AddBookForm

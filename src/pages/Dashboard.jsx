@@ -3,7 +3,7 @@ import moment from 'moment'
 import { Grid, Box, Typography } from '@mui/material'
 
 import IssueBook from '../components/admin/IssuedBooks'
-import CardsDashboard from '../components/cards/CardsDashboard'
+import AddCards from '../components/admin/AddCards'
 
 const Dashboard = () => {
   const date = moment().format('Do MMMM YYYY')
@@ -25,7 +25,7 @@ const Dashboard = () => {
         <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
           Welcome, {userName}
         </Typography>
-        <CardsDashboard />
+        <AddCards />
         <IssueBook />
       </Box>
     </Grid>
