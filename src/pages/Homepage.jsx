@@ -24,6 +24,7 @@ const Homepage = () => {
   const allBooks = useSelector((state) => state.books.books)
 
   const authUserId = useSelector((state) => state.auth.id)
+  const authUser = useSelector((state) => state.auth.firstName)
   const borrowedBooks = allBooks.filter((book) => book.borrowerId === authUserId)
   const [renew, setRenew] = useState(false)
   const dispatch = useDispatch()
@@ -53,7 +54,7 @@ const Homepage = () => {
       </Box>
       <Box>
         <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
-          {/* Welcome, {loggedUser.firstName} {loggedUser.lastName} */}
+          Welcome, {authUser.firstName}
         </Typography>
       </Box>
       <Box sx={{ mt: 4, mb: 4 }}>

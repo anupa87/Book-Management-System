@@ -105,7 +105,7 @@ const Books = () => {
                       {book.ISBN}
                     </TableCell>
                     <TableCell>
-                      <Link component="button" onClick={() => handleTitleLink(book.borrowerId)}>
+                      <Link component="button" onClick={() => showDetail(book.id)}>
                         {book.title}
                       </Link>
                     </TableCell>
