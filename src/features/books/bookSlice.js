@@ -19,8 +19,12 @@ const bookSlice = createSlice({
 
     updateBook: (state, action) => {
       const updatedBook = action.payload
-      const index = state.books.findIndex((book) => book.id === updatedBook.id)
-      state.books[index] = updatedBook
+      state.books = state.books.map((book) => {
+        if (book.id === updatedBook.id) {
+          return { ...book, ...updatedBook }
+        }
+        return book
+      })
       localStorage.setItem('books', JSON.stringify(state.books))
     },
 
