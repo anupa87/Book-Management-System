@@ -29,6 +29,7 @@ const Books = () => {
   const books = useSelector((state) => state.books.books)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const [sortOrder, setSortOrder] = useState('asc')
   const [sortColumn, setSortColumn] = useState('title')
   const sortDirection = sortOrder === 'asc' ? 'desc' : 'asc'
@@ -54,22 +55,15 @@ const Books = () => {
     }
   }
 
-  const handleUpdateBook = (book) => {
-    const updateUserUrl = `/update/${book.id}`
-    navigate(updateUserUrl, { state: book })
+  const showDetail = (id) => {
+    const bookToEdit = books && books.find((book) => book.id === id)
+    navigate(`/books/${id}`)
   }
 
   const handleDeleteBook = (bookId) => {
     dispatch(deleteBook(bookId))
   }
 
-  const handleTitleLink = (borrowerId) => {
-    navigate(`/books/${id}`)
-  }
-
-  const handleStatusLink = (borrowerId) => {
-    navigate(`/users/${borrowerId}`)
-  }
   return (
     <Grid item xs={10}>
       <Box>
@@ -97,15 +91,16 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publish Date</TableCell>
-                <TableCell sx={{ color: 'white' }}>Status</TableCell>
-                <TableCell sx={{ color: 'white' }}>Update</TableCell>
+                <TableCell onClick={() => showDetail(book.id)} sx={{ color: 'white' }}>
+                  Status
+                </TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {sortedBooks &&
                 sortedBooks.map((book) => (
-                  <TableRow key={book.id}>
+                  <TableRow key={book.id} style={{ cursor: 'pointer' }}>
                     <TableCell component="th" scope="row">
                       {book.ISBN}
                     </TableCell>
@@ -118,16 +113,7 @@ const Books = () => {
                     <TableCell>{book.authorId}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
                     <TableCell>{book.publisedDate}</TableCell>
-                    <TableCell>
-                      <Link component="button" onClick={() => handleStatusLink(book.borrowerId)}>
-                        {book.status}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleUpdateBook(book)}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell onClick={() => showDetail(book.id)}>{book.status}</TableCell>
                     <TableCell>
                       <IconButton onClick={() => handleDeleteBook(book.id)}>
                         <DeleteIcon />
