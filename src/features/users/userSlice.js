@@ -19,13 +19,12 @@ const userSlice = createSlice({
 
     updateUser: (state, action) => {
       const updatedUser = action.payload
-      const user = state.users.find((user) => user.id === updatedUser.id)
-
-      state.users = [
-        { ...user, ...updatedUser },
-        ...state.users.filter((user) => user.id !== updateUser.id)
-      ]
-
+      state.users = state.users.map((user) => {
+        if (user.id === updatedUser.id) {
+          return { ...user, ...updatedUser }
+        }
+        return user
+      })
       localStorage.setItem('users', JSON.stringify(state.users))
     },
 

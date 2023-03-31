@@ -50,7 +50,6 @@ const IssueForm = ({ open, handleClose, books }) => {
                 value={selectedBook}
                 onChange={handleBookChange}
                 required>
-                open={selectedBook}
                 {books
                   .filter((user) => user?.id)
                   .filter((book) => ['available'].includes(book.status))

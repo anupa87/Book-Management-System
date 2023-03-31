@@ -31,7 +31,7 @@ const Users = () => {
   }
 
   const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId))
+    dispatch(deleteUser({ id: userId }))
   }
 
   return (
