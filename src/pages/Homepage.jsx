@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { renewBook } from '../features/books/bookSlice'
-import { calculateDueDate } from '../components/helper'
 
 import {
   Grid,
@@ -18,31 +16,19 @@ import {
   IconButton,
   Link
 } from '@mui/material'
-import { useState } from 'react'
 
 const Homepage = () => {
-  const allBooks = useSelector((state) => state.books.books)
-
-  const authUserId = useSelector((state) => state.auth.id)
-  const authUser = useSelector((state) => state.auth.firstName)
-  const borrowedBooks = allBooks.filter((book) => book.borrowerId === authUserId)
-  const [renew, setRenew] = useState(false)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const handleRenew = (book) => {
-    if (book.status === 'overdue' && book.renewCount < 2) {
-      const renewCount = book.renewCount + 1
-      const dueDate = calculateDueDate(renewCount)
-      const status = renewCount === 2 ? 'available' : 'borrowed'
-      const updatedBook = {
-        ...book,
-        status,
-        renewCount,
-        dueDate
-      }
-      dispatch(renewBook(updatedBook))
-    }
-  }
+  const allBooks = useSelector((state) => state.books)
+  const allUsers = useSelector((state) => state.users)
+  const authUserId = useSelector((state) => state.auth.id)
+
+  console.log({ allBooks })
+  console.log({ allUsers })
+
+  const borrowedBooks = allBooks.filter((book) => book.borrowerId === authUserId)
 
   return (
     <Grid item xs={10}>
@@ -54,7 +40,7 @@ const Homepage = () => {
       </Box>
       <Box>
         <Typography variant="h5" sx={{ mt: 5, textAlign: 'center' }}>
-          Welcome, {authUser.firstName}
+          {/* Welcome, {loggedUser.firstName} {loggedUser.lastName} */}
         </Typography>
       </Box>
       <Box sx={{ mt: 4, mb: 4 }}>
@@ -63,10 +49,11 @@ const Homepage = () => {
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
                 <TableCell sx={{ color: 'white' }}>Book Title</TableCell>
-
+                <TableCell sx={{ color: 'white' }}>Borrowed Date</TableCell>
                 <TableCell sx={{ color: 'white' }}>Return Date</TableCell>
                 <TableCell sx={{ color: 'white' }}>Status</TableCell>
                 <TableCell sx={{ color: 'white' }}>Renew</TableCell>
+                <TableCell sx={{ color: 'white' }}>Return</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -74,15 +61,14 @@ const Homepage = () => {
                 borrowedBooks.map((book) => (
                   <TableRow key={book.id}>
                     <TableCell>{book.title}</TableCell>
-
+                    <TableCell>{book.borrowedDate}</TableCell>
                     <TableCell>{book.returnDate}</TableCell>
                     <TableCell>{book.status}</TableCell>
                     <TableCell>
-                      <Button
-                        disabled={book.status !== 'overdue' || book.renewCount === 2}
-                        onClick={() => handleRenew(book)}>
-                        Renew
-                      </Button>
+                      <Button onClick={() => handleUpdateBook(book)}>Renew</Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button onClick={() => handleDeleteBook(book.id)}>Return</Button>
                     </TableCell>
                   </TableRow>
                 ))}

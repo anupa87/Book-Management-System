@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -17,9 +17,9 @@ import {
 } from '@mui/material'
 import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
 
-import { addBook } from '../../features/books/bookSlice'
+import { addBook, updateBook } from '../../features/books/bookSlice'
 
-const AddBookForm = ({ open, onClose, setOpen }) => {
+const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -33,7 +33,14 @@ const AddBookForm = ({ open, onClose, setOpen }) => {
     publishedDate: '',
     borrowDate: '',
     returnDate: '',
-    authorIds: []
+    authorIds: [],
+    ...bookData
+  })
+
+  useEffect(() => {
+    if (bookData && !book.ISBN) {
+      setBook(bookData)
+    }
   })
 
   const formRef = useRef(null)
@@ -48,8 +55,7 @@ const AddBookForm = ({ open, onClose, setOpen }) => {
 
   const handleSubmitBook = (e) => {
     e.preventDefault()
-    console.log(book)
-    dispatch(addBook(book)) //dispatch the addBook action with the book data
+    dispatch(bookData ? updateBook(book) : addBook(book))
     setBook({
       ISBN: '',
       title: '',
@@ -90,7 +96,7 @@ const AddBookForm = ({ open, onClose, setOpen }) => {
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
               <CheckCircleIcon color="success" fontSize="large" />
               <Typography variant="h6" color="success" ml={1}>
-                Book,{title} added successfully!
+                Book,{book.title} added successfully!
               </Typography>
             </Box>
           )}
@@ -199,7 +205,7 @@ const AddBookForm = ({ open, onClose, setOpen }) => {
             <DialogActions>
               <Grid item xs={12}>
                 <Button variant="contained" color="primary" type="submit">
-                  Add
+                  {bookData ? 'Update' : 'Add'}
                 </Button>
               </Grid>
             </DialogActions>

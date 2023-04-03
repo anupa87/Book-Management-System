@@ -3,14 +3,13 @@ import moment from 'moment'
 
 import { Grid, Box, Typography } from '@mui/material'
 
-import IssuedBook from '../components/admin/IssuedBooks'
+import IssueBook from '../components/admin/IssuedBooks'
 import AddCards from '../components/admin/AddCards'
 
 const Dashboard = () => {
   const authUserId = useSelector((state) => state.auth.id)
-  const allUsers = useSelector((state) => state.users.users)
-  const loggedUser = allUsers.find((user) => user.id === authUserId)
-  console.log({ loggedUser })
+  const allUsers = useSelector((state) => state.users)
+  const loggedUser = allUsers?.find((user) => user.id === authUserId)
 
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')
@@ -31,7 +30,7 @@ const Dashboard = () => {
           Welcome, {loggedUser.firstName}
         </Typography>
         <AddCards />
-        <IssuedBook />
+        <IssueBook />
       </Box>
     </Grid>
   )

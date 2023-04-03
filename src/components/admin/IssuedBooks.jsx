@@ -12,11 +12,15 @@ import {
   TableCell
 } from '@mui/material'
 
-import { issueBook } from '../../features/books/bookSlice'
+import { updateBook } from "../../features/books/bookSlice";
 import IssueForm from '../forms/IssueForm'
+import { v4 as uuidv4 } from 'uuid'
+
+const filterBooks = (tmpBooks) =>
+  tmpBooks?.filter((book) => ['borrowed', 'overdue', 'issued'].includes(book.status))
 
 const IssuedBooks = () => {
-  const books = useSelector((state) => state.books.books)
+  const books = useSelector((state) => state.books)
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
@@ -30,7 +34,7 @@ const IssuedBooks = () => {
   }
 
   const handleIssue = (data) => {
-    dispatch(issueBook(data))
+    dispatch(updateBook(data))
     setOpen(false)
   }
 
@@ -53,20 +57,18 @@ const IssuedBooks = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {books
-            .filter((book) => ['borrowed', 'overdue'].includes(book.status))
-            .map((issuedBook) => (
-              <TableRow key={issuedBook.id}>
-                <TableCell>{issuedBook.title}</TableCell>
-                <TableCell>{issuedBook.borrowerName}</TableCell>
-                <TableCell>{new Date(issuedBook.borrowDate).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(issuedBook.returnDate).toLocaleDateString()}</TableCell>
-                <TableCell
-                  sx={issuedBook && issuedBook.status === 'Overdue' ? { color: 'red' } : null}>
-                  {issuedBook && issuedBook.status}
-                </TableCell>
-              </TableRow>
-            ))}
+          {filterBooks(books).map((issuedBook) => (
+            <TableRow key={uuidv4()}>
+              <TableCell>{issuedBook.title}</TableCell>
+              <TableCell>{issuedBook.borrowerName}</TableCell>
+              <TableCell>{new Date(issuedBook.borrowDate).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(issuedBook.returnDate).toLocaleDateString()}</TableCell>
+              <TableCell
+                sx={issuedBook && issuedBook.status === 'Overdue' ? { color: 'red' } : null}>
+                {issuedBook && issuedBook.status}
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
       <Box>

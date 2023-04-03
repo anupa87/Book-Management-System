@@ -21,7 +21,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 const Users = () => {
-  const users = useSelector((state) => state.users.users) // get the users array from the Redux store
+  const users = useSelector((state) => state.users) // get the users array from the Redux store
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -31,7 +31,7 @@ const Users = () => {
   }
 
   const handleDeleteUser = (userId) => {
-    dispatch(deleteUser({ id: userId }))
+    dispatch(deleteUser(userId))
   }
 
   return (

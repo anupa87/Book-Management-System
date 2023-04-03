@@ -24,14 +24,16 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
+import AddBook from "../components/forms/AddBookForm.jsx";
 
 const Books = () => {
-  const books = useSelector((state) => state.books.books)
+  const books = useSelector((state) => state.books)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const [sortOrder, setSortOrder] = useState('asc')
   const [sortColumn, setSortColumn] = useState('title')
+  const [selectedBook, setSelectedBook] = useState()
+  const [open, setOpen] = useState(false)
   const sortDirection = sortOrder === 'asc' ? 'desc' : 'asc'
   const sortIcon = sortOrder === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />
 
@@ -55,13 +57,13 @@ const Books = () => {
     }
   }
 
-  const showDetail = (id) => {
-    const bookToEdit = books && books.find((book) => book.id === id)
-    navigate(`/books/${id}`)
-  }
-
   const handleDeleteBook = (bookId) => {
     dispatch(deleteBook(bookId))
+  }
+
+  const handleTitleLink = (tmpBook) => {
+    setSelectedBook(tmpBook)
+    setOpen(true)
   }
 
   return (
@@ -91,21 +93,20 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publish Date</TableCell>
-                <TableCell onClick={() => showDetail(book.id)} sx={{ color: 'white' }}>
-                  Status
-                </TableCell>
+                <TableCell sx={{ color: 'white' }}>Status</TableCell>
+                <TableCell sx={{ color: 'white' }}>Update</TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {sortedBooks &&
                 sortedBooks.map((book) => (
-                  <TableRow key={book.id} style={{ cursor: 'pointer' }}>
+                  <TableRow key={book.id}>
                     <TableCell component="th" scope="row">
                       {book.ISBN}
                     </TableCell>
                     <TableCell>
-                      <Link component="button" onClick={() => showDetail(book.id)}>
+                      <Link component="button" onClick={() => handleTitleLink(book)}>
                         {book.title}
                       </Link>
                     </TableCell>
@@ -113,7 +114,16 @@ const Books = () => {
                     <TableCell>{book.authorId}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
                     <TableCell>{book.publisedDate}</TableCell>
-                    <TableCell onClick={() => showDetail(book.id)}>{book.status}</TableCell>
+                    <TableCell>
+                      <Link component="button" onClick={() => handleTitleLink(book)}>
+                        {book.status}
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <IconButton onClick={() => handleTitleLink(book)}>
+                        <EditIcon />
+                      </IconButton>
+                    </TableCell>
                     <TableCell>
                       <IconButton onClick={() => handleDeleteBook(book.id)}>
                         <DeleteIcon />
@@ -133,6 +143,7 @@ const Books = () => {
           Back to dashboard
         </Button>
       </Box>
+      <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} bookData={selectedBook} />
     </Grid>
   )
 }

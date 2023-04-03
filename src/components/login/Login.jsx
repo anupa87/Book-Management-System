@@ -18,7 +18,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { loginSuccess } from '../../features/auth/authSlice'
 
 const Login = () => {
-  const users = useSelector((state) => state.users.users) // get the users array from the Redux store
+  const users = useSelector((state) => state.users) // get the users array from the Redux store
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -52,13 +52,14 @@ const Login = () => {
       }
 
       const role = foundUser.role
+      console.log(role)
 
       dispatch(loginSuccess(foundUser)) // Dispatch action to update Redux store with logged-in user information
       localStorage.setItem('loggedUser', JSON.stringify(foundUser))
 
       navigate(currentRoute === '' ? (role === 'admin' ? 'dashboard' : 'home') : currentRoute)
     } else {
-      setError('Please login')
+      setError('User not found')
     }
   }
   useEffect(() => {

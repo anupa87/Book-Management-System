@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 
 import {
@@ -14,16 +14,13 @@ import {
   MenuItem,
   Select
 } from '@mui/material'
-import { issueBook } from '../../features/books/bookSlice'
 
-const IssueForm = ({ open, handleClose, books }) => {
+const IssueForm = ({ open, handleClose, books, handleIssue }) => {
   const [selectedBook, setSelectedBook] = useState('')
   const [selectedUser, setSelectedUser] = useState('')
-  const users = useSelector((state) => state.users.users)
-  const dispatch = useDispatch()
+  const users = useSelector((state) => state.users)
 
   const handleBookChange = (event) => {
-    console.log(event.target.value)
     setSelectedBook(event.target.value)
   }
 
@@ -32,8 +29,14 @@ const IssueForm = ({ open, handleClose, books }) => {
   }
 
   const handleSubmit = () => {
-    console.log(selectedBook, selectedUser)
-    dispatch(issueBook({ bookId: selectedBook, borrowerId: selectedUser }))
+    handleIssue({
+      ...books.find(b => b.id === selectedBook),
+      status: 'issued',
+      bookId: selectedBook,
+      borrowerId: selectedUser,
+      borrowerName: users.find(u => u.id === selectedUser).firstName,
+      borrowDate: new Date().toISOString()
+    })
     handleClose()
   }
 
@@ -50,11 +53,10 @@ const IssueForm = ({ open, handleClose, books }) => {
                 value={selectedBook}
                 onChange={handleBookChange}
                 required>
+                open={selectedBook}
                 {books
-                  .filter((user) => user?.id)
-                  .filter((book) => ['available'].includes(book.status))
                   .map((book) => (
-                    <MenuItem key={uuidv4()} value={book.id}>
+                    <MenuItem key={uuidv4()} value={book.id} disabled={book.status !== 'available'}>
                       {book.title}
                     </MenuItem>
                   ))}
@@ -67,13 +69,11 @@ const IssueForm = ({ open, handleClose, books }) => {
                 value={selectedUser}
                 onChange={handleUserChange}
                 required>
-                {users
-                  .filter((user) => user?.id)
-                  .map((user) => (
-                    <MenuItem key={uuidv4()} value={user.id}>
-                      {`${user.firstName} ${user.lastName}`}
-                    </MenuItem>
-                  ))}
+                {users.map((user) => (
+                  <MenuItem key={uuidv4()} value={user.id}>
+                    {`${user.firstName} ${user.lastName}`}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>

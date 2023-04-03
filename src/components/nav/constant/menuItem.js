@@ -18,7 +18,7 @@ const menuItems = [
   { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'user' },
   { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'both' },
   { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },
-  { label: 'Profile', icon: React.createElement(PersonIcon), path: '/users/:id', role: 'user' },
+  { label: 'Profile', icon: React.createElement(PersonIcon), path: '/profile', role: 'user' },
   { label: 'Settings', icon: React.createElement(SettingsIcon), path: '/setting', role: 'both' },
   { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'both' },
   { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'both' }
