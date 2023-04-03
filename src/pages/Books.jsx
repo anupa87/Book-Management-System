@@ -24,7 +24,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import AddBook from "../components/forms/AddBookForm.jsx";
+import AddBook from '../components/forms/AddBookForm.jsx'
 
 const Books = () => {
   const books = useSelector((state) => state.books)
@@ -92,7 +92,6 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Description</TableCell>
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
-                <TableCell sx={{ color: 'white' }}>Publish Date</TableCell>
                 <TableCell sx={{ color: 'white' }}>Status</TableCell>
                 <TableCell sx={{ color: 'white' }}>Update</TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
@@ -111,9 +110,9 @@ const Books = () => {
                       </Link>
                     </TableCell>
                     <TableCell>{book.description}</TableCell>
-                    <TableCell>{book.authorId}</TableCell>
+                    <TableCell>{book.author}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
-                    <TableCell>{book.publisedDate}</TableCell>
+
                     <TableCell>
                       <Link component="button" onClick={() => handleTitleLink(book)}>
                         {book.status}
@@ -143,7 +142,12 @@ const Books = () => {
           Back to dashboard
         </Button>
       </Box>
-      <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} bookData={selectedBook} />
+      <AddBook
+        open={open}
+        onClose={() => setOpen(false)}
+        setOpen={setOpen}
+        bookData={selectedBook}
+      />
     </Grid>
   )
 }
