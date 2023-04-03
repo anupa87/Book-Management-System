@@ -4,7 +4,7 @@
       "id": "1",
       "firstName": "Anupa",
       "lastName": "Thapa",
-      "email": "thapaanupa@gmail.com",
+      "email": "admin@gmail.com",
       "password": "12345",
       "role": "admin"
     },
@@ -12,7 +12,7 @@
       "id": "2",
       "firstName": "Prak",
       "lastName": "Link",
-      "email": "link.prak@gmail.com",
+      "email": "user@gmail.com",
       "password": "12345",
       "role": "user"
     },
