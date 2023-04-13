@@ -2,9 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 
 import data from '../../../public/data/data.json'
+
 const userSlice = createSlice({
   name: 'users',
-  initialState: data.users, //get user from local storage
+  initialState: data.users, //get user from data.json
 
   reducers: {
     addUser: (state, action) => {
@@ -30,3 +31,6 @@ const userSlice = createSlice({
 })
 export const { addUser, updateUser, deleteUser } = userSlice.actions
 export default userSlice.reducer
+
+// Selector function to select all users
+export const selectUsers = (state) => state.users

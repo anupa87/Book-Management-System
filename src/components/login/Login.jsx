@@ -1,73 +1,53 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
+  Box,
   Grid,
   TextField,
   FormControlLabel,
   Checkbox,
   Button,
   Typography,
-  Box,
   IconButton,
   InputAdornment
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 import { loginSuccess } from '../../features/auth/authSlice'
+import { selectUsers } from '../../features/users/userSlice'
 
 const Login = () => {
-  const users = useSelector((state) => state.users) // get the users array from the Redux store
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState()
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const users = useSelector(selectUsers)
 
-  const currentRoute = window.location.href.split('/').reverse()[0]
-  console.log(currentRoute, window.location.href)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
   }
 
   const handleInputChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    setFormData({ ...formData, [name]: value })
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleLogin = (formData) => {
-    setError()
-    const foundUser = users && users.find((user) => user.email === formData.email)
-    localStorage.removeItem('loggedUser')
+  const handleLogin = (e) => {
+    e.preventDefault()
+    const foundUser = users.find(
+      (user) => user.email === formData.email && user.password === formData.password
+    )
 
     if (foundUser) {
-      if (foundUser.password !== formData.password) {
-        setError('Incorrect password')
-        return
-      }
-
-      const role = foundUser.role
-      console.log(role)
-
-      dispatch(loginSuccess(foundUser)) // Dispatch action to update Redux store with logged-in user information
-      localStorage.setItem('loggedUser', JSON.stringify(foundUser))
-
-      navigate(currentRoute === '' ? (role === 'admin' ? 'dashboard' : 'home') : currentRoute)
+      dispatch(loginSuccess(foundUser))
+      navigate('/home')
     } else {
-      setError('User not found')
+      console.log('User not found or incorrect password.')
     }
   }
-  useEffect(() => {
-    const user = localStorage.getItem('loggedUser')
-    if (user && !isLoggedIn) {
-      handleLogin(JSON.parse(user))
-    }
-  }, [isLoggedIn])
+
   return (
     <Box sx={{ p: 4 }}>
       <Grid container alignItems="center">
@@ -86,16 +66,12 @@ const Login = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6} sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ mx: 'auto', maxWidth: '400px', p: 3 }}>
+          <Box sx={{ mx: 'auto', p: 3 }}>
             <Typography variant="h4" align="center" gutterBottom>
               Login
             </Typography>
-            {error?.length && <div>{error}</div>}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                handleLogin(formData)
-              }}>
+
+            <form onSubmit={handleLogin}>
               <TextField
                 name="email"
                 label="Email"
@@ -104,6 +80,7 @@ const Login = () => {
                 margin="normal"
                 variant="outlined"
                 placeholder="Enter your email"
+                value={formData.email}
                 onChange={handleInputChange}
               />
               <TextField
@@ -114,6 +91,7 @@ const Login = () => {
                 variant="outlined"
                 type={showPassword ? 'text' : 'password'} // toggle password visibility
                 placeholder="Enter your password"
+                value={formData.password}
                 onChange={handleInputChange}
                 InputProps={{
                   endAdornment: (
@@ -136,6 +114,11 @@ const Login = () => {
                 </Grid>
               </Grid>
 
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="body2">
+                  Don't have an account? <Link to="/signup">Sign up</Link>
+                </Typography>
+              </Box>
               <Box sx={{ textAlign: 'center' }}>
                 <Button
                   type="submit"

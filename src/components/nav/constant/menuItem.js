@@ -15,7 +15,7 @@ const menuItems = [
     path: '/dashboard',
     role: 'admin'
   },
-  { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'user' },
+  { label: 'Home', icon: React.createElement(HomeIcon), path: '/home', role: 'both' },
   { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'both' },
   { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },
   { label: 'Profile', icon: React.createElement(PersonIcon), path: '/profile', role: 'user' },

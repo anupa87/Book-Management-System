@@ -1,7 +1,7 @@
 import Menu from '../components/nav/Menu'
 
-const Layout = ({ children }) => {
-  return <Menu {...children} />
+const Layout = ({ foundUser }) => {
+  return <Menu foundUser={foundUser} />
 }
 
 export default Layout
