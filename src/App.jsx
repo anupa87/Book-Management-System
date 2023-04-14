@@ -23,11 +23,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Login />} />
+        <Route index element={<Homepage />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
-            <Route path="/home" element={<Homepage />} />
             <Route path="/books" element={<Books />} />
             <Route path="/users/:id" element={<User />} />
             <Route path="/setting" element={<Setting />} />

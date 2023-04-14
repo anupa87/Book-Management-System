@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import {
@@ -19,12 +19,14 @@ import { loginSuccess } from '../../features/auth/authSlice'
 import { selectUsers } from '../../features/users/userSlice'
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' })
-  const [showPassword, setShowPassword] = useState(false)
   const users = useSelector(selectUsers)
-
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [formData, setFormData] = useState({ email: '', password: '' })
+  const [showPassword, setShowPassword] = useState(false)
+  const [error, setError] = useState()
+  const { isLoggedIn } = useSelector((state) => state.auth)
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -34,19 +36,32 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-    const foundUser = users.find(
+  const handleLogin = (formData) => {
+    setError()
+    const user = users.find(
       (user) => user.email === formData.email && user.password === formData.password
     )
+    localStorage.removeItem('currentUser')
+    localStorage.removeItem('currentRole')
 
-    if (foundUser) {
-      dispatch(loginSuccess(foundUser))
+    if (user) {
+      const role = user.role
+      console.log(role)
+      dispatch(loginSuccess({ user, role: user.role }))
+      localStorage.setItem('currentUser', JSON.stringify(user))
+      localStorage.setItem('currentRole', JSON.stringify(user.role))
       navigate('/home')
     } else {
-      console.log('User not found or incorrect password.')
+      setError('User not found or incorrect password.')
     }
   }
+  useEffect(() => {
+    const user = localStorage.getItem('currentUser')
+    const role = localStorage.getItem('currentRole')
+    if (user && role && !isLoggedIn) {
+      dispatch(loginSuccess({ user: JSON.parse(user), role: JSON.parse(role) }))
+    }
+  }, [dispatch, isLoggedIn])
 
   return (
     <Box sx={{ p: 4 }}>
@@ -70,8 +85,12 @@ const Login = () => {
             <Typography variant="h4" align="center" gutterBottom>
               Login
             </Typography>
-
-            <form onSubmit={handleLogin}>
+            {error?.length && <div>{error}</div>}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleLogin(formData)
+              }}>
               <TextField
                 name="email"
                 label="Email"

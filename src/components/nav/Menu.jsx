@@ -2,20 +2,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Box, List, ListItemIcon, ListItemText, Drawer, ListItemButton } from '@mui/material'
-
 import menuItems from './constant/menuItem'
+
 import logo from '../../../public/assests/logo.png'
-import { logoutSuccess, selectCurrentUser } from '../../features/auth/authSlice'
+
+import { logoutSuccess, selectCurrentRole } from '../../features/auth/authSlice'
 
 const Menu = () => {
-  const currentUser = useSelector(selectCurrentUser)
-  const role = currentUser ? currentUser.role : null
+  const currentRole = useSelector(selectCurrentRole)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   // Filter menu items based on user's role
   const filteredMenuItems = menuItems.filter(
-    (item) => item.role === role.toLowerCase() || item.role === 'both'
+    (item) => item.role === currentRole.toLowerCase() || item.role === 'both'
   )
 
   return (
@@ -31,7 +31,8 @@ const Menu = () => {
               onClick={() => {
                 if (item.path === '/logout') {
                   dispatch(logoutSuccess())
-                  localStorage.removeItem('loggedUser')
+                  localStorage.removeItem('currentUser')
+                  localStorage.removeItem('currentRole')
                   navigate('/')
                 } else {
                   navigate(item.path)
