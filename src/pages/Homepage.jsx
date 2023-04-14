@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Grid, Box, Typography, Card, CardContent, CardActions, Button, Link } from '@mui/material'
 
 import heroImage from '../../public/assests/heroImage.jpg'
-import Footer from '../components/footer'
+import Footer from '../components/Footer'
 import Search from '../components/Search'
 
 const Homepage = () => {
@@ -37,7 +37,7 @@ const Homepage = () => {
           <img
             src={heroImage}
             alt="Hero Image"
-            style={{ width: '100%', height: '60vh', objectFit: 'cover' }}
+            style={{ width: '100%', height: '65vh', objectFit: 'cover' }}
           />
           <Box
             sx={{
@@ -52,12 +52,17 @@ const Homepage = () => {
             <Typography variant="h2" sx={{ mb: 1 }} color="#FFFFFF">
               Welcome to BookSphere
             </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2, underline: 'none' }}>
+              <Typography variant="h6" gutterBottom>
+                Opening: Monday - Friday ( 9am - 5pm)
+              </Typography>
+            </Box>
             <Typography variant="h6" sx={{ mb: 2 }} color="#FFFFFF">
-              <Link href="/login" color="#FFFFFF">
+              <Link href="/login" color="#FFFFFF" underline="hover">
                 Login
               </Link>{' '}
               |{' '}
-              <Link href="/register" color="#FFFFFF">
+              <Link href="/register" color="#FFFFFF" underline="hover">
                 Register
               </Link>
             </Typography>
@@ -69,12 +74,14 @@ const Homepage = () => {
       </Grid>
       <Grid item xs={10}>
         <Box sx={{ mt: 4, mb: 4 }}>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-            Featured Books
-          </Typography>
-          <Button variant="outlined" color="primary" sx={{ mb: 2 }}>
-            View All Books
-          </Button>
+          <Box
+            sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h4">Featured Books</Typography>
+            <Button variant="outlined" color="primary">
+              View All Books
+            </Button>
+          </Box>
+          <hr />
           <Grid container spacing={2}>
             {allBooks.map((book) => (
               <Grid item key={book.id} xs={12} sm={6} md={4}>
@@ -111,15 +118,10 @@ const Homepage = () => {
             ))}
           </Grid>
         </Box>
+
         <Box sx={{ mt: 4 }}>
           <Typography variant="h4" sx={{ mb: 2 }}>
-            New Arrival
-          </Typography>
-          <Box sx={{ height: 300 }}>List of Events</Box>
-        </Box>
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-            Events
+            Upcoming Events
           </Typography>
           <Button variant="outlined" color="primary" sx={{ mb: 2 }}>
             View All Events

@@ -2,7 +2,6 @@ import { Box, Typography, Link } from '@mui/material'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import InstagramIcon from '@mui/icons-material/Instagram'
-import { Padding } from '@mui/icons-material'
 
 const Footer = () => {
   return (
@@ -13,20 +12,24 @@ const Footer = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        Padding: '2rem'
+        p: 4
       }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography variant="h6" gutterBottom>
-          Opening Hours : Monday - Friday ( 9am - 5pm)
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Box
+        sx={{
+          width: '80%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between'
+        }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h6" gutterBottom>
             Address
           </Typography>
           <Typography variant="body1" gutterBottom>
-            123 Main Street, Anytown, USA
+            Ladugatan 18B
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            70226, Heslinki
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -42,7 +45,7 @@ const Footer = () => {
         </Box>
         <Box>
           <Typography variant="h6" gutterBottom>
-            Follow Us :
+            Follow Us
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Link
@@ -69,6 +72,29 @@ const Footer = () => {
               sx={{ mr: 1 }}>
               <InstagramIcon />
             </Link>
+          </Box>
+          <Box sx={{ mt: 4, borderTop: '1px solid white', paddingTop: 2 }}>
+            <Typography variant="body2" align="center">
+              &copy;{' '}
+              <Link
+                href="https://portfolio-website-lhr8bzbr9-anupa87.vercel.app/"
+                target="_blank"
+                rel="noopener"
+                color="inherit"
+                underline="hover">
+                {' '}
+                anupa2023
+              </Link>{' '}
+              | &copy;{' '}
+              <Link
+                href="https://unsplash.com"
+                target="_blank"
+                rel="noopener"
+                color="inherit"
+                underline="hover">
+                Image unsplash
+              </Link>
+            </Typography>
           </Box>
         </Box>
       </Box>
