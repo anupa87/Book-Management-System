@@ -28,20 +28,20 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/user" element={<Layout />}>
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute />} path="*">
             <Route path="/user/" element={<Homepage />} />
             <Route path="/user/books" element={<Books />} />
             <Route path="/user/users/:id" element={<User />} />
             <Route path="/user/setting" element={<Setting />} />
             <Route path="/user/help" element={<Help />} />
-            <Route element={<AdminRoute />}>
-              <Route path="/user/dashboard" element={<Dashboard />}>
-                <Route path="/user/dashboard/adduser" element={<AddUser />} />
-                <Route path="/user/dashboard/updateuser" element={<UpdateUser />} />
-                <Route path="/user/dashboard/addbook" element={<AddBook />} />
-                <Route path="/user/dashboard/updatebook" element={<UpdateBook />} />
-                <Route path="/user/dashboard/issuebook" element={<IssueBook />} />
-              </Route>
+          </Route>
+          <Route element={<AdminRoute />}>
+            <Route path="/user/dashboard" element={<Dashboard />}>
+              <Route path="/user/dashboard/adduser" element={<AddUser />} />
+              <Route path="/user/dashboard/updateuser" element={<UpdateUser />} />
+              <Route path="/user/dashboard/addbook" element={<AddBook />} />
+              <Route path="/user/dashboard/updatebook" element={<UpdateBook />} />
+              <Route path="/user/dashboard/issuebook" element={<IssueBook />} />
             </Route>
           </Route>
         </Route>
