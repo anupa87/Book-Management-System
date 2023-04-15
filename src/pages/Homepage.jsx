@@ -54,7 +54,7 @@ const Homepage = () => {
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2, underline: 'none' }}>
               <Typography variant="h6" gutterBottom>
-                Opening: Monday - Friday ( 9am - 5pm)
+                Opening: Monday - Friday ( 9:00 - 16:00)
               </Typography>
             </Box>
             <Typography variant="h6" sx={{ mb: 2 }} color="#FFFFFF">
@@ -73,7 +73,7 @@ const Homepage = () => {
         <Search />
       </Grid>
       <Grid item xs={10}>
-        <Box sx={{ mt: 4, mb: 4 }}>
+        <Box sx={{ my: 4 }}>
           <Box
             sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
             <Typography variant="h4">Featured Books</Typography>
@@ -84,7 +84,15 @@ const Homepage = () => {
           <hr />
           <Grid container spacing={2}>
             {allBooks.map((book) => (
-              <Grid item key={book.id} xs={12} sm={6} md={4}>
+              <Grid
+                item
+                key={book.id}
+                xs={12}
+                sm={6}
+                md={4}
+                sx={{
+                  mt: 6
+                }}>
                 <Card sx={{ width: 500, height: 300 }}>
                   <CardContent>
                     <Typography variant="h6" component="div">
@@ -119,17 +127,73 @@ const Homepage = () => {
           </Grid>
         </Box>
 
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-            Upcoming Events
-          </Typography>
-          <Button variant="outlined" color="primary" sx={{ mb: 2 }}>
-            View All Events
-          </Button>
-          <div style={{ height: 300 }}>List of Events</div>
+        <Box sx={{ my: 4, display: 'flex', flexDirection: 'column' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              my: 4,
+              mb: '2'
+            }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              Upcoming Events
+            </Typography>
+            <Button variant="outlined" color="primary" sx={{ my: 2 }}>
+              View All Events
+            </Button>
+          </Box>
+          <hr />
+          <Grid container spacing={2} sx={{ my: 4 }}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6" gutterBottom>
+                Event 1
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
+                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
+                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
+                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
+              </Typography>
+              <Button size="small">Learn More</Button>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6" gutterBottom>
+                Event 2
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
+                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
+                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
+                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
+              </Typography>
+              <Button size="small">Learn More</Button>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Typography variant="h6" gutterBottom>
+                Event 3
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
+                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
+                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
+                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
+              </Typography>
+              <Button size="small">Learn More</Button>
+            </Grid>
+          </Grid>
         </Box>
       </Grid>
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          backgroundColor: '#70334E',
+          color: '#fff',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}>
         <Footer />
       </Grid>
     </Grid>

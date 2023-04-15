@@ -5,7 +5,7 @@ import { Grid, Box, Button, Container, TextField, Typography } from '@mui/materi
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Snackbar from '@mui/material/Snackbar'
 
-import { updateUser } from '../features/users/userSlice'
+import { updateUser } from '../../features/users/userSlice'
 
 const User = () => {
   const { id: userId } = useParams()

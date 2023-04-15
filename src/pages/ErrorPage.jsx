@@ -3,7 +3,7 @@ import React from 'react'
 const ErrorPage = () => {
   return (
     <div>
-      <p>Please check your username or password is correct</p>
+      <p>Please register or check your username and password is correct</p>
     </div>
   )
 }
