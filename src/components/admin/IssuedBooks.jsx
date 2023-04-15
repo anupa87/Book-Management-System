@@ -12,8 +12,8 @@ import {
   TableCell
 } from '@mui/material'
 
-import { updateBook } from "../../features/books/bookSlice";
-import IssueForm from '../forms/IssueForm'
+import { updateBook } from '../../features/books/bookSlice'
+import IssueForm from '../forms/IssueBookForm'
 import { v4 as uuidv4 } from 'uuid'
 
 const filterBooks = (tmpBooks) =>

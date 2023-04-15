@@ -7,7 +7,7 @@ import Dashboard from './pages/Dashboard'
 import Homepage from './pages/Homepage'
 import Books from './pages/Books'
 import Users from './pages/Users'
-import User from './components/admin/UserUpdate'
+import User from './components/admin/UpdateUser'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
 import ErrorPage from './pages/ErrorPage'
@@ -23,23 +23,25 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/user/users" element={<Users />} />
         <Route index element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/" element={<Layout />}>
+        <Route path="/user" element={<Layout />}>
           <Route element={<ProtectedRoute />}>
-            <Route path="/books" element={<Books />} />
-            <Route path="/users/:id" element={<User />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/help" element={<Help />} />
+            <Route path="/user/" element={<Homepage />} />
+            <Route path="/user/books" element={<Books />} />
+            <Route path="/user/users/:id" element={<User />} />
+            <Route path="/user/setting" element={<Setting />} />
+            <Route path="/user/help" element={<Help />} />
             <Route element={<AdminRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/adduser" element={<AddUser />} />
-              <Route path="/updateuser" element={<UpdateUser />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/addbook" element={<AddBook />} />
-              <Route path="/updatebook" element={<UpdateBook />} />
-              <Route path="/issuebook" element={<IssueBook />} />
+              <Route path="/user/dashboard" element={<Dashboard />}>
+                <Route path="/user/dashboard/adduser" element={<AddUser />} />
+                <Route path="/user/dashboard/updateuser" element={<UpdateUser />} />
+                <Route path="/user/dashboard/addbook" element={<AddBook />} />
+                <Route path="/user/dashboard/updatebook" element={<UpdateBook />} />
+                <Route path="/user/dashboard/issuebook" element={<IssueBook />} />
+              </Route>
             </Route>
           </Route>
         </Route>

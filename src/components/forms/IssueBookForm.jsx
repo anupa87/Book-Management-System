@@ -15,7 +15,7 @@ import {
   Select
 } from '@mui/material'
 
-const IssueForm = ({ open, handleClose, books, handleIssue }) => {
+const IssueBookForm = ({ open, handleClose, books, handleIssue }) => {
   const [selectedBook, setSelectedBook] = useState('')
   const [selectedUser, setSelectedUser] = useState('')
   const users = useSelector((state) => state.users)
@@ -30,11 +30,11 @@ const IssueForm = ({ open, handleClose, books, handleIssue }) => {
 
   const handleSubmit = () => {
     handleIssue({
-      ...books.find(b => b.id === selectedBook),
+      ...books.find((b) => b.id === selectedBook),
       status: 'issued',
       bookId: selectedBook,
       borrowerId: selectedUser,
-      borrowerName: users.find(u => u.id === selectedUser).firstName,
+      borrowerName: users.find((u) => u.id === selectedUser).firstName,
       borrowDate: new Date().toISOString()
     })
     handleClose()
@@ -54,12 +54,11 @@ const IssueForm = ({ open, handleClose, books, handleIssue }) => {
                 onChange={handleBookChange}
                 required>
                 open={selectedBook}
-                {books
-                  .map((book) => (
-                    <MenuItem key={uuidv4()} value={book.id} disabled={book.status !== 'available'}>
-                      {book.title}
-                    </MenuItem>
-                  ))}
+                {books.map((book) => (
+                  <MenuItem key={uuidv4()} value={book.id} disabled={book.status !== 'available'}>
+                    {book.title}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl>
@@ -87,4 +86,4 @@ const IssueForm = ({ open, handleClose, books, handleIssue }) => {
   )
 }
 
-export default IssueForm
+export default IssueBookForm

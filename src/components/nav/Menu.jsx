@@ -15,7 +15,7 @@ const Menu = () => {
 
   // Filter menu items based on user's role
   const filteredMenuItems = menuItems.filter(
-    (item) => item.role === currentRole.toLowerCase() || item.role === 'both'
+    (item) => item.role === currentRole?.toLowerCase() || item.role === 'both'
   )
 
   return (

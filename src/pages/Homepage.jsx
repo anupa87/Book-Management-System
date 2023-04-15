@@ -1,7 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Grid, Box, Typography, Card, CardContent, CardActions, Button, Link } from '@mui/material'
+import {
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  Link
+} from '@mui/material'
 
 import heroImage from '../../public/assests/heroImage.jpg'
 import Footer from '../components/Footer'
@@ -93,7 +103,16 @@ const Homepage = () => {
                 sx={{
                   mt: 6
                 }}>
-                <Card sx={{ width: 500, height: 300 }}>
+                <Card sx={{ width: 300, height: 300 }}>
+                  <CardMedia
+                    component="img"
+                    height="150"
+                    image={book.image}
+                    alt={book.title}
+                    sx={{
+                      objectFit: 'cover'
+                    }}
+                  />
                   <CardContent>
                     <Typography variant="h6" component="div">
                       {book.title}
@@ -103,6 +122,9 @@ const Homepage = () => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {book.description}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Status: {book.status}
                     </Typography>
                   </CardContent>
                   <CardActions>

@@ -50,7 +50,7 @@ const Login = () => {
       dispatch(loginSuccess({ user, role: user.role }))
       localStorage.setItem('currentUser', JSON.stringify(user))
       localStorage.setItem('currentRole', JSON.stringify(user.role))
-      navigate('/home')
+      navigate('/user/')
     } else {
       setError('User not found or incorrect password.')
     }

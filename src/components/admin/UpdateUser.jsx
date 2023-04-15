@@ -7,7 +7,7 @@ import Snackbar from '@mui/material/Snackbar'
 
 import { updateUser } from '../../features/users/userSlice'
 
-const User = () => {
+const UpdateUser = () => {
   const { id: userId } = useParams()
   const dispatch = useDispatch()
   const users = useSelector((state) => state.users)
@@ -137,4 +137,4 @@ const User = () => {
   )
 }
 
-export default User
+export default UpdateUser
