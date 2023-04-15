@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import {
   Grid,
@@ -9,35 +9,23 @@ import {
   CardMedia,
   CardContent,
   CardActions,
-  Button,
-  Link
+  Button
 } from '@mui/material'
 
 import heroImage from '../../public/assests/heroImage.jpg'
 import Footer from '../components/Footer'
-import Search from '../components/Search'
+import Events from '../components/events/Events'
 
 const Homepage = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
   const allBooks = useSelector((state) => state.books)
-  const allUsers = useSelector((state) => state.users)
-  const authUserId = useSelector((state) => state.auth.id)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  console.log({ allBooks })
-  console.log({ allUsers })
-
-  const handleUpdateBook = (book) => {
-    // handle renew book logic
+  const handleOpen = () => {
+    setIsModalOpen(true)
   }
 
-  const handleDeleteBook = (bookId) => {
-    // handle return book logic
-  }
-
-  const handleBorrowBook = (book) => {
-    // handle borrow book logic
+  const handleClose = () => {
+    setIsModalOpen(false)
   }
 
   return (
@@ -47,41 +35,46 @@ const Homepage = () => {
           <img
             src={heroImage}
             alt="Hero Image"
-            style={{ width: '100%', height: '65vh', objectFit: 'cover' }}
+            style={{ width: '100%', height: '55vh', objectFit: 'cover' }}
           />
           <Box
             sx={{
               position: 'absolute',
-              bottom: 0,
-              left: 0,
-              width: '100vw',
-              textAlign: 'center',
+              top: 0,
+              right: 0,
+              transform: 'translate(-50%, 50%)',
               backgroundColor: '#70334E',
-              padding: 2
+              textAlign: 'center',
+              opacity: 1
             }}>
-            <Typography variant="h2" sx={{ mb: 1 }} color="#FFFFFF">
-              Welcome to BookSphere
+            <Button onClick={handleOpen}>Login</Button>
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: '50%',
+              left: '50%',
+              transform: 'translate(-50%, 50%)',
+              backgroundColor: '#70334E',
+              textAlign: 'center',
+              padding: 2,
+              opacity: 0.9
+            }}>
+            <Typography
+              variant="h1"
+              sx={{ mb: 1, fontWeight: 'bold', letterSpacing: '0.1em' }}
+              color="#FFFFFF">
+              BookSphere
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2, underline: 'none' }}>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="h6" gutterBottom color="#FFFFFF">
                 Opening: Monday - Friday ( 9:00 - 16:00)
               </Typography>
             </Box>
-            <Typography variant="h6" sx={{ mb: 2 }} color="#FFFFFF">
-              <Link href="/login" color="#FFFFFF" underline="hover">
-                Login
-              </Link>{' '}
-              |{' '}
-              <Link href="/register" color="#FFFFFF" underline="hover">
-                Register
-              </Link>
-            </Typography>
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={4}>
-        <Search />
-      </Grid>
+
       <Grid item xs={10}>
         <Box sx={{ my: 4 }}>
           <Box
@@ -127,84 +120,14 @@ const Homepage = () => {
                       Status: {book.status}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    {book.borrowerId === authUserId ? (
-                      <>
-                        <Button size="small" onClick={() => handleUpdateBook(book)}>
-                          Renew
-                        </Button>
-                        <Button size="small" onClick={() => handleDeleteBook(book.id)}>
-                          Return
-                        </Button>
-                      </>
-                    ) : (
-                      <Button size="small" onClick={() => handleBorrowBook(book)}>
-                        Borrow
-                      </Button>
-                    )}
-                  </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
         </Box>
-
-        <Box sx={{ my: 4, display: 'flex', flexDirection: 'column' }}>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              my: 4,
-              mb: '2'
-            }}>
-            <Typography variant="h4" sx={{ mb: 2 }}>
-              Upcoming Events
-            </Typography>
-            <Button variant="outlined" color="primary" sx={{ my: 2 }}>
-              View All Events
-            </Button>
-          </Box>
-          <hr />
-          <Grid container spacing={2} sx={{ my: 4 }}>
-            <Grid item xs={12} sm={4}>
-              <Typography variant="h6" gutterBottom>
-                Event 1
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
-                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
-                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
-                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
-              </Typography>
-              <Button size="small">Learn More</Button>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Typography variant="h6" gutterBottom>
-                Event 2
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
-                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
-                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
-                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
-              </Typography>
-              <Button size="small">Learn More</Button>
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <Typography variant="h6" gutterBottom>
-                Event 3
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut quam id elit maximus
-                egestas. Morbi elementum turpis nec urna euismod, eget tempor velit fermentum. Duis
-                vestibulum euismod vestibulum. Donec et consequat dolor. Aliquam vel enim non nunc
-                mattis blandit. Proin ultricies blandit nulla, a rhoncus justo bibendum non.
-              </Typography>
-              <Button size="small">Learn More</Button>
-            </Grid>
-          </Grid>
-        </Box>
+      </Grid>
+      <Grid item xs={10}>
+        <Events />
       </Grid>
       <Grid
         item

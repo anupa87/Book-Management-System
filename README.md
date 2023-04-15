@@ -6,7 +6,7 @@ React and Redux, and styled using Material UI (MUI).
 
 ### `Outcome:`
 
-A web applocation that allows visitors to explore a list of books, search and filter the list, borrow, renew and return books. Inaddition it allows an admin to perform management tasks related to users and books
+A web applocation that allows visitors to explore a list of books, search and filter the list, borrow, renew and return books. Inaddition it allows an admin to perform management tasks related to users and books.
 
 **Use cases:**
 
@@ -16,7 +16,7 @@ Visitor can:
 - explore list of books
 - filter and search
 - borrow a book
-- return a borrowed book
+- return and renew a borrowed book
 
 Admin can:
 

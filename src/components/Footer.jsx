@@ -23,7 +23,7 @@ const Footer = () => {
           Ladugatan 18B
         </Typography>
         <Typography variant="body1" gutterBottom>
-          70226, Heslinki
+          70226, Heslinki, Finland
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>

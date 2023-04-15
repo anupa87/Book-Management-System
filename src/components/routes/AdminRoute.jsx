@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import Unauthorized from './Unauthorized'
+import Layout from '../../pages/Layout.jsx'
 
-const AdminRoute = ({ children }) => {
-  const { isLoggedIn, role } = useSelector((state) => state.auth)
-  return isLoggedIn && role === 'admin' ? <Outlet /> : <Unauthorized />
+const AdminRoute = () => {
+  const { isLoggedIn, currentRole: role } = useSelector((state) => state.auth)
+  return isLoggedIn && role === 'admin' ? <Layout /> : <Unauthorized />
 }
 
 export default AdminRoute

@@ -1,18 +1,10 @@
-import { Outlet, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import AdminRoute from './AdminRoute'
+import { Navigate } from 'react-router-dom'
+import Layout from '../../pages/Layout.jsx'
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const { isLoggedIn } = useSelector((state) => state.auth)
-  console.log(isLoggedIn)
-  return isLoggedIn ? (
-    <>
-      <Outlet />
-      <AdminRoute />
-    </>
-  ) : (
-    <Navigate to="/" replace />
-  )
+  return isLoggedIn ? <Layout /> : <Navigate to="/" replace />
 }
 
 export default ProtectedRoute

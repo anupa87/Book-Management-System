@@ -1,14 +1,17 @@
+import { Grid } from '@mui/material'
 import Menu from '../components/nav/Menu'
-import ProtectedRoute from '../components/routes/ProtectedRoute'
-import AdminRoute from '../components/routes/AdminRoute'
+import { Outlet } from 'react-router-dom'
 
 const Layout = ({ CurrentUser }) => {
   return (
-    <>
-      <Menu foundUser={CurrentUser} />
-
-      <ProtectedRoute />
-    </>
+    <Grid container>
+      <Grid item xs={12} md={3}>
+        <Menu foundUser={CurrentUser} />
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Outlet />
+      </Grid>
+    </Grid>
   )
 }
 
