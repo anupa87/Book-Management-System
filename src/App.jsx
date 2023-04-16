@@ -26,6 +26,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/users/:id" element={<User />} />
+          <Route path="/books/:id" element={<User />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/help" element={<Help />} />
           <Route element={<AdminRoute />}>
