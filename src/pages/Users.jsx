@@ -17,8 +17,6 @@ import {
   Container
 } from '@mui/material'
 
-import DeleteIcon from '@mui/icons-material/Delete'
-
 const Users = () => {
   const users = useSelector((state) => state.users) // get the users array from the Redux store
   const dispatch = useDispatch()

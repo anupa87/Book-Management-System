@@ -42,7 +42,7 @@ const FeaturedBooks = () => {
             <Card sx={{ width: 300, height: 300 }}>
               <CardMedia
                 component="img"
-                image={book.image}
+                image={book.imageURL}
                 alt={book.title}
                 sx={{
                   objectFit: 'cover',

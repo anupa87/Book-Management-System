@@ -41,7 +41,7 @@ const Profile = () => {
     <Grid item xs={10}>
       <Box>
         <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
-          Profile
+          Update User
         </Typography>
         <hr />
       </Box>

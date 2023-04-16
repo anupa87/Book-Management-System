@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteBook } from '../features/books/bookSlice'
 
 import {
   Grid,
@@ -20,10 +19,9 @@ import {
   TableSortLabel
 } from '@mui/material'
 
-import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import AddBook from '../components/forms/AddBookForm.jsx'
+import AddBook from '../components/admin/AddBookForm.jsx'
 
 const Books = () => {
   const books = useSelector((state) => state.books)
@@ -54,10 +52,6 @@ const Books = () => {
       setSortColumn(column)
       setSortOrder('asc')
     }
-  }
-
-  const handleDeleteBook = (bookId) => {
-    dispatch(deleteBook(bookId))
   }
 
   const handleTitleLink = (tmpBook) => {
@@ -111,11 +105,6 @@ const Books = () => {
                     <TableCell>{book.author}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
                     <TableCell>{book.status}</TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleDeleteBook(book.id)}>
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

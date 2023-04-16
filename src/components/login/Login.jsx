@@ -21,7 +21,7 @@ import { selectUsers } from '../../features/users/userSlice'
 
 const Login = ({ modalOpen, onClose }) => {
   const users = useSelector(selectUsers)
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState()
@@ -53,6 +53,7 @@ const Login = ({ modalOpen, onClose }) => {
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user))
       localStorage.setItem('currentRole', JSON.stringify(user.role))
+      localStorage.setItem('isLoggedIn', 'true')
       if (user.role === 'admin') navigate('/dashboard')
       else if (user.role === 'user') navigate('/homepage')
     } else {

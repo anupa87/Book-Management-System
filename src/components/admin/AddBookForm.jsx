@@ -18,30 +18,26 @@ import {
 import { Close as CloseIcon } from '@mui/icons-material'
 import Snackbar from '@mui/material/Snackbar'
 
-import { addBook, updateBook } from '../../features/books/bookSlice'
+import { addBook } from '../../features/books/bookSlice'
 
-const AddBookForm = ({ open, setOpen, bookData }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
+const AddBook = ({ setopenBookModal, OpenBookModal }) => {
   const [book, setBook] = useState({
     ISBN: '',
     title: '',
+    imageURL: '',
     description: '',
+    author: '',
     publisher: '',
+    publishedYear: '',
     status: '',
-    borrowerId: '',
-    publishedDate: '',
+    borrowerId: null,
     borrowDate: '',
     returnDate: '',
-    ...bookData
+    likesCount: null
   })
 
-  useEffect(() => {
-    if (bookData && !book.ISBN) {
-      setBook(bookData)
-    }
-  })
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const formRef = useRef(null)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -53,36 +49,40 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
 
   const handleSubmitBook = (e) => {
     e.preventDefault()
-    dispatch(bookData ? updateBook(book) : addBook(book))
+    dispatch(addBook(book))
     setBook({
       ISBN: '',
       title: '',
+      imageURL: '',
       description: '',
+      author: '',
       publisher: '',
-      publishedDate: '',
+      publishedYear: '',
       status: '',
-      borrowerId: '',
+      borrowerId: null,
       borrowDate: '',
-      returnDate: ''
+      returnDate: '',
+      likesCount: null
     })
     setShowSuccessMessage(true)
     formRef.current.reset()
     setTimeout(() => {
-      navigate('/books')
+      setShowSuccessMessage(false)
     }, 2000)
+    navigate('/books')
   }
 
   const handleClose = () => {
-    setOpen(false)
+    setopenBookModal(false)
   }
 
   return (
     <Container maxWidth="sm">
-      <Dialog open={open} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+      <Dialog open={OpenBookModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
         <DialogTitle>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="h4" gutterBottom>
-              {bookData ? 'Update Book' : 'Add Book'}
+              Add Book
             </Typography>
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -127,6 +127,16 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  name="imageURL"
+                  label="Image"
+                  value={book.imageURL}
+                  fullWidth
+                  required
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   name="description"
                   label="Description"
                   value={book.description}
@@ -136,6 +146,16 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
                 />
               </Grid>
 
+              <Grid item xs={12}>
+                <TextField
+                  name="author"
+                  label="Author"
+                  value={book.author}
+                  fullWidth
+                  required
+                  onChange={handleChange}
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   name="publisher"
@@ -148,9 +168,19 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="publishedDate"
-                  label="Published Date"
-                  value={book.publishedDate}
+                  name="publishedYear"
+                  label="Published Year"
+                  value={book.publishedYear}
+                  fullWidth
+                  required
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="status"
+                  label="status"
+                  value={book.status}
                   fullWidth
                   required
                   onChange={handleChange}
@@ -185,22 +215,21 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="status"
-                  label="status"
-                  value={book.status}
+                  name="likesCount"
+                  label="Likes Count"
+                  value={book.likesCount}
                   fullWidth
-                  required
                   onChange={handleChange}
                 />
               </Grid>
+              <DialogActions>
+                <Grid item xs={12}>
+                  <Button variant="contained" color="primary" type="submit">
+                    Add
+                  </Button>
+                </Grid>
+              </DialogActions>
             </Grid>
-            <DialogActions>
-              <Grid item xs={12}>
-                <Button variant="contained" color="primary" type="submit">
-                  {bookData ? 'Update' : 'Add'}
-                </Button>
-              </Grid>
-            </DialogActions>
           </form>
         </DialogContent>
       </Dialog>
@@ -208,4 +237,4 @@ const AddBookForm = ({ open, setOpen, bookData }) => {
   )
 }
 
-export default AddBookForm
+export default AddBook

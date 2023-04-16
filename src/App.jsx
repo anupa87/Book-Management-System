@@ -11,10 +11,10 @@ import Users from './pages/Users'
 import User from './components/admin/UpdateUser'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
-import AddUser from './components/forms/AddUserForm'
+import AddUser from './components/admin/AddUserForm'
 import UpdateUser from './components/admin/UpdateUser'
-import AddBook from './components/forms/AddBookForm'
-// import UpdateBook from './components/admin/UpdateBook'
+import AddBook from './components/admin/AddBookForm'
+import UpdateBook from './components/admin/UpdateBook'
 import IssueBook from './components/admin/IssuedBooks'
 
 function App() {
@@ -33,7 +33,7 @@ function App() {
               <Route path="/dashboard/adduser" element={<AddUser />} />
               <Route path="/dashboard/updateuser" element={<UpdateUser />} />
               <Route path="/dashboard/addbook" element={<AddBook />} />
-              {/* <Route path="/dashboard/updatebook" element={<UpdateBook />} /> */}
+              <Route path="/dashboard/updatebook" element={<UpdateBook />} />
               <Route path="/dashboard/issuebook" element={<IssueBook />} />
             </Route>
             <Route path="/users" element={<Users />} />

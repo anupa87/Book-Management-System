@@ -44,14 +44,14 @@ const UpdateUser = () => {
   }
 
   const handleCancel = () => {
-    navigate('/users')
+    navigate('/dashboard')
   }
 
   return (
     <Grid item xs={10}>
       <Box>
         <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
-          Profile
+          Update User
         </Typography>
         <hr />
       </Box>
@@ -75,8 +75,8 @@ const UpdateUser = () => {
           <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
             <Snackbar
               open={showSuccessMessage}
-              autoHideDuration={6000}
               message="User updated successfully"
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             />
           </Box>
         )}
@@ -120,11 +120,16 @@ const UpdateUser = () => {
             disabled={!isEdit}
           />
         </Box>
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-evenly' }}>
           {!isEdit ? (
-            <Button variant="contained" onClick={handleEdit}>
-              Edit
-            </Button>
+            <>
+              <Button variant="contained" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button variant="contained" onClick={handleEdit}>
+                Edit
+              </Button>
+            </>
           ) : (
             <>
               <Button variant="contained" onClick={handleCancel}>

@@ -4,26 +4,30 @@ import { useNavigate } from 'react-router-dom'
 import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import AddUser from '../forms/AddUserForm'
-import AddBook from '../forms/AddBookForm'
-import IssueBookForm from '../forms/IssueBookForm'
+import AddUser from './admin/AddUserForm'
+import AddBook from './admin/AddBookForm'
+import IssueBookForm from './admin/IssueBookForm'
 
-const AddCards = () => {
+const DashboardCards = () => {
   const navigate = useNavigate()
   const [openUserModal, setOpenUserModal] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [OpenBookModal, setopenBookModal] = useState(false)
   const [openIssueModal, setOpenIssueModal] = useState(false)
+  const [openEventModal, setOpenEventModal] = useState(false)
 
   const handleAddUser = () => {
     setOpenUserModal(true)
   }
 
   const handleAddBook = () => {
-    setOpen(true)
+    setopenBookModal(true)
   }
 
   const handleIssueBook = () => {
     setOpenIssueModal(true)
+  }
+  const handleAddEvent = () => {
+    setOpenEventModal(true)
   }
 
   return (
@@ -59,6 +63,16 @@ const AddCards = () => {
           </CardContent>
         </Box>
       </Card>
+      <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <IconButton sx={{ color: 'white' }} onClick={handleAddEvent}>
+            <AddIcon />
+          </IconButton>
+          <CardContent sx={{ mt: 1 }}>
+            <Typography variant="h6">Add Events</Typography>
+          </CardContent>
+        </Box>
+      </Card>
       <Dialog
         open={openUserModal}
         onClose={() => setOpenUserModal(false)}
@@ -69,8 +83,15 @@ const AddCards = () => {
           setOpenUserModal={setOpenUserModal}
         />
       </Dialog>
-      <Dialog open={open} onClose={() => setOpen(false)} PaperProps={{ style: { width: '80%' } }}>
-        <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
+      <Dialog
+        open={OpenBookModal}
+        onClose={() => setopenBookModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <AddBook
+          OpenBookModal={OpenBookModal}
+          onClose={() => setopenBookModal(false)}
+          setopenBookModal={setopenBookModal}
+        />
       </Dialog>
       <Dialog
         open={openIssueModal}
@@ -82,8 +103,18 @@ const AddCards = () => {
           setOpenIssueModal={setOpenIssueModal}
         />
       </Dialog>
+      <Dialog
+        open={openEventModal}
+        onClose={() => setOpenEventModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <IssueBookForm
+          openEventModal={openEventModal}
+          onClose={() => setOpenEventModal(false)}
+          setOpenEventModal={setOpenEventModal}
+        />
+      </Dialog>
     </Box>
   )
 }
 
-export default AddCards
+export default DashboardCards

@@ -15,11 +15,12 @@ import {
   DialogContent,
   DialogActions
 } from '@mui/material'
-import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
+import { Close as CloseIcon } from '@mui/icons-material'
+import Snackbar from '@mui/material/Snackbar'
 
 import { addUser } from '../../features/users/userSlice'
 
-const UserForm = ({ setOpenUserModal, openUserModal }) => {
+const AddUser = ({ setOpenUserModal, openUserModal }) => {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -74,10 +75,11 @@ const UserForm = ({ setOpenUserModal, openUserModal }) => {
           </Box>
           {showSuccessMessage && (
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-              <CheckCircleIcon color="success" fontSize="large" />
-              <Typography variant="h6" color="success" ml={1}>
-                User added successfully!
-              </Typography>
+              <Snackbar
+                open={showSuccessMessage}
+                autoHideDuration={6000}
+                message={'User added successfully!'}
+              />
             </Box>
           )}
         </DialogTitle>
@@ -151,4 +153,4 @@ const UserForm = ({ setOpenUserModal, openUserModal }) => {
   )
 }
 
-export default UserForm
+export default AddUser

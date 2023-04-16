@@ -48,7 +48,7 @@ const FeaturedPopular = () => {
                   <CardMedia
                     component="img"
                     height={150}
-                    image={book.image}
+                    image={book.imageURL}
                     alt={book.title}
                     sx={{
                       objectFit: 'cover',

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import {
-  Typography,
   Box,
   List,
   ListItemIcon,
@@ -41,6 +40,7 @@ const Menu = () => {
       dispatch(logoutSuccess())
       localStorage.removeItem('currentUser')
       localStorage.removeItem('currentRole')
+      localStorage.setItem('isLoggedIn', 'false')
       navigate('/')
     } else {
       navigate(item.path)
@@ -58,7 +58,7 @@ const Menu = () => {
         bgColor: theme.palette.primary.main,
         color: 'white'
       }}>
-      <Toolbar />
+      <Toolbar sx={{ p: 0 }} />
       <Box sx={{ p: 2 }}>
         <img src={logo} alt="Logo" height={80} />
       </Box>
@@ -97,7 +97,11 @@ const Menu = () => {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+          zIndex: theme.zIndex.drawer + 1 // add this line
+        }}
         aria-label="mailbox folders">
         <Drawer
           variant="temporary"

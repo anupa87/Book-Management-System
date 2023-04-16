@@ -1,32 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
-import data from "../../../public/data/data.json";
-
-import { v4 as uuidv4 } from "uuid";
+import { createSlice } from '@reduxjs/toolkit'
+import data from '../../../public/data/data.json'
 
 const bookSlice = createSlice({
-  name: "books",
+  name: 'books',
   initialState: data.books,
 
   reducers: {
     addBook: (state, action) => {
       const addedBook = {
-        id: uuidv4(),
-        ...action.payload,
-      };
-      return [...state, addedBook];
+        ...action.payload
+      }
+      return [...state, addedBook]
     },
 
     updateBook: (state, action) => {
-      const updatedBook = action.payload;
-      return [updatedBook, ...state.filter((b) => b.id !== updatedBook.id)];
+      const updatedBook = action.payload
+      return [updatedBook, ...state.filter((b) => b.ISBN !== updatedBook.ISBN)]
     },
 
     deleteBook: (state, action) => {
-      const deletedBookId = action.payload;
-      return [...state.filter((book) => book.id !== deletedBookId)];
-    },
-  },
-});
+      const deletedBookISBN = action.payload
+      return [...state.filter((book) => book.ISBN !== deletedBookISBN)]
+    }
+  }
+})
 
-export const { addBook, updateBook, deleteBook } = bookSlice.actions;
-export default bookSlice.reducer;
+export const { addBook, updateBook, deleteBook } = bookSlice.actions
+export default bookSlice.reducer
