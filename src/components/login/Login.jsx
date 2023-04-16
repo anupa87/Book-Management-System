@@ -69,10 +69,19 @@ const Login = ({ modalOpen, onClose }) => {
   }, [dispatch, isLoggedIn])
 
   return (
-    <Box sx={{ mx: 'auto', p: 3 }}>
-      <Dialog open={modalOpen} onClose={onClose} sx={{ width: '400px' }}>
-        <DialogTitle>Login</DialogTitle>
-        <DialogContent>
+    <Box>
+      <Dialog
+        open={modalOpen}
+        onClose={onClose}
+        maxWidth="sm"
+        fullWidth={true}
+        PaperProps={{ sx: { borderRadius: '20px' } }}>
+        <DialogTitle>
+          <Typography variant="h4" align="center" gutterBottom>
+            Login
+          </Typography>
+        </DialogTitle>
+        <DialogContent sx={{ mx: 'auto', p: 6 }}>
           {error?.length && <div>{error}</div>}
           <form onSubmit={handleLogin}>
             <TextField
@@ -106,26 +115,29 @@ const Login = ({ modalOpen, onClose }) => {
                 )
               }}
             />
-            <Grid container justifyContent="space-between">
-              <Grid item>
-                <FormControlLabel control={<Checkbox color="primary" />} label="Remember me" />
-              </Grid>
-              <Grid item sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                  Forgot password?
-                </Typography>
-              </Grid>
-            </Grid>
-
-            <Box sx={{ textAlign: 'center' }}>
+            <Box item sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Typography variant="body2" color="text.secondary">
+                Forgot password?
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: 'center', mt: 3 }}>
               <Typography variant="body2">
-                Don't have an account? <Link to="/signup">Register</Link>
+                Don't have an account? <Link to="/register">Register</Link>
               </Typography>
             </Box>
           </form>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
+        <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>
+          <Button
+            onClick={onClose}
+            sx={{
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline'
+              }
+            }}>
+            Cancel
+          </Button>
           <Button variant="contained" onClick={handleLogin}>
             Login
           </Button>

@@ -90,7 +90,21 @@ const PublicPage = () => {
         }}>
         <Footer />
       </Grid>
-      <Dialog open={modalOpen} onClose={handleClose}>
+      <Dialog
+        open={modalOpen}
+        onClose={handleClose}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          '& .MuiDialog-paper': {
+            opacity: 0,
+            transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '& .MuiDialog-paper.MuiDialog-paperOpen': {
+            opacity: 1
+          }
+        }}>
         <Login modalOpen={modalOpen} onClose={handleClose} />
       </Dialog>
     </Grid>
