@@ -53,7 +53,7 @@ const AddUser = ({ setOpenUserModal, openUserModal }) => {
     formRef.current.reset()
     setTimeout(() => {
       setShowSuccessMessage(false)
-    }, 1000)
+    }, 2000)
     navigate('/users')
   }
 
@@ -75,11 +75,7 @@ const AddUser = ({ setOpenUserModal, openUserModal }) => {
           </Box>
           {showSuccessMessage && (
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-              <Snackbar
-                open={showSuccessMessage}
-                autoHideDuration={6000}
-                message={'User added successfully!'}
-              />
+              <Snackbar open={showSuccessMessage} message={'User added successfully!'} />
             </Box>
           )}
         </DialogTitle>

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Snackbar from '@mui/material/Snackbar'
@@ -15,7 +14,6 @@ const Profile = () => {
   const [firstName, setFirstName] = useState(loggedUser.firstName)
   const [lastName, setLastName] = useState(loggedUser.lastName)
   const [email, setEmail] = useState(loggedUser.email)
-  const [role, setRole] = useState(loggedUser.role)
   const [isEdit, setIsEdit] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
@@ -27,13 +25,12 @@ const Profile = () => {
   }
 
   const handleSave = () => {
-    const updatedUser = { id: userId, firstName, lastName, email, role }
+    const updatedUser = { id: userId, firstName, lastName, email }
     dispatch(updateUser(updatedUser))
     setIsEdit(false)
     setFirstName(updatedUser.firstName)
     setLastName(updatedUser.lastName)
     setEmail(updatedUser.email)
-    setRole(updatedUser.role)
     setShowSuccessMessage(true)
   }
 
@@ -101,16 +98,6 @@ const Profile = () => {
             fullWidth
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={!isEdit}
-          />
-        </Box>
-        <Box sx={{ mt: 2 }}>
-          <TextField
-            label="Role"
-            variant="outlined"
-            fullWidth
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
             disabled={!isEdit}
           />
         </Box>

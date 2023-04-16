@@ -16,6 +16,7 @@ import UpdateUser from './components/admin/UpdateUser'
 import AddBook from './components/admin/AddBookForm'
 import UpdateBook from './components/admin/UpdateBook'
 import IssueBook from './components/admin/IssuedBooks'
+import Book from './components/books/Book'
 
 function App() {
   return (
@@ -26,15 +27,15 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/users/:id" element={<User />} />
-          <Route path="/books/:id" element={<User />} />
+          <Route path="/books/:id" element={<Book />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/help" element={<Help />} />
           <Route element={<AdminRoute />}>
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="/dashboard/adduser" element={<AddUser />} />
-              <Route path="/dashboard/updateuser" element={<UpdateUser />} />
+              <Route path="/dashboard/users/:id" element={<UpdateUser />} />
               <Route path="/dashboard/addbook" element={<AddBook />} />
-              <Route path="/dashboard/updatebook" element={<UpdateBook />} />
+              <Route path="/dashboard/books/:ISBN" element={<UpdateBook />} />
               <Route path="/dashboard/issuebook" element={<IssueBook />} />
             </Route>
             <Route path="/users" element={<Users />} />

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Snackbar from '@mui/material/Snackbar'
@@ -9,44 +10,50 @@ import { updateUser } from '../../features/users/userSlice'
 
 const UpdateUser = () => {
   const { id: userId } = useParams()
-  const users = useSelector((state) => state.users)
+  console.log({ userId })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [isEdit, setIsEdit] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [role, setRole] = useState('')
 
+  const users = useSelector((state) => state.users)
+  console.log(users)
   const userToUpdate = users.find((user) => user.id === userId)
   console.log({ userToUpdate })
 
-  const [firstName, setFirstName] = useState(userToUpdate.firstName)
-  const [lastName, setLastName] = useState(userToUpdate.lastName)
-  const [email, setEmail] = useState(userToUpdate.email)
-  const [role, setRole] = useState(userToUpdate.role)
-  const [isEdit, setIsEdit] = useState(false)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  useEffect(() => {
+    if (userToUpdate) {
+      setFirstName(userToUpdate.firstName)
+      setLastName(userToUpdate.lastName)
+      setEmail(userToUpdate.email)
+      setRole(userToUpdate.role)
+    }
+  }, [userToUpdate])
 
   const handleEdit = () => {
     setIsEdit(true)
     setShowSuccessMessage(false)
   }
 
-  const handleSave = () => {
-    const updatedUser = { id: userId, firstName, lastName, email, role }
-    dispatch(updateUser(updatedUser))
-    setIsEdit(false)
-    setFirstName(updatedUser.firstName)
-    setLastName(updatedUser.lastName)
-    setEmail(updatedUser.email)
-    setRole(updatedUser.role)
-    setShowSuccessMessage(true)
-    setTimeout(() => {
-      navigate('/users')
-    }, 2000)
-  }
-
   const handleCancel = () => {
+    setIsEdit(false)
     navigate('/dashboard')
   }
 
+  const handleSave = (event) => {
+    const updatedUser = { id: userId, firstName, lastName, email, role }
+    dispatch(updateUser(updatedUser))
+    setShowSuccessMessage(true)
+    setTimeout(() => {
+      setShowSuccessMessage(false)
+      setIsEdit(false)
+      navigate('/dashboard', { replace: 'true' })
+    }, 2000)
+  }
   return (
     <Grid item xs={10}>
       <Box>
@@ -72,11 +79,11 @@ const UpdateUser = () => {
           </Typography>
         </Box>
         {showSuccessMessage && (
-          <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+          <Box alignItems="center" justifyContent="center" mb={2}>
             <Snackbar
               open={showSuccessMessage}
               message="User updated successfully"
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+              anchor={{ vertical: 'center', horizontal: 'center' }}
             />
           </Box>
         )}
@@ -120,14 +127,15 @@ const UpdateUser = () => {
             disabled={!isEdit}
           />
         </Box>
-        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-evenly' }}>
+        <Box sx={{ mt: 2 }}>
           {!isEdit ? (
             <>
-              <Button variant="contained" onClick={handleCancel}>
-                Cancel
-              </Button>
               <Button variant="contained" onClick={handleEdit}>
                 Edit
+              </Button>
+              <Box sx={{ display: 'inline-block', width: '16px' }} />
+              <Button variant="contained" onClick={() => navigate('/dashboard')}>
+                Back
               </Button>
             </>
           ) : (

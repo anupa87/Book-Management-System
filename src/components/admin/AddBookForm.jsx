@@ -92,7 +92,6 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
               <Snackbar
                 open={showSuccessMessage}
-                autoHideDuration={6000}
                 message={
                   bookData
                     ? 'Book, {book.title} updated successfully!'

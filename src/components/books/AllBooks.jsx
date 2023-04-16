@@ -78,7 +78,7 @@ const AllBooks = () => {
               {displayedBooks.map((book) => (
                 <TableRow key={book.ISBN}>
                   <TableCell component="th" scope="row">
-                    <RouterLink to={`/books/${book.ISBN}`} sx={{ color: 'inherit' }}>
+                    <RouterLink to={`/dashboard/books/${book.ISBN}`} sx={{ color: 'inherit' }}>
                       {`${book.title}`}
                     </RouterLink>
                   </TableCell>
