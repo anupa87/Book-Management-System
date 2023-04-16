@@ -8,7 +8,6 @@ import HomePage from './pages/HomePage'
 import Dashboard from './pages/Dashboard'
 import Books from './pages/Books'
 import Users from './pages/Users'
-import User from './components/admin/UpdateUser'
 import Setting from './pages/Setting'
 import Help from './pages/Help'
 import AddUser from './components/admin/AddUserForm'
@@ -17,6 +16,7 @@ import AddBook from './components/admin/AddBookForm'
 import UpdateBook from './components/admin/UpdateBook'
 import IssueBook from './components/admin/IssuedBooks'
 import Book from './components/books/Book'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -26,8 +26,10 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/homepage" element={<HomePage />} />
-          <Route path="/users/:id" element={<User />} />
-          <Route path="/books/:id" element={<Book />} />
+          <Route path="/user/:id" element={<Profile />} />
+          <Route path="/book/:ISBN" element={<Book />} />
+          <Route path="/users/:id" element={<UpdateUser />} />
+          <Route path="/books/:ISBN" element={<UpdateBook />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/help" element={<Help />} />
           <Route element={<AdminRoute />}>

@@ -15,7 +15,11 @@ const bookSlice = createSlice({
 
     updateBook: (state, action) => {
       const updatedBook = action.payload
-      return [updatedBook, ...state.filter((b) => b.ISBN !== updatedBook.ISBN)]
+      const book = state.find((book) => book.ISBN === updatedBook.ISBN)
+      return [
+        { ...book, ...updatedBook },
+        ...state.filter((book) => book.ISBN !== updatedBook.ISBN)
+      ]
     },
 
     deleteBook: (state, action) => {

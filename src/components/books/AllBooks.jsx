@@ -45,6 +45,7 @@ const AllBooks = () => {
       setShowSuccessMessage(false)
     }, 2000)
   }
+
   const displayedBooks = books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
@@ -78,7 +79,7 @@ const AllBooks = () => {
               {displayedBooks.map((book) => (
                 <TableRow key={book.ISBN}>
                   <TableCell component="th" scope="row">
-                    <RouterLink to={`/dashboard/books/${book.ISBN}`} sx={{ color: 'inherit' }}>
+                    <RouterLink to={`/books/${book.ISBN}`} sx={{ color: 'inherit' }}>
                       {`${book.title}`}
                     </RouterLink>
                   </TableCell>

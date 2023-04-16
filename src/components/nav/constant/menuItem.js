@@ -30,7 +30,7 @@ const getMenuItems = (currentUser) => [
     path: '/user/setting',
     role: 'both'
   },
-  { label: 'Help', icon: React.createElement(HelpIcon), path: '/user/help', role: 'both' },
+  { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'both' },
   { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'both' }
 ]
 

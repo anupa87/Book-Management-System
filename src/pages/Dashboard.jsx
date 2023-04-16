@@ -9,7 +9,6 @@ import AllBooks from '../components/books/AllBooks'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
-  console.log(currentUser)
 
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')

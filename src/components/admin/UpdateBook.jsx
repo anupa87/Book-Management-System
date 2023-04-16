@@ -1,237 +1,252 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import {
-  Button,
-  Container,
-  TextField,
-  Typography,
-  Grid,
-  Box,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions
-} from '@mui/material'
-import { Close as CloseIcon } from '@mui/icons-material'
+import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 
 import { updateBook } from '../../features/books/bookSlice'
 
 const UpdateBook = () => {
+  const { ISBN: bookISBN } = useParams()
   const [isEdit, setIsEdit] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-  const [book, setBook] = useState({
-    ISBN: '',
-    title: '',
-    imageURL: '',
-    description: '',
-    author: '',
-    publisher: '',
-    publishedYear: '',
-    status: '',
-    borrowerId: null,
-    borrowDate: '',
-    returnDate: '',
-    likesCount: null,
-    ...bookData
-  })
+  const [title, setTitle] = useState('')
+  const [imageURL, setImageURL] = useState('')
+  const [description, setDescription] = useState('')
+  const [author, setAuthor] = useState('')
+  const [publisher, setPublisher] = useState('')
+  const [publishedYear, setPublishedYear] = useState('')
+  const [status, setStatus] = useState('')
+  const [borrowerId, setBorrowerId] = useState(null)
+  const [borrowDate, setBorrowDate] = useState('')
+  const [returnDate, setReturnDate] = useState('')
+  const [likesCount, setLikesCount] = useState(null)
 
-  const navigate = useNavigate()
+  const books = useSelector((state) => state.books)
+  const bookToUpdate = books.find((book) => book.ISBN === bookISBN)
+  console.log({ bookToUpdate })
+
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (bookData && !book.ISBN) {
-      setBook(bookData)
+    if (bookToUpdate) {
+      setTitle(bookToUpdate.title)
+      setImageURL(bookToUpdate.imageURL)
+      setDescription(bookToUpdate.description)
+      setAuthor(bookToUpdate.author)
+      setPublisher(bookToUpdate.publisher)
+      setPublishedYear(bookToUpdate.publishedYear)
+      setStatus(bookToUpdate.status)
+      setBorrowerId(bookToUpdate.borrowerId)
+      setBorrowDate(bookToUpdate.borrowDate)
+      setReturnDate(bookToUpdate.returnDate)
+      setLikesCount(bookToUpdate.likesCount)
     }
-  })
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setBook((prevState) => ({ ...prevState, [name]: value }))
-  }
+  }, [bookToUpdate])
 
   const handleEdit = () => {
     setIsEdit(true)
     setShowSuccessMessage(false)
   }
 
-  const handleSave = (e) => {
-    e.preventDefault()
-    dispatch(updateBook(book))
-    setBook({
-      ISBN: '',
-      title: '',
-      imageURL: '',
-      description: '',
-      author: '',
-      publisher: '',
-      publishedYear: '',
-      status: '',
-      borrowerId: null,
-      borrowDate: '',
-      returnDate: '',
-      likesCount: null
-    })
-    setShowSuccessMessage(true)
-    setTimeout(() => {
-      setShowSuccessMessage(false)
-    }, 2000)
-    navigate('/books')
-  }
-
-  const handleClose = () => {
+  const handleCancel = () => {
+    setIsEdit(false)
     navigate('/dashboard')
   }
 
+  const handleSave = (event) => {
+    const updatedBook = {
+      title,
+      imageURL,
+      description,
+      author,
+      publisher,
+      publishedYear,
+      status,
+      borrowerId,
+      borrowDate,
+      returnDate,
+      likesCount
+    }
+    dispatch(updateBook(updatedBook))
+    setShowSuccessMessage(true)
+    setTimeout(() => {
+      setShowSuccessMessage(false)
+      setIsEdit(false)
+      navigate('/dashboard', { replace: 'true' })
+    }, 2000)
+  }
   return (
-    <Container maxWidth="sm">
+    <Grid item xs={10}>
       <Box>
-        <Typography variant="h4" sx={{ mt: 2, mb: 2 }} gutterBottom>
+        <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
           Update Book
         </Typography>
         <hr />
       </Box>
-      {showSuccessMessage && (
-        <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-          <Snackbar
-            open={showSuccessMessage}
-            message={'Book updated successfully!'}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      <Container
+        maxWidth="sm"
+        sx={{
+          backgroundColor: 'white',
+          padding: '16px',
+          borderRadius: '8px',
+          textAlign: 'center',
+          mt: 5
+        }}>
+        {showSuccessMessage && (
+          <Box alignItems="center" justifyContent="center" mb={2}>
+            <Snackbar
+              open={showSuccessMessage}
+              message="Book updated successfully"
+              anchor={{ vertical: 'center', horizontal: 'center' }}
+            />
+          </Box>
+        )}
+
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="title"
+            label="Title"
+            value={title}
+            fullWidth
+            required
+            onChange={(e) => setTitle(e.target.value)}
+            disabled={!isEdit}
           />
         </Box>
-      )}
-      <form ref={formRef} onSubmit={handleSubmitBook}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              name="ISBN"
-              label="ISBN"
-              value={book.ISBN}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="title"
-              label="Title"
-              value={book.title}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="imageURL"
-              label="Image"
-              value={book.imageURL}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="description"
-              label="Description"
-              value={book.description}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              name="author"
-              label="Author"
-              value={book.author}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="publisher"
-              label="Publisher"
-              value={book.publisher}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="publishedYear"
-              label="Published Year"
-              value={book.publishedYear}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="status"
-              label="status"
-              value={book.status}
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="borrowerId"
-              label="Borrower Id"
-              value={book.borrowerId}
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="borrowDate"
-              label="Borrow Date"
-              value={book.borrowDate}
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="returnDate"
-              label="Return Date"
-              value={book.returnDate}
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              name="likesCount"
-              label="Likes Count"
-              value={book.likesCount}
-              fullWidth
-              onChange={handleChange}
-            />
-          </Grid>
-          <DialogActions>
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary" type="submit">
-                Add
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="imageURL"
+            label="Image"
+            value={imageURL}
+            fullWidth
+            required
+            onChange={(e) => setImageURL(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="description"
+            label="Description"
+            value={description}
+            fullWidth
+            required
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="author"
+            label="Author"
+            value={author}
+            fullWidth
+            required
+            onChange={(e) => setAuthor(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="publisher"
+            label="Publisher"
+            value={publisher}
+            fullWidth
+            required
+            onChange={(e) => setPublisher(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="publishedYear"
+            label="Published Year"
+            value={publishedYear}
+            fullWidth
+            required
+            onChange={(e) => setPublishedYear(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="status"
+            label="status"
+            value={status}
+            fullWidth
+            required
+            onChange={(e) => setStatus(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="borrowerId"
+            label="Borrower Id"
+            value={borrowerId}
+            fullWidth
+            onChange={(e) => setborrowerId(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="borrowDate"
+            label="Borrow Date"
+            value={borrowDate}
+            fullWidth
+            onChange={(e) => setborrowDate(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="returnDate"
+            label="Return Date"
+            value={returnDate}
+            fullWidth
+            onChange={(e) => setreturnDate(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          <TextField
+            name="likesCount"
+            label="Likes Count"
+            value={likesCount}
+            fullWidth
+            onChange={(e) => setLikesCount(e.target.value)}
+            disabled={!isEdit}
+          />
+        </Box>
+        <Box sx={{ mt: 2 }}>
+          {!isEdit ? (
+            <>
+              <Button variant="contained" onClick={handleEdit}>
+                Edit
               </Button>
-            </Grid>
-          </DialogActions>
-        </Grid>
-      </form>
-    </Container>
+              <Box sx={{ display: 'inline-block', width: '16px' }} />
+              <Button variant="contained" onClick={() => navigate('/dashboard')}>
+                Back
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="contained" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Box sx={{ display: 'inline-block', width: '16px' }} />
+              <Button variant="contained" color="primary" onClick={handleSave}>
+                Save
+              </Button>
+            </>
+          )}
+        </Box>
+      </Container>
+    </Grid>
   )
 }
 

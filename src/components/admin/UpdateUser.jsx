@@ -10,9 +10,7 @@ import { updateUser } from '../../features/users/userSlice'
 
 const UpdateUser = () => {
   const { id: userId } = useParams()
-  console.log({ userId })
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+
   const [isEdit, setIsEdit] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [firstName, setFirstName] = useState('')
@@ -21,9 +19,10 @@ const UpdateUser = () => {
   const [role, setRole] = useState('')
 
   const users = useSelector((state) => state.users)
-  console.log(users)
   const userToUpdate = users.find((user) => user.id === userId)
-  console.log({ userToUpdate })
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (userToUpdate) {

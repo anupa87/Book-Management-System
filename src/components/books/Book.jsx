@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material'
 
-const book = () => {
+const Book = () => {
   return (
     <Box>
       <Typography variant="h3" sx={{ my: 2 }}>
-        Book
+        Book:
       </Typography>
       <hr />
     </Box>
   )
 }
 
-export default book
+export default Book
