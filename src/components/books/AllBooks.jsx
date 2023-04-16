@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteBook } from '../../features/books/bookSlice'
 import { Link as RouterLink } from 'react-router-dom'

@@ -1,131 +1,80 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 
 import {
   Grid,
   Box,
   Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Button,
-  Link,
-  TableSortLabel
+  Card,
+  CardHeader,
+  CardMedia,
+  CardActions,
+  CardContent
 } from '@mui/material'
 
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
-import AddBook from '../components/admin/AddBookForm.jsx'
+import Search from '../components/Search'
 
 const Books = () => {
   const books = useSelector((state) => state.books)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [sortOrder, setSortOrder] = useState('asc')
-  const [sortColumn, setSortColumn] = useState('title')
-  const [selectedBook, setSelectedBook] = useState()
-  const [open, setOpen] = useState(false)
-  const sortDirection = sortOrder === 'asc' ? 'desc' : 'asc'
-  const sortIcon = sortOrder === 'asc' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />
 
-  const sortedBooks = [...books].sort((a, b) => {
-    const aValue = a[sortColumn]
-    const bValue = b[sortColumn]
-
-    if (sortOrder === 'asc') {
-      return aValue.localeCompare(bValue)
-    } else {
-      return bValue.localeCompare(aValue)
-    }
-  })
-
-  const handleSortClick = (column) => {
-    if (column === sortColumn) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortColumn(column)
-      setSortOrder('asc')
-    }
-  }
-
-  const handleTitleLink = (tmpBook) => {
-    setSelectedBook(tmpBook)
-    setOpen(true)
-  }
+  // Get the filtered books from the Search component
+  const filteredBooks = useSelector((state) => state.filteredBooks)
 
   return (
-    <Grid item xs={10}>
-      <Box>
-        <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
-          All Books
-        </Typography>
-        <hr />
+    <Box sx={{ my: 4 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 2
+        }}>
+        <Typography variant="h4">Books</Typography>
       </Box>
-      <Box sx={{ mt: 4, mb: 4 }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="User table">
-            <TableHead sx={{ backgroundColor: 'secondary.main' }}>
-              <TableRow>
-                <TableCell sx={{ color: 'white' }}>ISBN</TableCell>
-                <TableCell sx={{ color: 'white' }}>
-                  <TableSortLabel
-                    active={sortColumn === 'title'}
-                    direction={sortDirection}
-                    onClick={() => handleSortClick('title')}
-                    sx={{ color: 'white' }}>
-                    Title {sortColumn === 'title' ? sortIcon : null}
-                  </TableSortLabel>
-                </TableCell>
-                <TableCell sx={{ color: 'white' }}>Description</TableCell>
-                <TableCell sx={{ color: 'white' }}>Author</TableCell>
-                <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
-                <TableCell sx={{ color: 'white' }}>Status</TableCell>
-                <TableCell sx={{ color: 'white' }}>Delete</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedBooks &&
-                sortedBooks.map((book) => (
-                  <TableRow key={book.id}>
-                    <TableCell component="th" scope="row">
-                      {book.ISBN}
-                    </TableCell>
-                    <TableCell>
-                      <Link component="button" onClick={() => handleTitleLink(book)}>
-                        {book.title}
-                      </Link>
-                    </TableCell>
-                    <TableCell>{book.description}</TableCell>
-                    <TableCell>{book.author}</TableCell>
-                    <TableCell>{book.publisher}</TableCell>
-                    <TableCell>{book.status}</TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <hr />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ width: '50%' }}>
+          <Search />
+        </Box>
       </Box>
-      <Box>
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: 'secondary.main', ml: 0 }}
-          onClick={() => navigate('/dashboard')}>
-          Back to dashboard
-        </Button>
-      </Box>
-      <AddBook
-        open={open}
-        onClose={() => setOpen(false)}
-        setOpen={setOpen}
-        bookData={selectedBook}
-      />
-    </Grid>
+      <Grid container spacing={2}>
+        {filteredBooks?.map((book) => (
+          <Grid
+            item
+            key={book.id}
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            sx={{
+              mt: 6
+            }}>
+            <Card sx={{ width: 350, height: 400 }}>
+              <CardMedia
+                component="img"
+                image={book.imageURL}
+                alt={book.title}
+                sx={{
+                  objectFit: 'cover',
+                  height: '50%'
+                }}
+              />
+              <CardHeader title={book.title} />
+              <CardContent>
+                <Typography variant="subtitle2" color="text.secondary">
+                  {book.author}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <RouterLink to={`/book/${book.ISBN}`} sx={{ color: 'inherit' }}>
+                  Learn More
+                </RouterLink>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   )
 }
 

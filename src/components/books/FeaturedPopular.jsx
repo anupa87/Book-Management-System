@@ -1,7 +1,16 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Grid, Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material'
+import {
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  CardHeader,
+  CardContent,
+  Button
+} from '@mui/material'
 
 const FeaturedPopular = () => {
   const books = useSelector((state) => state.books)
@@ -47,18 +56,15 @@ const FeaturedPopular = () => {
                 <Card sx={{ width: 300, height: 300 }}>
                   <CardMedia
                     component="img"
-                    height={150}
                     image={book.imageURL}
                     alt={book.title}
                     sx={{
                       objectFit: 'cover',
-                      width: '100%'
+                      height: '50%'
                     }}
                   />
+                  <CardHeader title={book.title} />
                   <CardContent>
-                    <Typography variant="h6" component="div">
-                      {book.title}
-                    </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                       {book.author}
                     </Typography>
@@ -83,17 +89,15 @@ const FeaturedPopular = () => {
                 <Card sx={{ width: 300, height: 300 }}>
                   <CardMedia
                     component="img"
-                    height="150"
-                    image={book.image}
+                    image={book.imageURL}
                     alt={book.title}
                     sx={{
-                      objectFit: 'cover'
+                      objectFit: 'cover',
+                      height: '50%'
                     }}
                   />
+                  <CardHeader title={book.title} />
                   <CardContent>
-                    <Typography variant="h6" component="div">
-                      {book.title}
-                    </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
                       {book.author}
                     </Typography>

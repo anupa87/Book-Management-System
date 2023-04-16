@@ -1,15 +1,41 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import { Box, TextField, IconButton } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import SearchIcon from '@mui/icons-material/Search'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import Books from '../pages/Books'
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState('')
+  const [filterYear, setFilterYear] = useState('')
+  const [filterAuthor, setFilterAuthor] = useState('')
+
+  const books = useSelector((state) => state.books)
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value)
   }
+  const handleFilterYearChange = (event) => {
+    setFilterYear(event.target.value)
+  }
+
+  const handleFilterAuthorChange = (event) => {
+    setFilterAuthor(event.target.value)
+  }
+
+  const filteredBooks = books.filter((book) => {
+    if (
+      (book.title && book.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.author && book.author.toLowerCase().includes(filterAuthor.toLowerCase())) ||
+      (book.publishedYear && book.publishedYear.toString().includes(filterYear))
+    ) {
+      return true
+    }
+    return false
+  })
+
   return (
     <Box sx={{ mt: 2 }}>
       <TextField
@@ -44,6 +70,7 @@ const Search = () => {
         }}
         placeholder="Search books"
       />
+      <Books books={filteredBooks} />
     </Box>
   )
 }

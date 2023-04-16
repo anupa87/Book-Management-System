@@ -14,7 +14,7 @@ import AddUser from './components/admin/AddUserForm'
 import UpdateUser from './components/admin/UpdateUser'
 import AddBook from './components/admin/AddBookForm'
 import UpdateBook from './components/admin/UpdateBook'
-import IssueBook from './components/admin/IssuedBooks'
+import IssueBook from './components/admin/IssueBookForm'
 import Book from './components/books/Book'
 import Profile from './pages/Profile'
 

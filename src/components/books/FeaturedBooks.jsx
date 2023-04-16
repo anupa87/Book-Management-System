@@ -1,7 +1,16 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Grid, Box, Typography, Card, CardMedia, CardContent, Button } from '@mui/material'
+import {
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  CardHeader,
+  CardContent,
+  Button
+} from '@mui/material'
 
 const FeaturedBooks = () => {
   const books = useSelector((state) => state.books)
@@ -49,10 +58,8 @@ const FeaturedBooks = () => {
                   height: '50%'
                 }}
               />
+              <CardHeader title={book.title} />
               <CardContent>
-                <Typography variant="h6" component="div">
-                  {book.title}
-                </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
                   {book.author}
                 </Typography>
