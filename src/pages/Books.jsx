@@ -20,7 +20,6 @@ import {
   TableSortLabel
 } from '@mui/material'
 
-import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
@@ -93,7 +92,6 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
                 <TableCell sx={{ color: 'white' }}>Status</TableCell>
-                <TableCell sx={{ color: 'white' }}>Update</TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
               </TableRow>
             </TableHead>
@@ -112,17 +110,7 @@ const Books = () => {
                     <TableCell>{book.description}</TableCell>
                     <TableCell>{book.author}</TableCell>
                     <TableCell>{book.publisher}</TableCell>
-
-                    <TableCell>
-                      <Link component="button" onClick={() => handleTitleLink(book)}>
-                        {book.status}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton onClick={() => handleTitleLink(book)}>
-                        <EditIcon />
-                      </IconButton>
-                    </TableCell>
+                    <TableCell>{book.status}</TableCell>
                     <TableCell>
                       <IconButton onClick={() => handleDeleteBook(book.id)}>
                         <DeleteIcon />

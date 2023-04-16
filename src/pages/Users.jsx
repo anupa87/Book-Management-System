@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { deleteUser } from '../features/users/userSlice'
 
 import {
-  Grid,
   Box,
   Typography,
   Table,
@@ -14,10 +13,10 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Button
+  Button,
+  Container
 } from '@mui/material'
 
-import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 const Users = () => {
@@ -35,7 +34,7 @@ const Users = () => {
   }
 
   return (
-    <Grid item xs={10}>
+    <Container>
       <Box>
         <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
           All Users
@@ -81,7 +80,7 @@ const Users = () => {
           Back to dashboard
         </Button>
       </Box>
-    </Grid>
+    </Container>
   )
 }
 

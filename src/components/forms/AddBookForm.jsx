@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
@@ -15,11 +15,12 @@ import {
   DialogContent,
   DialogActions
 } from '@mui/material'
-import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-material'
+import { Close as CloseIcon } from '@mui/icons-material'
+import Snackbar from '@mui/material/Snackbar'
 
 import { addBook, updateBook } from '../../features/books/bookSlice'
 
-const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
+const AddBookForm = ({ open, setOpen, bookData }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -33,7 +34,6 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
     publishedDate: '',
     borrowDate: '',
     returnDate: '',
-    authorIds: [],
     ...bookData
   })
 
@@ -47,10 +47,8 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    console.log(name, value)
-    setBook({ ...book, [name]: value })
+    const { name, value } = e.target
+    setBook((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleSubmitBook = (e) => {
@@ -65,15 +63,13 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
       status: '',
       borrowerId: '',
       borrowDate: '',
-      returnDate: '',
-      authorIds: []
+      returnDate: ''
     })
     setShowSuccessMessage(true)
     formRef.current.reset()
     setTimeout(() => {
-      setShowSuccessMessage(false)
-    }, 1000)
-    navigate('/books')
+      navigate('/books')
+    }, 2000)
   }
 
   const handleClose = () => {
@@ -86,7 +82,7 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
         <DialogTitle>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="h4" gutterBottom>
-              Add Book
+              {bookData ? 'Update Book' : 'Add Book'}
             </Typography>
             <IconButton onClick={handleClose}>
               <CloseIcon />
@@ -94,10 +90,15 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
           </Box>
           {showSuccessMessage && (
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-              <CheckCircleIcon color="success" fontSize="large" />
-              <Typography variant="h6" color="success" ml={1}>
-                Book,{book.title} added successfully!
-              </Typography>
+              <Snackbar
+                open={showSuccessMessage}
+                autoHideDuration={6000}
+                message={
+                  bookData
+                    ? 'Book, {book.title} updated successfully!'
+                    : 'Book, {book.title} added successfully!'
+                }
+              />
             </Box>
           )}
         </DialogTitle>
@@ -134,16 +135,7 @@ const AddBookForm = ({ open, onClose, setOpen, bookData }) => {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="authorIds"
-                  label="Author Id/s"
-                  value={book.authorIds}
-                  fullWidth
-                  required
-                  onChange={handleChange}
-                />
-              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   name="publisher"

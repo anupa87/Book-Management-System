@@ -8,17 +8,22 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import HelpIcon from '@mui/icons-material/Help'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-const menuItems = [
+const getMenuItems = (currentUser) => [
+  { label: 'Home', icon: React.createElement(HomeIcon), path: '/homepage', role: 'both' },
   {
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
-    path: '/user/dashboard',
-    role: 'admin'
+    path: '/dashboard',
+    role: 'both'
   },
-  { label: 'Home', icon: React.createElement(HomeIcon), path: '/user/', role: 'both' },
-  { label: 'Books', icon: React.createElement(BookIcon), path: '/user/books', role: 'both' },
-  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/user/users', role: 'admin' },
-  { label: 'Profile', icon: React.createElement(PersonIcon), path: '/user/profile', role: 'user' },
+  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'admin' },
+  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },
+  {
+    label: 'Profile',
+    icon: React.createElement(PersonIcon),
+    path: '/user/' + currentUser.id,
+    role: 'user'
+  },
   {
     label: 'Settings',
     icon: React.createElement(SettingsIcon),
@@ -29,4 +34,4 @@ const menuItems = [
   { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'both' }
 ]
 
-export default menuItems
+export default getMenuItems

@@ -22,23 +22,14 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { loginSuccess } from '../../features/auth/authSlice'
 import { selectUsers } from '../../features/users/userSlice'
 
-const Login = () => {
+const Login = ({ modalOpen, onClose }) => {
   const users = useSelector(selectUsers)
   const { isLoggedIn } = useSelector((state) => state.auth)
-  const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -48,7 +39,8 @@ const Login = () => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleLogin = (formData) => {
+  const handleLogin = (e) => {
+    e.preventDefault()
     if (!formData.email || !formData.password) {
       setError('Please enter your email and password.')
       return
@@ -61,12 +53,9 @@ const Login = () => {
     localStorage.removeItem('currentRole')
 
     if (user) {
-      const role = user.role
-      console.log(role)
-      dispatch(loginSuccess({ user, role: user.role }))
       localStorage.setItem('currentUser', JSON.stringify(user))
       localStorage.setItem('currentRole', JSON.stringify(user.role))
-      navigate('/')
+      navigate('/homepage')
     } else {
       setError('User not found or incorrect password.')
     }
@@ -81,15 +70,11 @@ const Login = () => {
 
   return (
     <Box sx={{ mx: 'auto', p: 3 }}>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={modalOpen} onClose={onClose} sx={{ width: '400px' }}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           {error?.length && <div>{error}</div>}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              handleLogin(formData)
-            }}>
+          <form onSubmit={handleLogin}>
             <TextField
               name="email"
               label="Email"
@@ -140,8 +125,8 @@ const Login = () => {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" onClick={handleClose}>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button variant="contained" onClick={handleLogin}>
             Login
           </Button>
         </DialogActions>

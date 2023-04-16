@@ -6,22 +6,24 @@ import AddIcon from '@mui/icons-material/Add'
 
 import AddUser from '../forms/AddUserForm'
 import AddBook from '../forms/AddBookForm'
+import IssueBookForm from '../forms/IssueBookForm'
 
 const AddCards = () => {
   const navigate = useNavigate()
-  const [showAddUser, setShowAddUser] = useState(false)
-  const [showAddBook, setShowAddBook] = useState(false)
   const [openUserModal, setOpenUserModal] = useState(false)
   const [open, setOpen] = useState(false)
+  const [openIssueModal, setOpenIssueModal] = useState(false)
 
   const handleAddUser = () => {
-    setShowAddUser(true)
     setOpenUserModal(true)
   }
 
   const handleAddBook = () => {
-    setShowAddBook(true)
     setOpen(true)
+  }
+
+  const handleIssueBook = () => {
+    setOpenIssueModal(true)
   }
 
   return (
@@ -47,6 +49,16 @@ const AddCards = () => {
           </CardContent>
         </Box>
       </Card>
+      <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <IconButton sx={{ color: 'white' }} onClick={handleIssueBook}>
+            <AddIcon />
+          </IconButton>
+          <CardContent sx={{ mt: 1 }}>
+            <Typography variant="h6">Issue Books</Typography>
+          </CardContent>
+        </Box>
+      </Card>
       <Dialog
         open={openUserModal}
         onClose={() => setOpenUserModal(false)}
@@ -59,6 +71,16 @@ const AddCards = () => {
       </Dialog>
       <Dialog open={open} onClose={() => setOpen(false)} PaperProps={{ style: { width: '80%' } }}>
         <AddBook open={open} onClose={() => setOpen(false)} setOpen={setOpen} />
+      </Dialog>
+      <Dialog
+        open={openIssueModal}
+        onClose={() => setOpenIssueModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <IssueBookForm
+          openIssueModal={openIssueModal}
+          onClose={() => setOpenIssueModal(false)}
+          setOpenIssueModal={setOpenIssueModal}
+        />
       </Dialog>
     </Box>
   )

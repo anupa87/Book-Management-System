@@ -19,10 +19,7 @@ import { CheckCircle as CheckCircleIcon, Close as CloseIcon } from '@mui/icons-m
 
 import { addUser } from '../../features/users/userSlice'
 
-const AddUserForm = ({ setOpenUserModal, openUserModal }) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
+const UserForm = ({ setOpenUserModal, openUserModal }) => {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
@@ -30,19 +27,19 @@ const AddUserForm = ({ setOpenUserModal, openUserModal }) => {
     password: '',
     role: ''
   })
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const formRef = useRef(null)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const handleChange = (e) => {
-    const name = e.target.name
-    const value = e.target.value
-    setUser({ ...user, [name]: value })
+    const { name, value } = e.target
+    setBook((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleSubmitUser = (e) => {
     e.preventDefault()
-    console.log(user)
     dispatch(addUser(user)) //dispatch the addUser action with the user data
     setUser({
       firstName: '',
@@ -154,4 +151,4 @@ const AddUserForm = ({ setOpenUserModal, openUserModal }) => {
   )
 }
 
-export default AddUserForm
+export default UserForm

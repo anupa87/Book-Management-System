@@ -1,16 +1,14 @@
 import { Box, Typography } from '@mui/material'
 
-import AddCards from '../components/admin/AddCards'
-
-const Dashboard = () => {
+const book = () => {
   return (
     <Box>
       <Typography variant="h3" sx={{ my: 2 }}>
-        Dashboard
+        Book
       </Typography>
       <hr />
-      <AddCards />
     </Box>
   )
 }
-export default Dashboard
+
+export default book

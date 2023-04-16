@@ -39,7 +39,8 @@
       "borrowerID": 456,
       "borrowDate": "2023-04-10",
       "returnDate": "2023-04-25",
-      "status": "borrowed"
+      "status": "borrowed",
+      "likesCount": 5
     },
     {
       "id": 2,
@@ -53,7 +54,8 @@
       "borrowerID": null,
       "borrowDate": null,
       "returnDate": null,
-      "status": "available"
+      "status": "available",
+      "likesCount": 1
     },
     {
       "id": 3,
@@ -67,7 +69,8 @@
       "borrowerID": 4,
       "borrowDate": "2023-04-01",
       "returnDate": "2023-04-15",
-      "status": "borrowed"
+      "status": "borrowed",
+      "likesCount": 2
     },
     {
       "id": 4,
@@ -81,7 +84,8 @@
       "borrowerID": 7,
       "borrowDate": "2023-04-03",
       "returnDate": "2023-04-17",
-      "status": "borrowed"
+      "status": "borrowed",
+      "likesCount": null
     },
     {
       "id": 5,
@@ -95,7 +99,8 @@
       "borrowerID": null,
       "borrowDate": null,
       "returnDate": null,
-      "status": "available"
+      "status": "available",
+      "likesCount": null
     },
     {
       "id": 6,
@@ -109,7 +114,8 @@
       "borrowerID": null,
       "borrowDate": null,
       "returnDate": null,
-      "status": "available"
+      "status": "available",
+      "likesCount": 1
     },
     {
       "id": 7,
@@ -123,7 +129,8 @@
       "borrowerID": null,
       "borrowDate": null,
       "returnDate": null,
-      "status": "available"
+      "status": "available",
+      "likesCount": null
     },
     {
       "id": 8,
@@ -137,7 +144,8 @@
       "borrowerID": 4,
       "borrowDate": "2023-04-10",
       "returnDate": "2023-04-24",
-      "status": "borrowed"
+      "status": "borrowed",
+      "likesCount": 3
     },
     {
       "id": 9,
@@ -151,7 +159,8 @@
       "borrowerID": null,
       "borrowDate": null,
       "returnDate": null,
-      "status": "available"
+      "status": "available",
+      "likesCount": 6
     },
     {
       "id": 10,
@@ -165,7 +174,8 @@
       "borrowerID": 6,
       "borrowDate": "2023-04-10",
       "returnDate": "2023-04-17",
-      "status": "borrowed"
+      "status": "borrowed",
+      "likesCount": 3
     }
   ]
 }

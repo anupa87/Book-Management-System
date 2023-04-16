@@ -9,7 +9,7 @@ const Events = () => {
     setShowAllEvents(!showAllEvents)
   }
 
-  const displayedEvents = showAllEvents ? events : events.slice(0, 3)
+  const upcomingEvents = showAllEvents ? events : events.slice(0, 2)
   return (
     <Box sx={{ my: 4, display: 'flex', flexDirection: 'column' }}>
       <Box
@@ -28,7 +28,7 @@ const Events = () => {
         </Button>
       </Box>
       <hr />
-      {displayedEvents.map((event) => (
+      {upcomingEvents.map((event) => (
         <Box key={event.id} sx={{ mt: 4 }}>
           <Typography variant="h6" gutterBottom>
             {event.title}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Snackbar from '@mui/material/Snackbar'
@@ -9,7 +9,6 @@ import { updateUser } from '../../features/users/userSlice'
 
 const UpdateUser = () => {
   const { id: userId } = useParams()
-  const dispatch = useDispatch()
   const users = useSelector((state) => state.users)
 
   const userToUpdate = users.find((user) => user.id === userId)
@@ -21,6 +20,9 @@ const UpdateUser = () => {
   const [role, setRole] = useState(userToUpdate.role)
   const [isEdit, setIsEdit] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleEdit = () => {
     setIsEdit(true)
@@ -36,6 +38,13 @@ const UpdateUser = () => {
     setEmail(updatedUser.email)
     setRole(updatedUser.role)
     setShowSuccessMessage(true)
+    setTimeout(() => {
+      navigate('/users')
+    }, 2000)
+  }
+
+  const handleCancel = () => {
+    navigate('/users')
   }
 
   return (
@@ -69,10 +78,6 @@ const UpdateUser = () => {
               autoHideDuration={6000}
               message="User updated successfully"
             />
-            {/* <CheckCircle color="success" fontSize="large" /> */}
-            <Typography variant="h6" color="success" ml={1}>
-              User updated successfully!
-            </Typography>
           </Box>
         )}
         <Box sx={{ mt: 2 }}>
@@ -122,7 +127,7 @@ const UpdateUser = () => {
             </Button>
           ) : (
             <>
-              <Button variant="contained" onClick={() => setIsEdit(false)}>
+              <Button variant="contained" onClick={handleCancel}>
                 Cancel
               </Button>
               <Box sx={{ display: 'inline-block', width: '16px' }} />
