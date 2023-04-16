@@ -9,12 +9,12 @@ import HelpIcon from '@mui/icons-material/Help'
 import LogoutIcon from '@mui/icons-material/Logout'
 
 const getMenuItems = (currentUser) => [
-  { label: 'Home', icon: React.createElement(HomeIcon), path: '/homepage', role: 'both' },
+  { label: 'Home', icon: React.createElement(HomeIcon), path: '/homepage', role: 'user' },
   {
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
     path: '/dashboard',
-    role: 'both'
+    role: 'admin'
   },
   { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'admin' },
   { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },

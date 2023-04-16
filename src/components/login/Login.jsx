@@ -4,10 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Box,
-  Grid,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Button,
   Typography,
   Dialog,
@@ -28,6 +25,7 @@ const Login = ({ modalOpen, onClose }) => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState()
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -55,7 +53,8 @@ const Login = ({ modalOpen, onClose }) => {
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user))
       localStorage.setItem('currentRole', JSON.stringify(user.role))
-      navigate('/homepage')
+      if (user.role === 'admin') navigate('/dashboard')
+      else if (user.role === 'user') navigate('/homepage')
     } else {
       setError('User not found or incorrect password.')
     }
