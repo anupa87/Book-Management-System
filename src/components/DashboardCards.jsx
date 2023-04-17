@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
@@ -11,7 +10,6 @@ import IssueBookForm from './admin/IssueBookForm'
 const DashboardCards = () => {
   const [openUserModal, setOpenUserModal] = useState(false)
   const [OpenBookModal, setopenBookModal] = useState(false)
-  const [openIssueModal, setOpenIssueModal] = useState(false)
   const [openEventModal, setOpenEventModal] = useState(false)
 
   const handleAddUser = () => {
@@ -22,9 +20,6 @@ const DashboardCards = () => {
     setopenBookModal(true)
   }
 
-  const handleIssueBook = () => {
-    setOpenIssueModal(true)
-  }
   const handleAddEvent = () => {
     setOpenEventModal(true)
   }
@@ -52,16 +47,7 @@ const DashboardCards = () => {
           </CardContent>
         </Box>
       </Card>
-      <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <IconButton sx={{ color: 'white' }} onClick={handleIssueBook}>
-            <AddIcon />
-          </IconButton>
-          <CardContent sx={{ mt: 1 }}>
-            <Typography variant="h6">Issue Books</Typography>
-          </CardContent>
-        </Box>
-      </Card>
+
       <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <IconButton sx={{ color: 'white' }} onClick={handleAddEvent}>
@@ -90,16 +76,6 @@ const DashboardCards = () => {
           OpenBookModal={OpenBookModal}
           onClose={() => setopenBookModal(false)}
           setopenBookModal={setopenBookModal}
-        />
-      </Dialog>
-      <Dialog
-        open={openIssueModal}
-        onClose={() => setOpenIssueModal(false)}
-        PaperProps={{ style: { width: '80%' } }}>
-        <IssueBookForm
-          openIssueModal={openIssueModal}
-          onClose={() => setOpenIssueModal(false)}
-          setOpenIssueModal={setOpenIssueModal}
         />
       </Dialog>
       <Dialog

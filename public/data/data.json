@@ -6,15 +6,48 @@
       "lastName": "Thapa",
       "email": "admin@gmail.com",
       "password": "12345",
-      "role": "admin"
+      "role": "admin",
+      "issuedBooks": [
+        {
+          "ISBN": "978-0-571-29831-6",
+          "bookId": "1",
+          "borrowDate": "2023-04-17",
+          "returnDate": "2023-05-01",
+          "returned": false
+        },
+        {
+          "ISBN": "978-0-345-47618-4",
+          "bookId": "3",
+          "borrowDate": "2023-04-17",
+          "returnDate": "2023-05-01",
+          "returned": false
+        }
+      ]
     },
+
     {
       "id": "2",
       "firstName": "Prak",
       "lastName": "Link",
       "email": "user@gmail.com",
       "password": "12345",
-      "role": "user"
+      "role": "user",
+      "borrowedBooks": [
+        {
+          "ISBN": "978-0-571-29831-6",
+          "bookId": "1",
+          "borrowDate": "2023-04-17",
+          "returnDate": "2023-05-01",
+          "returned": false
+        },
+        {
+          "ISBN": "978-0-345-47618-4",
+          "bookId": "3",
+          "borrowDate": "2023-04-17",
+          "returnDate": "2023-05-01",
+          "returned": false
+        }
+      ]
     },
     {
       "id": "3",
@@ -85,14 +118,14 @@
   "books": [
     {
       "ISBN": "978-3-16-148410-0",
-      "title": "The Hitchhiker's Guide to the Galaxy",
+      "title": "The Hitchhiker's Guide ",
       "imageURL": "https://publicgeneralist.com/wp-content/uploads/2018/11/The-Hitchhikers-Guide-to-the-Galaxy-is-my-favourite-book..jpg",
-      "description": "A science fiction comedy series created by Douglas Adams.",
+      "description": "A science fiction comedy series.",
       "author": "Douglas Adams",
       "publisher": "Pan Books",
       "publishedYear": "1979",
       "status": "borrowed",
-      "borrowerID": 456,
+      "borrowerID": 2,
       "borrowDate": "2023-04-10",
       "returnDate": "2023-04-25",
       "likesCount": 5
@@ -120,7 +153,7 @@
       "publisher": "Penguin Books",
       "publishedYear": "2013",
       "status": "borrowed",
-      "borrowerID": 4,
+      "borrowerID": 2,
       "borrowDate": "2023-04-01",
       "returnDate": "2023-04-15",
       "likesCount": 2
@@ -134,7 +167,7 @@
       "publisher": "Little, Brown and Company",
       "publishedYear": "2013",
       "status": "borrowed",
-      "borrowerID": 7,
+      "borrowerID": 2,
       "borrowDate": "2023-04-03",
       "returnDate": "2023-04-17",
       "likesCount": null
@@ -211,9 +244,9 @@
     },
     {
       "ISBN": "978-0-593-08330-3",
-      "title": "The Thursday Murder Club",
+      "title": "The Thursday Murder ",
       "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAMhyTwpcWqDgS1hPSg0wg1NyoNHdgaD9Nrg&usqp=CAU",
-      "description": "A mystery novel about a group of retirees who investigate a murder.",
+      "description": "A mystery novel about a group of retirees .",
       "author": "Richard Osman",
       "publisher": "Penguin Books",
       "publishedYear": "2020",

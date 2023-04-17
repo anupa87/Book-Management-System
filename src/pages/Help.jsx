@@ -37,16 +37,16 @@ const Help = () => {
             Address:
           </Typography>
           <Typography variant="body1" sx={{ mb: 2 }}>
-            Hamenkatu, 205
+            Ladugatan 18B
             <br />
-            Helsinki, Finland
+            70226, Heslinki, Finland
           </Typography>
           <Typography variant="subtitle1" sx={{ mb: 1 }}>
-            Phone: (358) 555-4444
+            Phone: (358) 456-7890
           </Typography>
 
           <Typography variant="subtitle1" sx={{ mb: 1 }}>
-            Email: info@library.fi
+            Email: info@booksphere.fi
           </Typography>
         </Box>
       </Grid>

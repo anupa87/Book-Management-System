@@ -58,7 +58,7 @@ const Books = () => {
             sx={{
               mt: 6
             }}>
-            <Card sx={{ width: 350, height: 400 }}>
+            <Card sx={{ width: 300, height: 300 }}>
               <CardMedia
                 component="img"
                 image={book.imageURL}

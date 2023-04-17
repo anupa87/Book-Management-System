@@ -17,11 +17,18 @@ const authSlice = createSlice({
       state.isLoggedIn = false
       state.currentUser = null
       state.currentRole = null
+    },
+    updateCurrentUserBorrowedBooks: (state, action) => {
+      state.currentUser.borrowedBooks = action.payload
+    },
+    updatePassword: (state, action) => {
+      state.currentUser.password = action.payload
     }
   }
 })
 
-export const { loginSuccess, logoutSuccess } = authSlice.actions
+export const { loginSuccess, logoutSuccess, updateCurrentUserBorrowedBooks, updatePassword } =
+  authSlice.actions
 export default authSlice.reducer
 
 export const selectCurrentUser = (state) => state.auth.currentUser

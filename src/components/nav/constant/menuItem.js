@@ -16,20 +16,15 @@ const getMenuItems = (currentUser) => [
     path: '/dashboard',
     role: 'admin'
   },
-  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'admin' },
+  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'both' },
   { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'admin' },
   {
     label: 'Profile',
     icon: React.createElement(PersonIcon),
-    path: '/user/' + currentUser.id,
+    path: `/user/${currentUser?.id}`,
     role: 'user'
   },
-  {
-    label: 'Settings',
-    icon: React.createElement(SettingsIcon),
-    path: '/user/setting',
-    role: 'both'
-  },
+
   { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'both' },
   { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'both' }
 ]

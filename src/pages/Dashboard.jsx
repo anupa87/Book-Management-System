@@ -4,8 +4,8 @@ import moment from 'moment'
 import { Grid, Box, Typography } from '@mui/material'
 
 import DashboardCards from '../components/DashboardCards'
-import AllUsers from '../components/users/AllUsers'
-import AllBooks from '../components/books/AllBooks'
+import AllUsers from '../components/admin/AllUsers'
+import AllBooks from '../components/books/AdminBooks'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)

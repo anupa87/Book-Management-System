@@ -26,3 +26,15 @@ Admin can:
 - add a new user
 - update info of user
 - remove user
+
+### `Steps to follow`
+
+- clone the project
+- npm install to install dependencies
+- vite to start the server
+- http:/localhost:5173/ to view the project in your browser
+- admin login (email: "admin@gmail.com" and password:"12345") and user login (email: "user@gmail.com" and password:"12345")
+
+### `Deployment`
+
+- https://book-management-system-cgosa5r4w-anupa87.vercel.app/

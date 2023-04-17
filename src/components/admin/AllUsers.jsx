@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteBook } from '../../features/books/bookSlice'
+import { deleteUser } from '../../features/users/userSlice'
 import { Link as RouterLink } from 'react-router-dom'
 
 import {
@@ -20,8 +20,8 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import Snackbar from '@mui/material/Snackbar'
 
-const AllBooks = () => {
-  const books = useSelector((state) => state.books.books)
+const AllUsers = () => {
+  const users = useSelector((state) => state.users)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -37,15 +37,15 @@ const AllBooks = () => {
     setPage(0)
   }
 
-  const handleDeleteBook = (bookISBN) => {
-    dispatch(deleteBook(bookISBN))
+  const handleDeleteUser = (userId) => {
+    dispatch(deleteUser(userId))
     setShowSuccessMessage(true)
     setTimeout(() => {
       setShowSuccessMessage(false)
     }, 2000)
   }
 
-  const displayedBooks = books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const displayedUsers = users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   return (
     <Container>
@@ -56,40 +56,32 @@ const AllBooks = () => {
           alignItems: 'center',
           mb: 2
         }}>
-        <Typography variant="h4">Books</Typography>
+        <Typography variant="h4">Users</Typography>
       </Box>
       <hr />
       <Box sx={{ mt: 4, mb: 4 }}>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="Book table">
+          <Table sx={{ minWidth: 650 }} aria-label="User table">
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
-                <TableCell sx={{ color: 'white' }}>Title</TableCell>
-                <TableCell sx={{ color: 'white' }}>Image URL</TableCell>
-                <TableCell sx={{ color: 'white' }}>Description</TableCell>
-                <TableCell sx={{ color: 'white' }}>Author</TableCell>
-                <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
-                <TableCell sx={{ color: 'white' }}>Published Year</TableCell>
-                <TableCell sx={{ color: 'white' }}>Status</TableCell>
+                <TableCell sx={{ color: 'white' }}>Name</TableCell>
+                <TableCell sx={{ color: 'white' }}>Email</TableCell>
+                <TableCell sx={{ color: 'white' }}>Role</TableCell>
                 <TableCell sx={{ color: 'white' }}>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedBooks.map((book) => (
-                <TableRow key={book.ISBN}>
+              {displayedUsers.map((user) => (
+                <TableRow key={user.id}>
                   <TableCell component="th" scope="row">
-                    <RouterLink to={`/books/${book.ISBN}`} sx={{ color: 'inherit' }}>
-                      {`${book.title}`}
+                    <RouterLink to={`/users/${user.id}`} sx={{ color: 'inherit' }}>
+                      {`${user.firstName} ${user.lastName}`}
                     </RouterLink>
                   </TableCell>
-                  <TableCell>{book.imageURL}</TableCell>
-                  <TableCell>{book.description}</TableCell>
-                  <TableCell>{book.author}</TableCell>
-                  <TableCell>{book.publisher}</TableCell>
-                  <TableCell>{book.publishedYear}</TableCell>
-                  <TableCell>{book.status}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.role}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleDeleteBook(book.ISBN)}>
+                    <IconButton onClick={() => handleDeleteUser(user.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -97,7 +89,7 @@ const AllBooks = () => {
                     <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
                       <Snackbar
                         open={showSuccessMessage}
-                        message="Book deleted successfully"
+                        message="User deleted successfully"
                         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                       />
                     </Box>
@@ -109,7 +101,7 @@ const AllBooks = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={books.length}
+            count={users.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -121,4 +113,4 @@ const AllBooks = () => {
   )
 }
 
-export default AllBooks
+export default AllUsers
