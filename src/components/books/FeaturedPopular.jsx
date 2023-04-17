@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 
 const FeaturedPopular = () => {
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
   const [showAllPopular, setShowAllPopular] = useState(false)
 
   const toggleShowAllPopular = () => {

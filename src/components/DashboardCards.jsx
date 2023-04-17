@@ -9,7 +9,6 @@ import AddBook from './admin/AddBookForm'
 import IssueBookForm from './admin/IssueBookForm'
 
 const DashboardCards = () => {
-  const navigate = useNavigate()
   const [openUserModal, setOpenUserModal] = useState(false)
   const [OpenBookModal, setopenBookModal] = useState(false)
   const [openIssueModal, setOpenIssueModal] = useState(false)

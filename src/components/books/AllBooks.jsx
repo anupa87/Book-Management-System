@@ -21,7 +21,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Snackbar from '@mui/material/Snackbar'
 
 const AllBooks = () => {
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)

@@ -19,7 +19,7 @@ import Snackbar from '@mui/material/Snackbar'
 const IssueBookForm = ({ open, handleClose, handleIssue }) => {
   const [selectedBook, setSelectedBook] = useState('')
   const [selectedUser, setSelectedUser] = useState('')
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
   const users = useSelector((state) => state.users)
 
   const handleBookChange = (event) => {

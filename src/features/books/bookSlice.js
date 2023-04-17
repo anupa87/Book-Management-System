@@ -3,8 +3,10 @@ import data from '../../../public/data/data.json'
 
 const bookSlice = createSlice({
   name: 'books',
-  initialState: data.books,
-
+  initialState: {
+    books: data.books,
+    search: ''
+  },
   reducers: {
     addBook: (state, action) => {
       const addedBook = {
@@ -25,9 +27,13 @@ const bookSlice = createSlice({
     deleteBook: (state, action) => {
       const deletedBookISBN = action.payload
       return [...state.filter((book) => book.ISBN !== deletedBookISBN)]
+    },
+
+    search(state, action) {
+      state.search = action.payload
     }
   }
 })
 
-export const { addBook, updateBook, deleteBook } = bookSlice.actions
+export const { addBook, updateBook, deleteBook, search } = bookSlice.actions
 export default bookSlice.reducer

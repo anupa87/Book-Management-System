@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 
 import {
@@ -12,13 +12,22 @@ import {
   CardContent
 } from '@mui/material'
 
-import Search from '../components/Search'
+import SearchBar from '../components/SearchBar'
+import { search } from '../features/books/bookSlice'
 
 const Books = () => {
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
+  const searchInput = useSelector((state) => state.books.search)
 
-  // Get the filtered books from the Search component
-  const filteredBooks = useSelector((state) => state.filteredBooks)
+  const dispatch = useDispatch()
+
+  const handleSearchInputChange = (event) => {
+    dispatch(search(event.target.value))
+  }
+
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchInput.toLowerCase())
+  )
 
   return (
     <Box sx={{ my: 4 }}>
@@ -34,11 +43,11 @@ const Books = () => {
       <hr />
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Box sx={{ width: '50%' }}>
-          <Search />
+          <SearchBar onChange={handleSearchInputChange} />
         </Box>
       </Box>
       <Grid container spacing={2}>
-        {filteredBooks?.map((book) => (
+        {filteredBooks.map((book) => (
           <Grid
             item
             key={book.id}

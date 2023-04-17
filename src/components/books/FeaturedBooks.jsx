@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 
 const FeaturedBooks = () => {
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
   const [showAllBooks, setShowAllBooks] = useState(false)
 
   const toggleShowAllBooks = () => {

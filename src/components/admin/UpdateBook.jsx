@@ -23,7 +23,7 @@ const UpdateBook = () => {
   const [returnDate, setReturnDate] = useState('')
   const [likesCount, setLikesCount] = useState(null)
 
-  const books = useSelector((state) => state.books)
+  const books = useSelector((state) => state.books.books)
   const bookToUpdate = books.find((book) => book.ISBN === bookISBN)
   console.log({ bookToUpdate })
 
