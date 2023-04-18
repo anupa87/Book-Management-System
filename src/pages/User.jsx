@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 
 import {
   Container,
@@ -10,7 +11,8 @@ import {
   Box,
   TextField,
   Button,
-  IconButton
+  IconButton,
+  CardActions
 } from '@mui/material'
 
 import { updatePassword } from '../features/auth/authSlice'
@@ -130,12 +132,25 @@ function User() {
                   {error}
                 </Typography>
               )}
-              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            </CardContent>
+            <CardActions
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                m: 2
+              }}>
+              <Box>
                 <Button variant="contained" onClick={handleChangePassword}>
                   Update Password
                 </Button>
               </Box>
-            </CardContent>
+              <Box>
+                <Button variant="contained" component={RouterLink} to="/UpdateUser">
+                  Update Info
+                </Button>
+              </Box>
+            </CardActions>
           </Card>
         </Box>
       </Box>
