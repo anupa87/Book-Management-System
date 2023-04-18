@@ -5,7 +5,7 @@ import {
   Container,
   Card,
   CardContent,
-  CardHeader,
+  CardMedia,
   Typography,
   Box,
   TextField,
@@ -50,75 +50,94 @@ function User() {
 
   return (
     <Container>
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: 'center',
+          gap: 4
+        }}>
         <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
           My Account
         </Typography>
-        <hr />
       </Box>
-      <Box sx={{ mt: 4, mb: 4 }}>
-        <Card sx={{ maxWidth: 600, margin: 'auto', mt: 4 }}>
-          <CardContent>
-            <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-              {currentUser.firstName} {currentUser.lastName}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              Email: {currentUser.email}
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Change Password
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <TextField
-                label="Current Password"
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                sx={{ mt: 2 }}
-              />
-              <TextField
-                label="New Password"
-                type={showNewPassword ? 'text' : 'password'}
-                value={newPassword}
-                onChange={(event) => setNewPassword(event.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton onClick={() => setShowNewPassword(!showNewPassword)}>
-                      {showNewPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  )
-                }}
-                sx={{ mt: 2 }}
-              />
-              <TextField
-                label="Confirm New Password"
-                type={showNewPassword ? 'text' : 'password'}
-                value={confirmNewPassword}
-                onChange={(event) => setConfirmNewPassword(event.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <IconButton onClick={() => setShowNewPassword(!showNewPassword)}>
-                      {showNewPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  )
-                }}
-                sx={{ mt: 2 }}
-              />
-            </Box>
-            {error && (
-              <Typography variant="body1" color="error" sx={{ mt: 2 }}>
-                {error}
+      <hr />
+      <Box>
+        <Box sx={{ mt: 4, mb: 4 }}>
+          <CardMedia
+            component="img"
+            image={currentUser.imageURL}
+            alt={currentUser.image}
+            sx={{
+              objectFit: 'cover',
+              width: { xs: '100%', md: '50%' }
+            }}
+          />
+        </Box>
+        <Box sx={{ mt: 4, mb: 4 }}>
+          <Card sx={{ maxWidth: 570, mt: 4 }}>
+            <CardContent>
+              <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
+                {currentUser.firstName} {currentUser.lastName}
               </Typography>
-            )}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-              <Button variant="contained" onClick={handleChangePassword}>
-                Update Password
-              </Button>
-            </Box>
-          </CardContent>
-        </Card>
+              <Typography variant="h6" gutterBottom>
+                Email: {currentUser.email}
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Change Password
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <TextField
+                  label="Current Password"
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  sx={{ mt: 2 }}
+                />
+                <TextField
+                  label="New Password"
+                  type={showNewPassword ? 'text' : 'password'}
+                  value={newPassword}
+                  onChange={(event) => setNewPassword(event.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={() => setShowNewPassword(!showNewPassword)}>
+                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    )
+                  }}
+                  sx={{ mt: 2 }}
+                />
+                <TextField
+                  label="Confirm New Password"
+                  type={showNewPassword ? 'text' : 'password'}
+                  value={confirmNewPassword}
+                  onChange={(event) => setConfirmNewPassword(event.target.value)}
+                  InputProps={{
+                    endAdornment: (
+                      <IconButton onClick={() => setShowNewPassword(!showNewPassword)}>
+                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    )
+                  }}
+                  sx={{ mt: 2 }}
+                />
+              </Box>
+              {error && (
+                <Typography variant="body1" color="error" sx={{ mt: 2 }}>
+                  {error}
+                </Typography>
+              )}
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                <Button variant="contained" onClick={handleChangePassword}>
+                  Update Password
+                </Button>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
     </Container>
   )
