@@ -14,8 +14,8 @@ import {
 } from '@mui/material'
 import { Favorite as FavoriteIcon, FavoriteBorder as FavoriteBorderIcon } from '@mui/icons-material'
 
-import { selectCurrentRole } from '../../features/auth/authSlice'
-import { borrowBook, issueBook } from '../../features/books/bookSlice'
+import { selectCurrentRole } from '../features/auth/authSlice'
+import { borrowBook, issueBook } from '../features/books/bookSlice'
 
 const Book = () => {
   const { ISBN: bookISBN } = useParams()

@@ -14,7 +14,7 @@ import UpdateUser from './components/admin/UpdateUser'
 import AddBook from './components/admin/AddBookForm'
 import UpdateBook from './components/admin/UpdateBook'
 import IssueBook from './components/admin/IssueBookForm'
-import Book from './components/books/Book'
+import Book from './pages/Book'
 import User from './pages/User'
 
 function App() {

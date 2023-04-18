@@ -5,12 +5,12 @@ import data from '../../../public/data/data.json'
 
 const userSlice = createSlice({
   name: 'users',
-  initialState: data.users, //get user from data.json
+  initialState: data.users,
 
   reducers: {
     addUser: (state, action) => {
       const newUser = {
-        id: uuidv4(), // generate a unique id
+        id: uuidv4(),
         ...action.payload
       }
       return [...state, newUser]
@@ -18,9 +18,17 @@ const userSlice = createSlice({
 
     updateUser: (state, action) => {
       const updatedUser = action.payload
-      const user = state.find((user) => user.id === updatedUser.id)
+      const updatedUsers = state.map((user) => {
+        if (user.id === updatedUser.id) {
+          return {
+            ...user,
+            ...updatedUser
+          }
+        }
+        return user
+      })
 
-      return [{ ...user, ...updatedUser }, ...state.filter((user) => user.id !== updatedUser.id)]
+      return updatedUsers
     },
 
     deleteUser: (state, action) => {

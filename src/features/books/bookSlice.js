@@ -11,9 +11,8 @@ const bookSlice = createSlice({
   },
   reducers: {
     addBook: (state, action) => {
-      const addedBook = {
-        ...action.payload
-      }
+      const addedBook = action.payload
+
       return { ...state, books: [...state.books, addedBook] }
     },
 
