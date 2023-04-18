@@ -6,6 +6,7 @@
       "lastName": "Thapa",
       "email": "admin@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1619895862022-09114b41f16f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
       "role": "admin",
       "issuedBooks": [
         {
@@ -31,6 +32,7 @@
       "lastName": "Link",
       "email": "user@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
       "role": "user",
       "borrowedBooks": [
         {
@@ -55,6 +57,7 @@
       "lastName": "Smith",
       "email": "john.smith@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1584673392125-f91e13c6a3cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjR8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -63,6 +66,7 @@
       "lastName": "Davis",
       "email": "emily.davis@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1513152697235-fe74c283646a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmlsZSUyMHBob3RvfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -71,6 +75,7 @@
       "lastName": "Johnson",
       "email": "oliver.johnson@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -79,6 +84,7 @@
       "lastName": "Wilson",
       "email": "sophia.wilson@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmlsZSUyMHBob3RvfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -87,6 +93,7 @@
       "lastName": "Garcia",
       "email": "liam.garcia@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
       "role": "user"
     },
     {
@@ -95,6 +102,7 @@
       "lastName": "Martinez",
       "email": "ava.martinez@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1595085610978-b5e35eb24dcf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -103,6 +111,7 @@
       "lastName": "Robinson",
       "email": "noah.robinson@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHwxfDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
       "role": "user"
     },
     {
@@ -111,6 +120,7 @@
       "lastName": "Clark",
       "email": "isabella.clark@gmail.com",
       "password": "12345",
+      "imageURL": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
       "role": "user"
     }
   ],

@@ -36,7 +36,7 @@ const AddUser = ({ setOpenUserModal, openUserModal }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setBook((prevState) => ({ ...prevState, [name]: value }))
+    setUser((prevState) => ({ ...prevState, [name]: value }))
   }
 
   const handleSubmitUser = (e) => {

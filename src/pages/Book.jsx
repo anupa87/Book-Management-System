@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 
 import {
   Box,
@@ -46,7 +47,14 @@ const Book = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        mt: 4
+      }}>
       <Box
         sx={{
           display: 'flex',
@@ -105,61 +113,81 @@ const Book = () => {
             </CardContent>
           </Card>
         </Box>
-        <Box
-          sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            ml: 4
-          }}>
-          <Typography variant="h4" gutterBottom>
-            Book Information
-          </Typography>
-          <Typography variant="subtitle1">
-            {selectedBook.author} ({selectedBook.publishedYear})
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            {selectedBook.description}
-          </Typography>
+        <Box>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              ml: 4
+            }}>
+            <Typography variant="h4" gutterBottom>
+              Book Information
+            </Typography>
+            <Typography variant="subtitle1">
+              {selectedBook.author} ({selectedBook.publishedYear})
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {selectedBook.description}
+            </Typography>
+          </Box>
+          <Box
+            mt={6}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+            <Box sx={{ flex: '0 0 auto', ml: 2 }}>
+              <Button
+                variant="contained"
+                component={RouterLink}
+                to="/books"
+                color="secondary"
+                sx={{ flex: '0 0 auto', mr: 2 }}>
+                Back to books
+              </Button>
+            </Box>
+            {selectedBook.status === 'available' ? (
+              currentRole === 'admin' ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleIssue}
+                  disabled={isBorrowed}
+                  sx={{
+                    width: '25%',
+                    '&:hover': {
+                      backgroundColor: '#0069d9'
+                    }
+                  }}>
+                  Issue
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleBorrow}
+                  disabled={isBorrowed}
+                  sx={{
+                    width: '25%',
+                    ml: 2,
+                    '&:hover': {
+                      backgroundColor: '#0069d9'
+                    }
+                  }}>
+                  Borrow
+                </Button>
+              )
+            ) : (
+              <Button variant="contained" disabled sx={{ width: '25%', ml: 10 }} color="primary">
+                Not Available
+              </Button>
+            )}
+          </Box>
         </Box>
-      </Box>
-      <Box mt={6}>
-        {selectedBook.status === 'available' ? (
-          currentRole === 'admin' ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleIssue}
-              disabled={isBorrowed}
-              sx={{
-                width: '100%',
-                '&:hover': {
-                  backgroundColor: '#0069d9'
-                }
-              }}>
-              Issue
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleBorrow}
-              disabled={isBorrowed}
-              sx={{
-                width: '100%',
-                '&:hover': {
-                  backgroundColor: '#0069d9'
-                }
-              }}>
-              Borrow
-            </Button>
-          )
-        ) : (
-          <Button variant="contained" disabled sx={{ width: '100%' }} color="primary">
-            Not Available
-          </Button>
-        )}
       </Box>
     </Box>
   )

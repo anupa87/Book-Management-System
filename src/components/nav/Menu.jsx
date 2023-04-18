@@ -55,7 +55,7 @@ const Menu = () => {
   const drawer = (
     <Box
       sx={{
-        bgColor: theme.palette.primary.main,
+        bgColor: theme.palette.secondary.main,
         color: 'white'
       }}>
       <Toolbar sx={{ p: 0 }} />
@@ -111,7 +111,8 @@ const Menu = () => {
             display: { xs: 'block', sm: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              width: drawerWidth
+              width: drawerWidth,
+              bgcolor: '#70334E'
             }
           }}>
           {drawer}
@@ -122,7 +123,8 @@ const Menu = () => {
             display: { xs: 'none', sm: 'block' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
-              width: drawerWidth
+              width: drawerWidth,
+              bgcolor: '#70334E'
             }
           }}
           open>

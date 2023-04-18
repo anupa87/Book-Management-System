@@ -15,20 +15,26 @@ const Dashboard = () => {
   const day = moment().format('dddd')
 
   return (
-    <Grid item xs={10}>
-      <Box>
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 2
+        }}>
         <Typography variant="h3" sx={{ my: 2 }}>
           Dashboard
         </Typography>
-        <hr />
-        <Typography sx={{ mt: 1 }}>
-          {moment().format('MMMM Do YYYY')} | {moment().format('dddd')},{' '}
-          {moment().format('h:mm:ss a')}
-        </Typography>
-        <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
-          Welcome, {currentUser?.firstName}
-        </Typography>
       </Box>
+      <hr />
+      <Typography sx={{ mt: 1 }}>
+        {moment().format('MMMM Do YYYY')} | {moment().format('dddd')},{' '}
+        {moment().format('h:mm:ss a')}
+      </Typography>
+      <Typography variant="h5" sx={{ my: 2, textAlign: 'center' }}>
+        Welcome, {currentUser?.firstName}
+      </Typography>
       <Box sx={{ mb: 10 }}>
         <DashboardCards />
       </Box>
@@ -38,7 +44,7 @@ const Dashboard = () => {
       <Box>
         <AllBooks />
       </Box>
-    </Grid>
+    </Box>
   )
 }
 export default Dashboard

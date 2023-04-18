@@ -5,12 +5,12 @@ import AddIcon from '@mui/icons-material/Add'
 
 import AddUser from './admin/AddUserForm'
 import AddBook from './admin/AddBookForm'
-import IssueBookForm from './admin/IssueBookForm'
+// import IssueBookForm from './admin/IssueBookForm'
 
 const DashboardCards = () => {
   const [openUserModal, setOpenUserModal] = useState(false)
   const [OpenBookModal, setopenBookModal] = useState(false)
-  const [openEventModal, setOpenEventModal] = useState(false)
+  // const [openEventModal, setOpenEventModal] = useState(false)
 
   const handleAddUser = () => {
     setOpenUserModal(true)
@@ -48,7 +48,7 @@ const DashboardCards = () => {
         </Box>
       </Card>
 
-      <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
+      {/* <Card sx={{ width: 275, mr: 4, backgroundColor: 'secondary.main', color: 'white' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <IconButton sx={{ color: 'white' }} onClick={handleAddEvent}>
             <AddIcon />
@@ -57,7 +57,7 @@ const DashboardCards = () => {
             <Typography variant="h6">Add Events</Typography>
           </CardContent>
         </Box>
-      </Card>
+      </Card> */}
       <Dialog
         open={openUserModal}
         onClose={() => setOpenUserModal(false)}
@@ -78,7 +78,7 @@ const DashboardCards = () => {
           setopenBookModal={setopenBookModal}
         />
       </Dialog>
-      <Dialog
+      {/* <Dialog
         open={openEventModal}
         onClose={() => setOpenEventModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
@@ -87,7 +87,7 @@ const DashboardCards = () => {
           onClose={() => setOpenEventModal(false)}
           setOpenEventModal={setOpenEventModal}
         />
-      </Dialog>
+      </Dialog> */}
     </Box>
   )
 }

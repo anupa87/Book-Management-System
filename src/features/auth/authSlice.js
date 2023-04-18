@@ -18,9 +18,11 @@ const authSlice = createSlice({
       state.currentUser = null
       state.currentRole = null
     },
+
     updateCurrentUserBorrowedBooks: (state, action) => {
       state.currentUser.borrowedBooks = action.payload
     },
+
     updatePassword: (state, action) => {
       state.currentUser.password = action.payload
     }
