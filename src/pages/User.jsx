@@ -147,7 +147,7 @@ function User() {
               </Box>
               <Box>
                 <Button variant="contained" component={RouterLink} to="/UpdateUser">
-                  Update Info
+                  Save
                 </Button>
               </Box>
             </CardActions>
