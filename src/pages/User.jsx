@@ -15,7 +15,7 @@ import {
   CardActions
 } from '@mui/material'
 
-import { updatePassword } from '../features/auth/authSlice'
+import { updatePassword } from '../features/auth/slices/authSlice'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 function User() {

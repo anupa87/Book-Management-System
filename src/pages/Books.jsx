@@ -12,8 +12,8 @@ import {
   CardContent
 } from '@mui/material'
 
-import SearchBar from '../components/SearchBar'
-import { search } from '../features/books/bookSlice'
+import SearchBar from '../features/book/components/SearchBar'
+import { search } from '../features/book/slices/bookSlice'
 
 const Books = () => {
   const books = useSelector((state) => state.books.books)

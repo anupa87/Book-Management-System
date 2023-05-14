@@ -2,12 +2,11 @@ import { useState } from 'react'
 
 import { Grid, Box, Typography, Button, Dialog } from '@mui/material'
 
-import heroImage from '../../public/assests/heroImage.jpg'
-import Login from '../components/login/Login'
-import Events from '../components/events/Events'
-import FeaturedBooks from '../components/books/FeaturedBooks'
-import FeaturedPopular from '../components/books/FeaturedPopular'
-import Footer from '../components/Footer'
+import heroImage from '../assets/images/heroImage.jpg'
+import Login from '../features/auth/components/Login'
+import FeaturedBooks from '../features/book/components/FeaturedBooks'
+import FeaturedPopular from '../features/book/components/FeaturedPopular'
+import Footer from '../components/common/Footer'
 
 const PublicPage = () => {
   const [modalOpen, setModalOpen] = useState(false)
@@ -73,9 +72,6 @@ const PublicPage = () => {
       </Grid>
       <Grid item xs={10}>
         <FeaturedPopular />
-      </Grid>
-      <Grid item xs={10}>
-        <Events />
       </Grid>
       <Grid
         item

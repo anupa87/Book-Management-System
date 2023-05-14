@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import moment from 'moment'
 
 import { Box, Typography } from '@mui/material'
-import BorrowedBooks from '../components/users/BorrowedBooks'
+import BorrowedBooks from '../features/borrow/components/BorrowedBooks'
 
 const HomePage = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
