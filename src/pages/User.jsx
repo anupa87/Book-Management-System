@@ -15,40 +15,40 @@ import {
   CardActions
 } from '@mui/material'
 
-import { updatePassword } from '../features/auth/slices/authSlice'
+// import { updatePassword } from '../features/auth/slices/authSlice'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 function User() {
   const currentUser = useSelector((state) => state.auth.currentUser)
-  const [password, setPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [confirmNewPassword, setConfirmNewPassword] = useState('')
-  const [error, setError] = useState('')
-  const [showNewPassword, setShowNewPassword] = useState(false)
+  // const [password, setPassword] = useState('')
+  // const [newPassword, setNewPassword] = useState('')
+  // const [confirmNewPassword, setConfirmNewPassword] = useState('')
+  // const [error, setError] = useState('')
+  // const [showNewPassword, setShowNewPassword] = useState(false)
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
-  const handleChangePassword = () => {
-    if (!password || !newPassword || !confirmNewPassword) {
-      setError('Please fill in all fields')
-      return
-    }
-    if (newPassword !== confirmNewPassword) {
-      setError('New password and confirm password do not match')
-      return
-    }
-    dispatch(updatePassword({ userId: currentUser.id, password, newPassword }))
-      .then(() => {
-        setPassword('')
-        setNewPassword('')
-        setConfirmNewPassword('')
-        setError('')
-        alert('Password updated successfully')
-      })
-      .catch((error) => {
-        setError(error.message)
-      })
-  }
+  // const handleChangePassword = () => {
+  //   if (!password || !newPassword || !confirmNewPassword) {
+  //     setError('Please fill in all fields')
+  //     return
+  //   }
+  //   if (newPassword !== confirmNewPassword) {
+  //     setError('New password and confirm password do not match')
+  //     return
+  //   }
+  //   dispatch(updatePassword({ userId: currentUser.id, password, newPassword }))
+  //     .then(() => {
+  //       setPassword('')
+  //       setNewPassword('')
+  //       setConfirmNewPassword('')
+  //       setError('')
+  //       alert('Password updated successfully')
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message)
+  //     })
+  // }
 
   return (
     <Container>
@@ -86,7 +86,7 @@ function User() {
                 Email: {currentUser.email}
               </Typography>
             </CardContent>
-            <CardContent>
+            {/* <CardContent>
               <Typography variant="h6" gutterBottom>
                 Change Password
               </Typography>
@@ -132,8 +132,8 @@ function User() {
                   {error}
                 </Typography>
               )}
-            </CardContent>
-            <CardActions
+            </CardContent> */}
+            {/* <CardActions
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -150,7 +150,7 @@ function User() {
                   Save
                 </Button>
               </Box>
-            </CardActions>
+            </CardActions> */}
           </Card>
         </Box>
       </Box>

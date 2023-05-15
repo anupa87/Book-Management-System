@@ -23,25 +23,33 @@ function App() {
       <Routes>
         <Route index element={<PublicPage />} />
         <Route path="*" element={<ErrorPage />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/homepage" element={<HomePage />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/user/:id" element={<User />} />
-          <Route path="/book/:ISBN" element={<Book />} />
-          <Route path="/users/:id" element={<UpdateUser />} />
-          <Route path="/books/:ISBN" element={<UpdateBook />} />
-          <Route path="/help" element={<Help />} />
-          <Route element={<AdminRoute />}>
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route path="/dashboard/adduser" element={<AddUser />} />
-              <Route path="/dashboard/users/:id" element={<UpdateUser />} />
-              <Route path="/dashboard/addbook" element={<AddBook />} />
-              <Route path="/dashboard/books/:ISBN" element={<UpdateBook />} />
-              <Route path="/dashboard/issuebook" element={<IssueBook />} />
-            </Route>
-            <Route path="/users" element={<Users />} />
-          </Route>
-        </Route>
+        <Route
+          element={
+            <ProtectedRoute>
+              <Route path="/homepage" element={<HomePage />} />
+              <Route path="/books" element={<Books />} />
+              <Route path="/user/:id" element={<User />} />
+              <Route path="/book/:ISBN" element={<Book />} />
+              <Route path="/users/:id" element={<UpdateUser />} />
+              <Route path="/books/:ISBN" element={<UpdateBook />} />
+              <Route path="/help" element={<Help />} />
+              <Route
+                element={
+                  <AdminRoute>
+                    <Route path="/dashboard" element={<Dashboard />}>
+                      <Route path="/dashboard/adduser" element={<AddUser />} />
+                      <Route path="/dashboard/users/:id" element={<UpdateUser />} />
+                      <Route path="/dashboard/addbook" element={<AddBook />} />
+                      <Route path="/dashboard/books/:ISBN" element={<UpdateBook />} />
+                      <Route path="/dashboard/issuebook" element={<IssueBook />} />
+                    </Route>
+                    <Route path="/users" element={<Users />} />
+                  </AdminRoute>
+                }
+              />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )

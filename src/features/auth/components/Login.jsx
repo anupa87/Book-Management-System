@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import jwt_decode from 'jwt-decode'
 
 import {
   Box,
@@ -16,15 +17,13 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import { loginSuccess } from '../slices/authSlice'
-import { selectUsers } from '../../user/slices/userSlice'
+import { loginFail, loginSuccess } from '../slices/authSlice'
 
 const Login = ({ modalOpen, onClose }) => {
-  const users = useSelector(selectUsers)
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState()
+  const isLoading = useSelector((state) => state.auth.isLoading)
+  const error = useSelector((state) => state.auth.error)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -37,37 +36,41 @@ const Login = ({ modalOpen, onClose }) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
-    if (!formData.email || !formData.password) {
-      setError('Please enter your email and password.')
-      return
-    }
 
-    const user = users.find(
-      (user) => user.email === formData.email && user.password === formData.password
-    )
-    localStorage.removeItem('currentUser')
-    localStorage.removeItem('currentRole')
+    console.log('Logging in...')
 
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user))
-      localStorage.setItem('currentRole', JSON.stringify(user.role))
-      localStorage.setItem('isLoggedIn', 'true')
-      if (user.role === 'admin') navigate('/dashboard')
-      else if (user.role === 'user') navigate('/homepage')
-    } else {
-      setError('User not found or incorrect password.')
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json()
+      const { token } = data
+      console.log(data)
+
+      // Decode the token to extract the role
+      const decodedToken = jwt_decode(token)
+      const { role } = decodedToken
+
+      dispatch(loginSuccess({ role }))
+
+      localStorage.setItem('token', token)
+
+      if (role === 'ADMIN') {
+        console.log('Navigating to /dashboard')
+        navigate('dashboard')
+      } else {
+        console.log('Navigating to /homepage')
+        navigate('homepage')
+      }
+    } catch (error) {
+      dispatch(loginFail(error.message))
     }
   }
-  useEffect(() => {
-    const user = localStorage.getItem('currentUser')
-    const role = localStorage.getItem('currentRole')
-    if (user && role && !isLoggedIn) {
-      dispatch(loginSuccess({ user: JSON.parse(user), role: JSON.parse(role) }))
-    }
-  }, [dispatch, isLoggedIn])
-
   return (
     <Box>
       <Dialog
@@ -82,7 +85,11 @@ const Login = ({ modalOpen, onClose }) => {
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ mx: 'auto', p: 6 }}>
-          {error?.length && <div>{error}</div>}
+          {error && (
+            <Typography color="error" sx={{ mt: 1 }}>
+              {error}
+            </Typography>
+          )}
           <form onSubmit={handleLogin}>
             <TextField
               name="email"

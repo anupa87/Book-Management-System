@@ -18,13 +18,11 @@ import { useTheme } from '@mui/material/styles'
 
 import getMenuItems from './menuItem'
 import logo from '../../../assets/images/logo.png'
-import { logoutSuccess, selectCurrentRole } from '../../../features/auth/slices/authSlice'
+import { logoutUser } from '../../../features/auth/slices/authSlice'
 
 const drawerWidth = 240
 
 const Menu = () => {
-  const currentRole = useSelector(selectCurrentRole)
-  const currentUser = useSelector((state) => state.auth.currentUser)
   const [mobileOpen, setMobileOpen] = useState(false)
 
   const navigate = useNavigate()
@@ -36,20 +34,13 @@ const Menu = () => {
   }
 
   const handleMenuClick = (item) => {
-    if (item.path === '/logout') {
-      dispatch(logoutSuccess())
-      localStorage.removeItem('currentUser')
-      localStorage.removeItem('currentRole')
-      localStorage.setItem('isLoggedIn', 'false')
-      navigate('/')
-    } else {
-      navigate(item.path)
-    }
+    dispatch(logoutUser())
+    navigate('/login')
   }
 
   // Filter menu items based on user's role
-  const filteredMenuItems = getMenuItems(currentUser).filter(
-    (item) => item.role === currentRole?.toLowerCase() || item.role === 'both'
+  const filteredMenuItems = getMenuItems().filter(
+    (item) => item.role === currentUserRole?.toLowerCase() || item.role === 'both'
   )
 
   const drawer = (

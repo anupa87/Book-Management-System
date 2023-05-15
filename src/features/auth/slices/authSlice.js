@@ -1,37 +1,55 @@
 import { createSlice } from '@reduxjs/toolkit'
+import AuthService from '../services/authService'
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    isLoggedIn: false,
-    currentUser: null,
-    currentRole: null
+    isAuthenticated: AuthService.isAuthenticated(),
+    isLoading: false,
+    error: null,
+    currentUserRole: null
   },
   reducers: {
+    loginStart: (state) => {
+      state.isLoading = true
+      state.error = null
+    },
     loginSuccess: (state, action) => {
-      state.isLoggedIn = true
-      state.currentUser = action.payload.user
-      state.currentRole = action.payload.role
+      state.isAuthenticated = true
+      state.isLoading = false
+      state.error = null
+      state.currentUserRole = action.payload.role
     },
-    logoutSuccess: (state) => {
-      state.isLoggedIn = false
+    loginFail: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    },
+    logout: (state) => {
+      state.isAuthenticated = false
+      state.isLoading = false
+      state.error = null
       state.currentUser = null
-      state.currentRole = null
-    },
-
-    updateCurrentUserBorrowedBooks: (state, action) => {
-      state.currentUser.borrowedBooks = action.payload
-    },
-
-    updatePassword: (state, action) => {
-      state.currentUser.password = action.payload
     }
   }
 })
 
-export const { loginSuccess, logoutSuccess, updateCurrentUserBorrowedBooks, updatePassword } =
-  authSlice.actions
-export default authSlice.reducer
+export const { loginStart, loginSuccess, loginFail, logout } = authSlice.actions
 
-export const selectCurrentUser = (state) => state.auth.currentUser
-export const selectCurrentRole = (state) => state.auth.currentRole
+export const login = (credentials) => async (dispatch) => {
+  dispatch(loginStart())
+  try {
+    const token = await AuthService.login(credentials)
+    const currentUser = await AuthService.getCurrentUser()
+    dispatch(loginSuccess(currentUser))
+    return token
+  } catch (error) {
+    dispatch(loginFail(error.message))
+  }
+}
+
+export const logoutUser = () => async (dispatch) => {
+  AuthService.logout()
+  dispatch(logout())
+}
+
+export default authSlice.reducer

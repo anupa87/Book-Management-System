@@ -1,44 +1,107 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-import data from '../../../data/data.json'
+import userService from '../services/userService'
+
+export const getAllUsers = createAsyncThunk('users/getAllUsers', async () => {
+  const users = await userService.getAllUsers()
+  return users
+})
+
+export const getUserById = createAsyncThunk('users/getUserById', async (userId) => {
+  const user = await userService.getUserById(userId)
+  return user
+})
+
+export const addUser = createAsyncThunk('users/addUser', async (user) => {
+  const newUser = await userService.addUser(user)
+  return newUser
+})
+
+export const updateUser = createAsyncThunk('users/updateUser', async ({ userId, user }) => {
+  const updatedUser = await userService.updateUser(userId, user)
+  return updatedUser
+})
+
+export const deleteUser = createAsyncThunk('users/deleteUser', async (userId) => {
+  await userService.deleteUser(userId)
+  return userId
+})
+
+const initialState = {
+  users: [],
+  status: 'idle',
+  error: null,
+  selectedUser: null
+}
 
 const userSlice = createSlice({
   name: 'users',
-  initialState: data.users,
+  initialState,
 
   reducers: {
-    addUser: (state, action) => {
-      const newUser = {
-        id: uuidv4(),
-        ...action.payload
-      }
-      return [...state, newUser]
+    setSelectedUser: (state, action) => {
+      state.selectedUser = action.payload
+    }
+  },
+  extraReducers: {
+    [getAllUsers.pending]: (state) => {
+      state.status = 'loading'
     },
-
-    updateUser: (state, action) => {
-      const updatedUser = action.payload
-      const updatedUsers = state.map((user) => {
-        if (user.id === updatedUser.id) {
-          return {
-            ...user,
-            ...updatedUser
-          }
-        }
-        return user
-      })
-
-      return updatedUsers
+    [getAllUsers.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      state.users = action.payload
     },
-
-    deleteUser: (state, action) => {
-      const deletedUserId = action.payload
-      return state.filter((user) => user.id !== deletedUserId)
+    [getAllUsers.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [getUserById.pending]: (state) => {
+      state.status = 'loading'
+    },
+    [getUserById.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      state.selectedUser = action.payload
+    },
+    [getUserById.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [addUser.pending]: (state) => {
+      state.status = 'loading'
+    },
+    [addUser.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      state.users.push(action.payload)
+    },
+    [addUser.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [updateUser.pending]: (state) => {
+      state.status = 'loading'
+    },
+    [updateUser.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      const updatedUserIndex = state.users.findIndex((user) => user.id === action.payload.id)
+      state.users[updatedUserIndex] = action.payload
+    },
+    [updateUser.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [deleteUser.pending]: (state) => {
+      state.status = 'loading'
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      state.users = state.users.filter((user) => user.id !== action.payload)
+    },
+    [deleteUser.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
     }
   }
 })
-export const { addUser, updateUser, deleteUser } = userSlice.actions
-export default userSlice.reducer
+export const { setSelectedUser } = userSlice
 
-// Selector function to select all users
-export const selectUsers = (state) => state.users
+export default userSlice.reducer
