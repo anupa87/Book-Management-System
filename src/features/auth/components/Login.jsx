@@ -18,6 +18,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 import { loginFail, loginSuccess } from '../slices/authSlice'
+import authService from '../services/authService'
 
 const Login = ({ modalOpen, onClose }) => {
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -39,33 +40,36 @@ const Login = ({ modalOpen, onClose }) => {
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    console.log('Logging in...')
+    if (!formData.email || !formData.password) {
+      dispatch(loginFail('Please provide both email and password.'))
+      return
+    }
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
+      const response = await authService.login(formData)
+      console.log('Response:', response)
 
-      const data = await response.json()
-      const { token } = data
-      console.log(data)
+      if (response && response.data) {
+        const { token } = response.data
+        console.log('Token:', token)
 
-      // Decode the token to extract the role
-      const decodedToken = jwt_decode(token)
-      const { role } = decodedToken
+        localStorage.setItem('token', token)
 
-      dispatch(loginSuccess({ role }))
+        // Decode the token to extract the role
+        const decodedToken = jwt_decode(token)
+        const { role } = decodedToken
 
-      localStorage.setItem('token', token)
+        dispatch(loginSuccess({ token, role }))
 
-      if (role === 'ADMIN') {
-        console.log('Navigating to /dashboard')
-        navigate('dashboard')
+        console.log('Role:', role)
+
+        if (role === 'ADMIN') {
+          navigate('admin/dashboard')
+        } else {
+          navigate('user/homepage')
+        }
       } else {
-        console.log('Navigating to /homepage')
-        navigate('homepage')
+        throw new Error('Invalid response data.')
       }
     } catch (error) {
       dispatch(loginFail(error.message))
@@ -132,23 +136,23 @@ const Login = ({ modalOpen, onClose }) => {
                 Don't have an account? <Link to="/register">Register</Link>
               </Typography>
             </Box>
+            <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>
+              <Button
+                onClick={onClose}
+                sx={{
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textDecoration: 'underline'
+                  }
+                }}>
+                Cancel
+              </Button>
+              <Button variant="contained" type="submit">
+                Login
+              </Button>
+            </DialogActions>
           </form>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>
-          <Button
-            onClick={onClose}
-            sx={{
-              textDecoration: 'none',
-              '&:hover': {
-                textDecoration: 'underline'
-              }
-            }}>
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={handleLogin}>
-            Login
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   )

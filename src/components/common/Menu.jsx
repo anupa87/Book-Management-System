@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,21 +13,50 @@ import {
   ListItemButton,
   IconButton
 } from '@mui/material'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import HomeIcon from '@mui/icons-material/Home'
+import BookIcon from '@mui/icons-material/Book'
+import PeopleIcon from '@mui/icons-material/People'
+import PersonIcon from '@mui/icons-material/Person'
+import SettingsIcon from '@mui/icons-material/Settings'
+import HelpIcon from '@mui/icons-material/Help'
+import LogoutIcon from '@mui/icons-material/Logout'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useTheme } from '@mui/material/styles'
 
-import getMenuItems from './menuItem'
-import logo from '../../../assets/images/logo.png'
-import { logoutUser } from '../../../features/auth/slices/authSlice'
+import logo from '../../assets/images/logo.png'
+import { logoutUser } from '../../features/auth/slices/authSlice'
 
 const drawerWidth = 240
 
-const Menu = () => {
-  const [mobileOpen, setMobileOpen] = useState(false)
+const getMenuItems = (currentUser) => [
+  { label: 'Home', icon: React.createElement(HomeIcon), path: '/homepage', role: 'USER' },
+  {
+    label: 'Dashboard',
+    icon: React.createElement(DashboardIcon),
+    path: '/dashboard',
+    role: 'ADMIN'
+  },
+  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'BOTH' },
+  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/users', role: 'ADMIN' },
+  {
+    label: 'Profile',
+    icon: React.createElement(PersonIcon),
+    path: `/user/${currentUser?.id}`,
+    role: 'USER'
+  },
 
+  { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'BOTH' },
+  { label: 'Logout', icon: React.createElement(LogoutIcon), path: '/logout', role: 'BOTH' }
+]
+
+const Menu = () => {
+  const theme = useTheme()
+
+  const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const theme = useTheme()
+  const currentRole = useSelector((state) => state.auth.currentRole)
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -39,8 +68,8 @@ const Menu = () => {
   }
 
   // Filter menu items based on user's role
-  const filteredMenuItems = getMenuItems().filter(
-    (item) => item.role === currentUserRole?.toLowerCase() || item.role === 'both'
+  const filteredMenuItems = getMenuItems(currentRole).filter(
+    (item) => item.role === currentRole || item.role === 'BOTH'
   )
 
   const drawer = (

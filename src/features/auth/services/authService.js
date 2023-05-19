@@ -13,31 +13,30 @@ const AuthService = {
   async login(credentials) {
     try {
       const response = await api.post('/login', credentials)
-      const token = response.data.token
-      sessionStorage.setItem('token', token)
-      return token
+      localStorage.setItem('token', response.data.token)
+      return response
     } catch (error) {
       throw new Error(error.response.data.error)
     }
   },
 
   logout() {
-    sessionStorage.removeItem('token')
+    Storage.removeItem('token')
   },
 
   isAuthenticated() {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     return token !== null
   },
 
   async getCurrentUser() {
     try {
-      const token = sessionStorage.getItem('token')
+      const token = localStorage.getItem('token')
       const decodedToken = jwtDecode(token)
       return {
         userId: decodedToken.user_id,
         email: decodedToken.email,
-        role: decodedToken.role // add this line
+        role: decodedToken.role
       }
     } catch (error) {
       throw new Error('Failed to retrieve current user')

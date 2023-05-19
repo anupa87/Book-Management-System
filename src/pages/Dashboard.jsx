@@ -5,10 +5,11 @@ import { Grid, Box, Typography } from '@mui/material'
 
 import Cards from '../components/Cards'
 import AllUsers from '../features/user/components/AllUsers'
-import AllBooks from '../features/admin/components/AdminBooks'
+import AdminBooks from '../features/book/components/AdminBooks'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
+  console.log(currentUser)
 
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')
@@ -42,7 +43,7 @@ const Dashboard = () => {
         <AllUsers />
       </Box>
       <Box>
-        <AllBooks />
+        <AdminBooks />
       </Box>
     </Box>
   )

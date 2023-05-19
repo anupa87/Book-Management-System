@@ -22,18 +22,15 @@ import { addBook } from '../../book/slices/bookSlice'
 
 const AddBook = ({ setopenBookModal, OpenBookModal }) => {
   const [book, setBook] = useState({
-    ISBN: '',
+    category: '',
     title: '',
     imageURL: '',
     description: '',
     author: '',
     publisher: '',
     publishedYear: '',
-    status: '',
-    borrowerId: null,
-    borrowDate: '',
-    returnDate: '',
-    likesCount: null
+    numberofCopies: null,
+    availableCopies: null
   })
 
   const navigate = useNavigate()
@@ -51,18 +48,14 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
     e.preventDefault()
     dispatch(addBook(book))
     setBook({
-      ISBN: '',
+      category: '',
       title: '',
       imageURL: '',
       description: '',
       author: '',
       publisher: '',
       publishedYear: '',
-      status: '',
-      borrowerId: null,
-      borrowDate: '',
-      returnDate: '',
-      likesCount: null
+      numberofCopies: null
     })
     setShowSuccessMessage(true)
     formRef.current.reset()
@@ -108,7 +101,7 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
                 <TextField
                   name="ISBN"
                   label="ISBN"
-                  value={book.ISBN}
+                  value={book.category}
                   fullWidth
                   required
                   onChange={handleChange}
@@ -175,48 +168,12 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
                   onChange={handleChange}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
-                  name="status"
-                  label="status"
-                  value={book.status}
-                  fullWidth
-                  required
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="borrowerId"
-                  label="Borrower Id"
-                  value={book.borrowerId}
-                  fullWidth
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="borrowDate"
-                  label="Borrow Date"
-                  value={book.borrowDate}
-                  fullWidth
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="returnDate"
-                  label="Return Date"
-                  value={book.returnDate}
-                  fullWidth
-                  onChange={handleChange}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  name="likesCount"
-                  label="Likes Count"
-                  value={book.likesCount}
+                  name="numberofCopies"
+                  label="numberofCopies"
+                  value={book.numberofCopies}
                   fullWidth
                   onChange={handleChange}
                 />

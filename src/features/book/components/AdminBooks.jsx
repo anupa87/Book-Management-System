@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteBook } from '../../book/slices/bookSlice'
+import { deleteBook } from '../slices/bookSlice'
 import { Link as RouterLink } from 'react-router-dom'
 
 import {

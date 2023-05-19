@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const Backend_URL = 'http:/localhost:8080/api/v1'
+const Backend_URL = 'http://localhost:8080/api/v1'
 
 const api = axios.create({
   baseURL: Backend_URL,
@@ -9,14 +9,13 @@ const api = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'
-  },
-  params: { _format: 'json' }
+  }
 })
 
 // Add request interceptor to set authorization header
 api.interceptors.request.use(
   async (config) => {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

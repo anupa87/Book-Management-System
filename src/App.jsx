@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import PublicPage from './pages/PublicPage'
 import ErrorPage from './pages/ErrorPage'
-import ProtectedRoute from './routes/ProtectedRoute'
-import AdminRoute from './routes/AdminRoute'
+import Layout from './components/common/Layout'
+import { AdminRoute, UserRoute, CommonRoute } from './routes/Routes'
 import HomePage from './pages/Homepage'
 import Dashboard from './pages/Dashboard'
 import Books from './pages/Books'
@@ -22,34 +22,27 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<PublicPage />} />
+        <Route element={<Layout />}>
+          <Route path="/admin" element={<AdminRoute />}>
+            <Route path="/admin/dashboard" element={<Dashboard />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/adduser" element={<AddUser />} />
+            <Route path="/admin/users/:id" element={<UpdateUser />} />
+            <Route path="/admin/addbook" element={<AddBook />} />
+            <Route path="/admin/books/:id" element={<UpdateBook />} />
+            <Route path="/admin/issuebook" element={<IssueBook />} />
+          </Route>
+          <Route path="/user" element={<UserRoute />}>
+            <Route path="/user/homepage" element={<HomePage />} />
+            <Route path="/user/:id" element={<User />} />
+          </Route>
+          <Route path="/" element={<CommonRoute />}>
+            <Route path="/books" element={<Books />} />
+            <Route path="/book/:ISBN" element={<Book />} />
+            <Route path="/help" element={<Help />} />
+          </Route>
+        </Route>
         <Route path="*" element={<ErrorPage />} />
-        <Route
-          element={
-            <ProtectedRoute>
-              <Route path="/homepage" element={<HomePage />} />
-              <Route path="/books" element={<Books />} />
-              <Route path="/user/:id" element={<User />} />
-              <Route path="/book/:ISBN" element={<Book />} />
-              <Route path="/users/:id" element={<UpdateUser />} />
-              <Route path="/books/:ISBN" element={<UpdateBook />} />
-              <Route path="/help" element={<Help />} />
-              <Route
-                element={
-                  <AdminRoute>
-                    <Route path="/dashboard" element={<Dashboard />}>
-                      <Route path="/dashboard/adduser" element={<AddUser />} />
-                      <Route path="/dashboard/users/:id" element={<UpdateUser />} />
-                      <Route path="/dashboard/addbook" element={<AddBook />} />
-                      <Route path="/dashboard/books/:ISBN" element={<UpdateBook />} />
-                      <Route path="/dashboard/issuebook" element={<IssueBook />} />
-                    </Route>
-                    <Route path="/users" element={<Users />} />
-                  </AdminRoute>
-                }
-              />
-            </ProtectedRoute>
-          }
-        />
       </Routes>
     </BrowserRouter>
   )

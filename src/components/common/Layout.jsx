@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import Menu from './nav/Menu'
+import Menu from './Menu'
 import { Outlet } from 'react-router-dom'
 import { ThemeProvider } from '@emotion/react'
 
