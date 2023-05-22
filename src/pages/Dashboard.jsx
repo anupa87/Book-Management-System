@@ -4,8 +4,6 @@ import moment from 'moment'
 import { Grid, Box, Typography } from '@mui/material'
 
 import Cards from '../components/Cards'
-import AllUsers from '../features/user/components/AllUsers'
-import AdminBooks from '../features/book/components/AdminBooks'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
@@ -16,7 +14,7 @@ const Dashboard = () => {
   const day = moment().format('dddd')
 
   return (
-    <Box>
+    <Grid>
       <Box
         sx={{
           display: 'flex',
@@ -39,13 +37,7 @@ const Dashboard = () => {
       <Box sx={{ mb: 10 }}>
         <Cards />
       </Box>
-      <Box>
-        <AllUsers />
-      </Box>
-      <Box>
-        <AdminBooks />
-      </Box>
-    </Box>
+    </Grid>
   )
 }
 export default Dashboard

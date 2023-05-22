@@ -4,6 +4,7 @@ import userService from '../services/userService'
 
 export const getAllUsers = createAsyncThunk('users/getAllUsers', async () => {
   const users = await userService.getAllUsers()
+  console.log(users)
   return users
 })
 
@@ -43,65 +44,69 @@ const userSlice = createSlice({
       state.selectedUser = action.payload
     }
   },
-  extraReducers: {
-    [getAllUsers.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [getAllUsers.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.users = action.payload
-    },
-    [getAllUsers.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    },
-    [getUserById.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [getUserById.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.selectedUser = action.payload
-    },
-    [getUserById.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    },
-    [addUser.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [addUser.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.users.push(action.payload)
-    },
-    [addUser.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    },
-    [updateUser.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [updateUser.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      const updatedUserIndex = state.users.findIndex((user) => user.id === action.payload.id)
-      state.users[updatedUserIndex] = action.payload
-    },
-    [updateUser.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    },
-    [deleteUser.pending]: (state) => {
-      state.status = 'loading'
-    },
-    [deleteUser.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      state.users = state.users.filter((user) => user.id !== action.payload)
-    },
-    [deleteUser.rejected]: (state, action) => {
-      state.status = 'failed'
-      state.error = action.error.message
-    }
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllUsers.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.users = action.payload
+        console.log('getAllUsers.fulfilled:', action.payload)
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+        console.log('getAllUsers.rejected:', action.error.message)
+      })
+      .addCase(getUserById.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.selectedUser = action.payload
+      })
+      .addCase(getUserById.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(addUser.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(addUser.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.users.push(action.payload)
+      })
+      .addCase(addUser.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        const updatedUserIndex = state.users.findIndex((user) => user.id === action.payload.id)
+        state.users[updatedUserIndex] = action.payload
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(deleteUser.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.users = state.users.filter((user) => user.userId !== action.payload)
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
   }
 })
-export const { setSelectedUser } = userSlice
+
+export const { setSelectedUser } = userSlice.actions
 
 export default userSlice.reducer

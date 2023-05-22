@@ -20,7 +20,6 @@ const UserRoute = ({ element: Element }) => {
   if (isAuthenticated && role === 'USER') {
     return <Layout>{Element}</Layout>
   }
-
   return <Unauthorized />
 }
 
@@ -30,7 +29,6 @@ const CommonRoute = ({ element: Element }) => {
   if (isAuthenticated) {
     return <Layout>{Element}</Layout>
   }
-
   return <Unauthorized />
 }
 

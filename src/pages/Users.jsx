@@ -1,47 +1,84 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
+  Container,
+  CircularProgress,
   Box,
   Typography,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Button,
-  Container
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+  TablePagination
 } from '@mui/material'
-// import DeleteIcon from '@mui/icons-material/Delete'
-// import EditIcon from '@mui/icons-material/Edit'
-import Snackbar from '@mui/material/Snackbar'
 
-// import { deleteUser } from '../features/users/userSlice'
+import User from '../features/user/components/User'
+import { getAllUsers } from '../features/user/slices/userSlice'
+import { deleteUser } from '../features/user/slices/userSlice'
 
 const Users = () => {
-  const users = useSelector((state) => state.users)
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
-
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
-  // const handleDeleteUser = (userId) => {
-  //   dispatch(deleteUser(userId))
-  //   setShowSuccessMessage(true)
-  //   setTimeout(() => {
-  //     setShowSuccessMessage(false)
-  //   }, 2000)
-  // }
+  const users = useSelector((state) => state.users.users)
+  const status = useSelector((state) => state.users.status)
+  const error = useSelector((state) => state.users.error)
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(8)
 
-  // const handleEditUser = (id) => {
-  //   navigate(`/users/${id}`)
-  // }
+  console.log(users)
 
-  const filteredUsers = users.filter((user) => user.role === 'user')
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(getAllUsers())
+    }
+  }, [dispatch, status])
+
+  if (status === 'loading') {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    )
+  }
+
+  if (status === 'failed') {
+    return (
+      <Typography variant="body1" color="error">
+        Error: {error}
+      </Typography>
+    )
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage)
+  }
+
+  const filteredUsers = users.filter((user) => user.role === 'USER')
+  console.log(filteredUsers)
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredUsers.length - page * rowsPerPage)
+  const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
+  const handleEdit = (user) => {
+    // Handle edit logic here
+    console.log('Edit user:', user)
+  }
+
+  const handleDelete = (user) => {
+    dispatch(deleteUser(user.userId))
+  }
 
   return (
-    <Box sx={{ my: 4 }}>
+    <Container>
       <Box
         sx={{
           display: 'flex',
@@ -49,78 +86,51 @@ const Users = () => {
           alignItems: 'center',
           mb: 2
         }}>
-        <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
-          Users
-        </Typography>
+        <Typography variant="h4">Users</Typography>
       </Box>
       <hr />
-
-      <Grid container spacing={2}>
-        {filteredUsers &&
-          filteredUsers.map((user) => (
-            <Grid
-              item
-              key={user.id}
-              xs={12}
-              sm={6}
-              md={4}
-              sx={{
-                mt: 6,
-                justifyContent: 'center'
-              }}>
-              <Card
-                onClick={() => showDetail(user.id)}
-                style={{ cursor: 'pointer' }}
-                sx={{ width: '100%', maxWidth: 300, height: 300 }}>
-                <CardMedia
-                  component="img"
-                  image={user.imageURL}
-                  alt={user.image}
-                  sx={{
-                    objectFit: 'cover',
-                    height: '60%'
-                  }}
-                />
-                <CardContent>
-                  <Typography variant="h5" sx={{ mb: 1 }} component="h2">
-                    {user.firstName} {user.lastName}
-                  </Typography>
-
-                  <Typography variant="body2" sx={{ mb: 1 }} color="text.secondary">
-                    {user.email}
-                  </Typography>
-                </CardContent>
-                {/* <CardActions sx={{ justifyContent: 'space-between' }}>
-                    <IconButton onClick={() => handleEditUser(user.id)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleDeleteUser(user.id)}>
-                      <DeleteIcon />
-                      {showSuccessMessage && (
-                        <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
-                          <Snackbar
-                            open={showSuccessMessage}
-                            message="User deleted successfully"
-                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                          />
-                        </Box>
-                      )}
-                    </IconButton>
-                  </CardActions> */}
-              </Card>
-            </Grid>
-          ))}
-      </Grid>
-
-      <Box>
-        <Button
-          variant="contained"
-          sx={{ backgroundColor: 'secondary.main', ml: 0, mb: 4, mt: 6 }}
-          onClick={() => navigate('/dashboard')}>
-          Back to dashboard
-        </Button>
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="Book table">
+            <TableHead sx={{ backgroundColor: 'secondary.main' }}>
+              <TableRow>
+                <TableCell sx={{ color: 'white' }}>Full Name</TableCell>
+                <TableCell sx={{ color: 'white' }}>Email</TableCell>
+                <TableCell sx={{ color: 'white' }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {displayedUsers.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>
+                    {`${user.firstName}
+                    ${user.lastName}`}
+                  </TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <User user={filteredUsers} onEdit={handleEdit} onDelete={handleDelete} />
+                  </TableCell>
+                </TableRow>
+              ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={3} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
-    </Box>
+      <TablePagination
+        rowsPerPageOptions={[8, 16, 24]}
+        component="div"
+        count={filteredUsers.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Container>
   )
 }
 

@@ -2,26 +2,51 @@ import api from '../../../api/api'
 
 const userService = {
   getAllUsers: async () => {
-    const response = await api.get('/users')
-    return response.data
+    try {
+      const response = await api.get('/users')
+      console.log('API response:', response.data)
+      return response.data
+    } catch (error) {
+      throw new Error('Failed to fetch users')
+    }
   },
+
   getUserById: async (userId) => {
-    const response = await api.get(`/users/${userId}`)
-    return response.data
+    try {
+      const response = await api.get(`/users/${userId}`)
+      return response.data
+    } catch (error) {
+      throw new Error(`Failed to fetch user with ID ${userId}`)
+    }
   },
+
   addUser: async (user) => {
-    const response = await api.post('/users', user)
-    return response.data
+    try {
+      const response = await api.post('/users', user)
+      return response.data
+    } catch (error) {
+      throw new Error('Failed to add user')
+    }
   },
+
   updateUser: async (userId, user) => {
-    const response = await api.put(`/users/${userId}`, user)
-    return response.data
+    try {
+      const response = await api.put(`/users/${userId}`, user)
+      return response.data
+    } catch (error) {
+      throw new Error(`Failed to update user with ID ${userId}`)
+    }
   },
+
   deleteUser: async (userId) => {
-    const response = await api.delete(`/users/${userId}`)
-    if (response.status === 204) {
-      return true
-    } else {
+    try {
+      const response = await api.delete(`/users/${userId}`)
+      if (response.status === 204) {
+        return true
+      } else {
+        throw new Error(`Failed to delete user with ID ${userId}`)
+      }
+    } catch (error) {
       throw new Error(`Failed to delete user with ID ${userId}`)
     }
   }
