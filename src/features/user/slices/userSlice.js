@@ -41,7 +41,7 @@ const userSlice = createSlice({
 
   reducers: {
     setSelectedUser: (state, action) => {
-      state.selectedUser = action.payload
+      state.selectedUser = action.payload.userId
     }
   },
   extraReducers: (builder) => {
@@ -86,7 +86,9 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        const updatedUserIndex = state.users.findIndex((user) => user.id === action.payload.id)
+        const updatedUserIndex = state.users.findIndex(
+          (user) => user.userId === action.payload.userId
+        )
         state.users[updatedUserIndex] = action.payload
       })
       .addCase(updateUser.rejected, (state, action) => {

@@ -1,62 +1,124 @@
-import { createSlice } from '@reduxjs/toolkit'
-import data from '../../../data/data.json'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import bookService from '../../book/services/bookService'
 
+export const getAllBooks = createAsyncThunk('books/getAllBooks', async () => {
+  const books = await bookService.getAllBooks()
+  console.log(books)
+  return books
+})
+
+export const getBookById = createAsyncThunk('books/getBookById', async (bookId) => {
+  const book = await bookService.getBookById(bookId)
+  return book
+})
+
+export const addBook = createAsyncThunk('books/addBook', async (book) => {
+  const newBook = await bookService.addBook(book)
+  return newBook
+})
+
+export const updateBook = createAsyncThunk('books/updateBook', async ({ bookId, book }) => {
+  const updateBook = await bookService.updateBook(bookId, book)
+  return updateBook
+})
+
+export const deleteBook = createAsyncThunk('books/deleteBook', async (bookId) => {
+  await bookService.deleteBook(bookId)
+  return bookId
+})
+
+const initialState = {
+  books: [],
+  status: 'idle',
+  error: null,
+  selectedBook: null,
+  borrowedBook: null,
+  issuedBook: null,
+  search: ''
+}
 const bookSlice = createSlice({
   name: 'books',
-  initialState: {
-    books: data.books,
-    borrowedBooks: [],
-    issuedBooks: [],
-    search: ''
-  },
+  initialState,
+
   reducers: {
-    addBook: (state, action) => {
-      const addedBook = action.payload
-
-      return { ...state, books: [...state.books, addedBook] }
+    setSelectedBook: (state, action) => {
+      state.selectedBook = action.payload.bookId
     },
-
-    updateBook: (state, action) => {
-      const updatedBook = action.payload
-      const book = state.find((book) => book.ISBN === updatedBook.ISBN)
-      return [
-        { ...book, ...updatedBook },
-        ...state.filter((book) => book.ISBN !== updatedBook.ISBN)
-      ]
+    setBorrowedBook: (state, action) => {
+      state.borrowedBook = action.payload.bookId
     },
-
-    deleteBook: (state, action) => {
-      const deletedBookISBN = action.payload
-      return [...state.filter((book) => book.ISBN !== deletedBookISBN)]
+    setIssuedBook: (state, action) => {
+      state.issuedBook = action.payload.bookId
     },
-
-    search(state, action) {
+    setSearch: (state, action) => {
       state.search = action.payload
-    },
-
-    borrowBook(state, action) {
-      const borrowedBook = action.payload
-      return {
-        ...state,
-        borrowedBooks: [...state.borrowedBooks, borrowedBook],
-        books: state.books.map((book) =>
-          book.ISBN === borrowedBook.ISBN ? { ...book, status: 'unavailable' } : book
-        )
-      }
-    },
-
-    issueBook(state, action) {
-      const issuedBook = action.payload
-      return {
-        ...state,
-        issuedBooks: [...state.issuedBooks, issuedBook],
-        books: state.books.map((book) =>
-          book.ISBN === issuedBook.ISBN ? { ...book, status: 'unavailable' } : book
-        )
-      }
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllBooks.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getAllBooks.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.books = action.payload
+        console.log('getAllBooks.fulfilled:', action.payload)
+      })
+      .addCase(getAllBooks.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+        console.log('getAllBooks.rejected:', action.error.message)
+      })
+      .addCase(getBookById.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(getBookById.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.selectedUser = action.payload
+      })
+      .addCase(getBookById.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(addBook.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(addBook.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.books.push(action.payload)
+      })
+      .addCase(addBook.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(updateBook.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(updateBook.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        const updatedBookIndex = state.books.findIndex(
+          (book) => book.bookId === action.payload.bookId
+        )
+        state.books[updatedBookIndex] = action.payload
+      })
+      .addCase(updateBook.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(deleteBook.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(deleteBook.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.books = state.books.filter((book) => book.bookId !== action.payload)
+      })
+      .addCase(deleteBook.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
   }
 })
 
-export const { addBook, updateBook, deleteBook, search, borrowBook, issueBook } = bookSlice.actions
+export const { setSelectedBook, setBorrowedBook, setIssuedBook, setSearch } = bookSlice.actions
+
 export default bookSlice.reducer

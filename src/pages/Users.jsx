@@ -13,12 +13,20 @@ import {
   TableCell,
   TableBody,
   Paper,
-  TablePagination
+  TablePagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+  Button,
+  Snackbar
 } from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import MuiAlert from '@mui/material/Alert'
 
-import User from '../features/user/components/User'
-import { getAllUsers } from '../features/user/slices/userSlice'
-import { deleteUser } from '../features/user/slices/userSlice'
+import { getAllUsers, deleteUser, setSelectedUser } from '../features/user/slices/userSlice'
 
 const Users = () => {
   const dispatch = useDispatch()
@@ -26,10 +34,12 @@ const Users = () => {
   const users = useSelector((state) => state.users.users)
   const status = useSelector((state) => state.users.status)
   const error = useSelector((state) => state.users.error)
+  const selectedUser = useSelector((state) => state.users.selectedUser)
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState('')
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(8)
-
-  console.log(users)
 
   useEffect(() => {
     if (status === 'idle') {
@@ -63,18 +73,42 @@ const Users = () => {
   }
 
   const filteredUsers = users.filter((user) => user.role === 'USER')
-  console.log(filteredUsers)
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredUsers.length - page * rowsPerPage)
   const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (user) => {
     // Handle edit logic here
+    setSnackbarMessage('User updated successfully')
+    setIsSnackbarOpen(true)
     console.log('Edit user:', user)
   }
 
-  const handleDelete = (user) => {
-    dispatch(deleteUser(user.userId))
+  const handleDelete = (userId) => {
+    dispatch(setSelectedUser({ userId }))
+    setIsConfirmationOpen(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    try {
+      await dispatch(deleteUser(selectedUser.userId))
+      setIsConfirmationOpen(false)
+      setSnackbarMessage('User deleted successfully')
+      setIsSnackbarOpen(true)
+    } catch (error) {
+      console.log('Error deleting user:', error.message)
+      setIsConfirmationOpen(false)
+      setSnackbarMessage(`Error: ${error.message}`)
+      setIsSnackbarOpen(true)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setIsConfirmationOpen(false)
+  }
+
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false)
   }
 
   return (
@@ -101,14 +135,19 @@ const Users = () => {
             </TableHead>
             <TableBody>
               {displayedUsers.map((user) => (
-                <TableRow key={user.id}>
+                <TableRow key={user.userId}>
                   <TableCell>
                     {`${user.firstName}
                     ${user.lastName}`}
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <User user={filteredUsers} onEdit={handleEdit} onDelete={handleDelete} />
+                    <IconButton onClick={() => handleEdit(user)}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(user.userId)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -130,6 +169,29 @@ const Users = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1">Are you sure you want to delete this user?</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>Cancel</Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity={status === 'succeeded' ? 'success' : 'error'}>
+          {snackbarMessage}
+        </MuiAlert>
+      </Snackbar>
     </Container>
   )
 }
