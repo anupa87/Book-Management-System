@@ -11,7 +11,7 @@ const authorService = {
     }
   },
 
-  getAuthorById: async () => {
+  getAuthorById: async (authorId) => {
     try {
       const response = await api.get(`/authors/${authorId}`)
       return response.data
