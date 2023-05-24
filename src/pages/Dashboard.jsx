@@ -4,6 +4,7 @@ import moment from 'moment'
 import { Grid, Box, Typography } from '@mui/material'
 
 import Cards from '../components/Cards'
+import Authors from '../features/author/components/authors'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
@@ -36,6 +37,9 @@ const Dashboard = () => {
       </Typography>
       <Box sx={{ mb: 10 }}>
         <Cards />
+      </Box>
+      <Box>
+        <Authors />
       </Box>
     </Grid>
   )

@@ -4,7 +4,7 @@ import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/mat
 import AddIcon from '@mui/icons-material/Add'
 
 import AddUser from '../features/admin/components/AddUserForm'
-import AddBook from '../features/admin/components/AddBookForm'
+import AddBook from '../features/admin/components/AddBook'
 
 const Cards = () => {
   const [openUserModal, setOpenUserModal] = useState(false)

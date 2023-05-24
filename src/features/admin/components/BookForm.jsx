@@ -20,7 +20,10 @@ import Snackbar from '@mui/material/Snackbar'
 
 import { addBook } from '../../book/slices/bookSlice'
 
-const AddBook = ({ setopenBookModal, OpenBookModal }) => {
+const BookForm = ({ setopenBookModal, OpenBookModal }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [book, setBook] = useState({
     category: '',
     title: '',
@@ -32,9 +35,6 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
     numberofCopies: null,
     availableCopies: null
   })
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const formRef = useRef(null)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -193,4 +193,4 @@ const AddBook = ({ setopenBookModal, OpenBookModal }) => {
   )
 }
 
-export default AddBook
+export default BookForm

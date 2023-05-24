@@ -11,7 +11,7 @@ import Users from './pages/Users'
 import Help from './pages/Help'
 import AddUser from './features/admin/components/AddUserForm'
 import UpdateUser from './features/admin/components/UpdateUser'
-import AddBook from './features/admin/components/AddBookForm'
+import AddBook from './features/admin/components/BookForm'
 import UpdateBook from './features/admin/components/UpdateBook'
 import IssueBook from './features/admin/components/IssueBookForm'
 import Book from './pages/Book'
@@ -27,7 +27,7 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/users" element={<Users />} />
             <Route path="/admin/adduser" element={<AddUser />} />
-            <Route path="/admin/users/:id" element={<UpdateUser />} />
+            <Route path="/admin/users/:userId" element={<UpdateUser />} />
             <Route path="/admin/addbook" element={<AddBook />} />
             <Route path="/admin/books/:id" element={<UpdateBook />} />
             <Route path="/admin/issuebook" element={<IssueBook />} />
@@ -38,7 +38,7 @@ function App() {
           </Route>
           <Route path="/" element={<CommonRoute />}>
             <Route path="/books" element={<Books />} />
-            <Route path="/book/:ISBN" element={<Book />} />
+            <Route path="/books/:bookId" element={<Book />} />
             <Route path="/help" element={<Help />} />
           </Route>
         </Route>

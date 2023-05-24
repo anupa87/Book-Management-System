@@ -36,6 +36,7 @@ const initialState = {
   issuedBook: null,
   search: ''
 }
+
 const bookSlice = createSlice({
   name: 'books',
   initialState,
@@ -74,7 +75,7 @@ const bookSlice = createSlice({
       })
       .addCase(getBookById.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.selectedUser = action.payload
+        state.selectedBook = action.payload
       })
       .addCase(getBookById.rejected, (state, action) => {
         state.status = 'failed'

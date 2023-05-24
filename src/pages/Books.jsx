@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -13,16 +14,20 @@ import {
 } from '@mui/material'
 
 import SearchBar from '../features/book/components/SearchBar'
-import { search } from '../features/book/slices/bookSlice'
+import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
 
 const Books = () => {
+  const dispatch = useDispatch()
+
   const books = useSelector((state) => state.books.books)
   const searchInput = useSelector((state) => state.books.search)
 
-  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllBooks())
+  }, [dispatch])
 
   const handleSearchInputChange = (event) => {
-    dispatch(search(event.target.value))
+    dispatch(setSearch(event.target.value))
   }
 
   const filteredBooks = books.filter((book) =>
@@ -50,7 +55,7 @@ const Books = () => {
         {filteredBooks.map((book) => (
           <Grid
             item
-            key={book.id}
+            key={book.bookId}
             xs={12}
             sm={6}
             md={4}
@@ -71,11 +76,11 @@ const Books = () => {
               <CardHeader title={book.title} />
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
-                  {book.author}
+                  {book.author.fullName}
                 </Typography>
               </CardContent>
               <CardActions>
-                <RouterLink to={`/book/${book.ISBN}`} sx={{ color: 'inherit' }}>
+                <RouterLink to={`/books/${book.bookId}`} sx={{ color: 'inherit' }}>
                   Learn More
                 </RouterLink>
               </CardActions>
