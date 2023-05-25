@@ -61,7 +61,7 @@ const AuthorForm = ({ author, onSubmit, handleClose }) => {
           </Grid>
 
           <Grid item xs={12}>
-            {!user && (
+            {!author && (
               <Button type="submit" variant="contained" color="secondary">
                 ADD
               </Button>
@@ -71,7 +71,7 @@ const AuthorForm = ({ author, onSubmit, handleClose }) => {
                 EDIT
               </Button>
             )}
-            {user && isEdit && (
+            {author && isEdit && (
               <>
                 <Box
                   sx={{

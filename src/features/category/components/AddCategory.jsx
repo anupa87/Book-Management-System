@@ -17,7 +17,7 @@ import MuiAlert from '@mui/material/Alert'
 import CategoryForm from './CategoryForm'
 import { addCategory } from '../slices/categorySlice'
 
-const AddCategory = ({ setOpenUserModal, openUserModal }) => {
+const AddCategory = ({ setOpenCategoryModal, openCategoryModal }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -33,11 +33,11 @@ const AddCategory = ({ setOpenUserModal, openUserModal }) => {
   }
 
   const handleClose = () => {
-    setOpenUserModal(false)
+    setOpenCategoryModal(false)
   }
 
   return (
-    <Dialog open={openUserModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+    <Dialog open={openCategoryModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
       <DialogTitle>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>

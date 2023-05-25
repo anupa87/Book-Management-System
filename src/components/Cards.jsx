@@ -12,22 +12,22 @@ const Cards = () => {
   const [openUserModal, setOpenUserModal] = useState(false)
   const [openAuthorModal, setOpenAuthorModal] = useState(false)
   const [openCategoryModal, setOpenCategoryModal] = useState(false)
-  const [OpenBookModal, setopenBookModal] = useState(false)
+  const [openBookModal, setOpenBookModal] = useState(false)
 
   const handleAddUser = () => {
     setOpenUserModal(true)
   }
 
   const handleAddAuthor = () => {
-    setopenAuthorModal(true)
+    setOpenAuthorModal(true)
   }
 
   const handleAddCategory = () => {
-    setopenCategoryModal(true)
+    setOpenCategoryModal(true)
   }
 
   const handleAddBook = () => {
-    setopenBookModal(true)
+    setOpenBookModal(true)
   }
 
   return (
@@ -92,7 +92,7 @@ const Cards = () => {
         onClose={() => setOpenAuthorModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
         <AddAuthor
-          openUserModal={openAuthorModal}
+          openAuthorModal={openAuthorModal}
           onClose={() => setOpenAuthorModal(false)}
           setOpenAuthorModal={setOpenAuthorModal}
         />
@@ -110,13 +110,13 @@ const Cards = () => {
       </Dialog>
 
       <Dialog
-        open={OpenBookModal}
-        onClose={() => setopenBookModal(false)}
+        open={openBookModal}
+        onClose={() => setOpenBookModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
         <AddBook
-          OpenBookModal={OpenBookModal}
-          onClose={() => setopenBookModal(false)}
-          setopenBookModal={setopenBookModal}
+          openBookModal={openBookModal}
+          onClose={() => setOpenBookModal(false)}
+          setOpenBookModal={setOpenBookModal}
         />
       </Dialog>
     </Box>

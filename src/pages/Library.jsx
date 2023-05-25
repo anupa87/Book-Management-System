@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ import {
 import SearchBar from '../features/book/components/SearchBar'
 import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
 
-const Books = () => {
+const Library = () => {
   const dispatch = useDispatch()
 
   const books = useSelector((state) => state.books.books)
@@ -92,4 +92,4 @@ const Books = () => {
   )
 }
 
-export default Books
+export default Library

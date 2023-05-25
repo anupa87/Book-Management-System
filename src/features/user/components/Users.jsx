@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+
 import {
   Container,
   CircularProgress,
@@ -25,24 +26,26 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MuiAlert from '@mui/material/Alert'
 
-import { getAllCategories, deleteCategory, setSelectedCategory } from '../slices/categorySlice'
+import { getAllUsers, deleteUser, setSelectedUser } from '../slices/userSlice'
+import UpdateUser from './UpdateUser'
 
-const Categories = () => {
+const Users = () => {
   const dispatch = useDispatch()
 
-  const categories = useSelector((state) => state.categories.categories)
-  const status = useSelector((state) => state.categories.status)
-  const error = useSelector((state) => state.categories.error)
-  const selectedCategory = useSelector((state) => state.categories.selectedCategory)
+  const users = useSelector((state) => state.users.users)
+  const status = useSelector((state) => state.users.status)
+  const error = useSelector((state) => state.users.error)
+  const selectedUser = useSelector((state) => state.users.selectedUser)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [openUserModal, setOpenUserModal] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(getAllCategories())
+      dispatch(getAllUsers())
     }
   }, [dispatch, status])
 
@@ -71,32 +74,37 @@ const Categories = () => {
     setPage(newPage)
   }
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, categories.length - page * rowsPerPage)
-  const displayedCategories = categories.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  const filteredUsers = users.filter((user) => user.role === 'USER')
 
-  const handleEdit = (category) => {
-    setSnackbarMessage('category updated successfully')
-    setIsSnackbarOpen(true)
-    console.log('Edit category:', category)
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredUsers.length - page * rowsPerPage)
+  const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
+  const handleEdit = (user) => {
+    setOpenUserModal(true)
+    dispatch(setSelectedUser(user))
   }
 
-  const handleDelete = (categoryId) => {
-    dispatch(setSelectedCategory({ categoryId }))
+  const handleDelete = (userId) => {
+    console.log('Deleting user with ID:', userId)
+    dispatch(setSelectedUser({ userId }))
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = async () => {
-    try {
-      await dispatch(deleteCategory(selectedCategory.categoryId))
-      setIsConfirmationOpen(false)
-      setSnackbarMessage('category deleted successfully')
-      setIsSnackbarOpen(true)
-    } catch (error) {
-      console.log('Error deleting category:', error.message)
-      setIsConfirmationOpen(false)
-      setSnackbarMessage(`Error: ${error.message}`)
-      setIsSnackbarOpen(true)
-    }
+  const handleConfirmDelete = () => {
+    console.log('Selected User ID:', selectedUser.userId)
+    dispatch(deleteUser(selectedUser.userId))
+      .then(() => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage('User deleted successfully')
+        setIsSnackbarOpen(true)
+        dispatch(getAllUsers())
+      })
+      .catch((error) => {
+        console.log('Error deleting user:', error.message)
+        setIsConfirmationOpen(false)
+        setSnackbarMessage(`Error: ${error.message}`)
+        setIsSnackbarOpen(true)
+      })
   }
 
   const handleCancelDelete = () => {
@@ -106,6 +114,7 @@ const Categories = () => {
   const handleSnackbarClose = () => {
     setIsSnackbarOpen(false)
   }
+
   return (
     <Container>
       <Box
@@ -115,7 +124,7 @@ const Categories = () => {
           alignItems: 'center',
           mb: 2
         }}>
-        <Typography variant="h4">Categories</Typography>
+        <Typography variant="h4">Users</Typography>
       </Box>
       <hr />
       <Box sx={{ mt: 4, mb: 4 }}>
@@ -123,19 +132,24 @@ const Categories = () => {
           <Table sx={{ minWidth: 650 }} aria-label="Book table">
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
-                <TableCell sx={{ color: 'white' }}>Name</TableCell>
+                <TableCell sx={{ color: 'white' }}>Full Name</TableCell>
+                <TableCell sx={{ color: 'white' }}>Email</TableCell>
                 <TableCell sx={{ color: 'white' }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedCategories.map((category) => (
-                <TableRow key={category.categoryId}>
-                  <TableCell>{category.name}</TableCell>
+              {displayedUsers.map((user) => (
+                <TableRow key={user.userId}>
                   <TableCell>
-                    <IconButton onClick={() => handleEdit(category)}>
+                    {`${user.firstName}
+                    ${user.lastName}`}
+                  </TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => handleEdit(user)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(category.categoryId)}>
+                    <IconButton onClick={() => handleDelete(user.userId)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -153,7 +167,7 @@ const Categories = () => {
       <TablePagination
         rowsPerPageOptions={[8, 16, 24]}
         component="div"
-        count={categories.length}
+        count={filteredUsers.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -163,7 +177,7 @@ const Categories = () => {
       <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
         <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">Are you sure you want to delete this category?</Typography>
+          <Typography variant="body1">Are you sure you want to delete this user?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete}>Cancel</Button>
@@ -171,6 +185,18 @@ const Categories = () => {
             Delete
           </Button>
         </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openUserModal}
+        onClose={() => setOpenUserModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <UpdateUser
+          openUserModal={openUserModal}
+          onClose={() => setOpenUserModal(false)}
+          selectedUser={selectedUser}
+          setOpenUserModal={setOpenUserModal}
+        />
       </Dialog>
 
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
@@ -186,4 +212,4 @@ const Categories = () => {
   )
 }
 
-export default Categories
+export default Users

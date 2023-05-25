@@ -38,7 +38,7 @@ const Authors = () => {
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(8)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
     if (status === 'idle') {
@@ -75,7 +75,6 @@ const Authors = () => {
   const displayedAuthors = authors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (author) => {
-    // Handle edit logic here
     setSnackbarMessage('Author updated successfully')
     setIsSnackbarOpen(true)
     console.log('Edit author:', author)
@@ -93,7 +92,6 @@ const Authors = () => {
       setSnackbarMessage('Author deleted successfully')
       setIsSnackbarOpen(true)
     } catch (error) {
-      console.log('Error deleting author:', error.message)
       setIsConfirmationOpen(false)
       setSnackbarMessage(`Error: ${error.message}`)
       setIsSnackbarOpen(true)
@@ -154,7 +152,7 @@ const Authors = () => {
         </TableContainer>
       </Box>
       <TablePagination
-        rowsPerPageOptions={[8, 16, 24]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
         count={authors.length}
         rowsPerPage={rowsPerPage}

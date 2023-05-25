@@ -26,26 +26,26 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import MuiAlert from '@mui/material/Alert'
 
-import { getAllUsers, deleteUser, setSelectedUser } from '../features/user/slices/userSlice'
-import UpdateUser from '../features/user/components/UpdateUser'
+import { getAllBooks, deleteBook, setSelectedBook } from '../slices/bookSlice'
+import UpdateBook from './UpdateBook'
 
-const Users = () => {
+const Books = () => {
   const dispatch = useDispatch()
 
-  const users = useSelector((state) => state.users.users)
-  const status = useSelector((state) => state.users.status)
-  const error = useSelector((state) => state.users.error)
-  const selectedUser = useSelector((state) => state.users.selectedUser)
+  const books = useSelector((state) => state.books.books)
+  const status = useSelector((state) => state.books.status)
+  const error = useSelector((state) => state.books.error)
+  const selectedBook = useSelector((state) => state.books.selectedBook)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
-  const [openUserModal, setOpenUserModal] = useState(false)
+  const [openBookModal, setOpenBookModal] = useState(false)
   const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(8)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(getAllUsers())
+      dispatch(getAllBooks())
     }
   }, [dispatch, status])
 
@@ -69,42 +69,34 @@ const Users = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, books.length - page * rowsPerPage)
+  const displayedBooks = books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
-  const filteredUsers = users.filter((user) => user.role === 'USER')
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, filteredUsers.length - page * rowsPerPage)
-  const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-
-  const handleEdit = (user) => {
-    setOpenUserModal(true)
-    dispatch(setSelectedUser(user))
+  const handleEdit = (book) => {
+    setSnackbarMessage('Book updated successfully')
+    setIsSnackbarOpen(true)
+    console.log('Edit book:', book)
   }
 
-  const handleDelete = (userId) => {
-    console.log('Deleting user with ID:', userId)
-    dispatch(setSelectedUser({ userId }))
+  const handleDelete = (bookId) => {
+    dispatch(setSelectedBook(bookId))
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = () => {
-    console.log('Selected User ID:', selectedUser.userId)
-    dispatch(deleteUser(selectedUser.userId))
-      .then(() => {
-        setIsConfirmationOpen(false)
-        setSnackbarMessage('User deleted successfully')
-        setIsSnackbarOpen(true)
-        dispatch(getAllUsers())
-      })
-      .catch((error) => {
-        console.log('Error deleting user:', error.message)
-        setIsConfirmationOpen(false)
-        setSnackbarMessage(`Error: ${error.message}`)
-        setIsSnackbarOpen(true)
-      })
+  const handleConfirmDelete = async () => {
+    try {
+      await dispatch(deleteBook(selectedBook.bookId))
+      setIsConfirmationOpen(false)
+      setSnackbarMessage('Book deleted successfully')
+      setIsSnackbarOpen(true)
+    } catch (error) {
+      setIsConfirmationOpen(false)
+      setSnackbarMessage(`Error: ${error.message}`)
+      setIsSnackbarOpen(true)
+    }
   }
 
   const handleCancelDelete = () => {
@@ -124,7 +116,7 @@ const Users = () => {
           alignItems: 'center',
           mb: 2
         }}>
-        <Typography variant="h4">Users</Typography>
+        <Typography variant="h4">Books</Typography>
       </Box>
       <hr />
       <Box sx={{ mt: 4, mb: 4 }}>
@@ -132,24 +124,27 @@ const Users = () => {
           <Table sx={{ minWidth: 650 }} aria-label="Book table">
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
-                <TableCell sx={{ color: 'white' }}>Full Name</TableCell>
-                <TableCell sx={{ color: 'white' }}>Email</TableCell>
+                <TableCell sx={{ color: 'white' }}>Title</TableCell>
+                {/* <TableCell sx={{ color: 'white' }}>Category</TableCell> */}
+                {/* <TableCell sx={{ color: 'white' }}>Author</TableCell> */}
+                <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
+                <TableCell sx={{ color: 'white' }}>Published Year</TableCell>
                 <TableCell sx={{ color: 'white' }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {displayedUsers.map((user) => (
-                <TableRow key={user.userId}>
+              {displayedBooks.map((book) => (
+                <TableRow key={book.bookId}>
+                  <TableCell>{book.title}</TableCell>
+                  {/* <TableCell>{book.category}</TableCell> */}
+                  {/* <TableCell>{book.author}</TableCell> */}
+                  <TableCell>{book.publisher}</TableCell>
+                  <TableCell>{book.publishedYear}</TableCell>
                   <TableCell>
-                    {`${user.firstName}
-                    ${user.lastName}`}
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <IconButton onClick={() => handleEdit(user)}>
+                    <IconButton onClick={() => handleEdit(book)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(user.userId)}>
+                    <IconButton onClick={() => handleDelete(book.bookId)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -165,19 +160,18 @@ const Users = () => {
         </TableContainer>
       </Box>
       <TablePagination
-        rowsPerPageOptions={[8, 16, 24]}
+        rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={filteredUsers.length}
+        count={books.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-
       <Dialog open={isConfirmationOpen} onClose={handleCancelDelete}>
         <DialogTitle>Confirmation</DialogTitle>
         <DialogContent>
-          <Typography variant="body1">Are you sure you want to delete this user?</Typography>
+          <Typography variant="body1">Are you sure you want to delete this book?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete}>Cancel</Button>
@@ -188,14 +182,14 @@ const Users = () => {
       </Dialog>
 
       <Dialog
-        open={openUserModal}
-        onClose={() => setOpenUserModal(false)}
+        open={openBookModal}
+        onClose={() => setOpenBookModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
-        <UpdateUser
-          openUserModal={openUserModal}
-          onClose={() => setOpenUserModal(false)}
-          selectedUser={selectedUser}
-          setOpenUserModal={setOpenUserModal}
+        <UpdateBook
+          openBookModal={openBookModal}
+          onClose={() => setOpenBookModal(false)}
+          selectedBook={selectedBook}
+          setOpenBookModal={setOpenBookModal}
         />
       </Dialog>
 
@@ -212,4 +206,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Books

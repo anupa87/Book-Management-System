@@ -49,17 +49,17 @@ const CategoryForm = ({ category, onSubmit, handleClose }) => {
           </Grid>
 
           <Grid item xs={12}>
-            {!user && (
+            {!category && (
               <Button type="submit" variant="contained" color="secondary">
                 ADD
               </Button>
             )}
-            {author && !isEdit && (
+            {category && !isEdit && (
               <Button variant="contained" color="secondary" onClick={handleEdit}>
                 EDIT
               </Button>
             )}
-            {user && isEdit && (
+            {category && isEdit && (
               <>
                 <Box
                   sx={{

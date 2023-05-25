@@ -17,7 +17,7 @@ import MuiAlert from '@mui/material/Alert'
 import AuthorForm from './AuthorForm'
 import { addAuthor } from '../slices/authorSlice'
 
-const AddAuthor = ({ setOpenUserModal, openUserModal }) => {
+const AddAuthor = ({ setOpenAuthorModal, openAuthorModal }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -28,16 +28,17 @@ const AddAuthor = ({ setOpenUserModal, openUserModal }) => {
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
+      setOpenAuthorModal(false)
       navigate('/admin/dashboard')
     }, 3000)
   }
 
   const handleClose = () => {
-    setOpenUserModal(false)
+    setOpenAuthorModal(false)
   }
 
   return (
-    <Dialog open={openUserModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+    <Dialog open={openAuthorModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
       <DialogTitle>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>
@@ -49,7 +50,7 @@ const AddAuthor = ({ setOpenUserModal, openUserModal }) => {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <AuthorForm onSubmit={handleSubmit} />
+        <AuthorForm onSubmit={handleSubmit} handleClose={handleClose} />
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
