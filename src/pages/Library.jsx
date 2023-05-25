@@ -38,17 +38,17 @@ const Library = () => {
   const handleCategorySelect = (category) => {
     dispatch(setSelectedCategory({ categoryId: category }))
   }
-
+  console.log(books)
   const filteredBooks = selectedCategory
     ? books.filter(
         (book) =>
-          book.category === selectedCategory &&
+          book.category.categoryId === selectedCategory &&
           book.title.toLowerCase().includes(searchInput.toLowerCase())
       )
     : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
   return (
-    <Box>
+    <Box sx={{ mb: 4 }}>
       <Box
         sx={{
           display: 'flex',
@@ -101,17 +101,32 @@ const Library = () => {
             sx={{
               mt: 6
             }}>
-            <Card sx={{ width: 300, height: 300 }}>
+            <Card sx={{ width: 300, height: 350 }}>
               <CardMedia
                 component="img"
                 image={book.imageURL}
                 alt={book.title}
                 sx={{
                   objectFit: 'cover',
-                  height: '50%'
+                  height: '60%'
                 }}
               />
-              <CardHeader title={book.title} />
+              <CardHeader
+                title={book.title}
+                sx={{
+                  textDecoration: 'none',
+                  '& .MuiCardHeader-title': {
+                    fontSize: '1.2rem',
+                    fontWeight: 'semi-bold',
+                    color: '#000000',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  },
+                  pb: 0
+                }}
+                component={RouterLink}
+                to={`/books/${book.bookId}`}
+              />
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
                   {book.author.fullName}
