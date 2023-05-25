@@ -10,35 +10,30 @@ import {
   DialogContent,
   Snackbar
 } from '@mui/material'
-import { Close as CloseIcon, TrendingUp } from '@mui/icons-material'
+import { Close as CloseIcon } from '@mui/icons-material'
 import MuiAlert from '@mui/material/Alert'
 
-import UserForm from './UserForm'
-import { updateUser } from '../slices/userSlice'
+import CategoryForm from './CategoryForm'
+import { updateCategory } from '../slices/categorySlice'
 
-const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
+const UpdateCategory = ({ setOpenCategoryModal, openCategoryModal, selectedCategory }) => {
   const dispatch = useDispatch()
-  console.log(selectedUser)
+  console.log(selectedCategory)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
-    firstName: selectedUser?.firstName || '',
-    lastName: selectedUser?.lastName || '',
-    email: selectedUser?.email || '',
-    password: selectedUser?.password || '',
-    role: selectedUser?.role || 'USER'
+    name: selectedCategory?.name || ''
   })
 
-  const handleUpdateUser = (updatedUser) => {
-    const updatedUserData = {
-      ...updatedUser,
-      password: selectedUser.password,
-      role: selectedUser.role
+  const handleUpdateCategory = (updatedCategory) => {
+    const updatedCategoryData = {
+      ...updatedCategory
     }
 
-    dispatch(updateUser({ userId: selectedUser.userId, user: updatedUserData }))
-    console.log('snackbar testing')
+    dispatch(
+      updateCategory({ categoryId: selectedCategory.categoryId, category: updatedCategoryData })
+    )
+
     setIsSnackbarOpen(true)
-    console.log('snackbar testing end')
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)
@@ -50,11 +45,11 @@ const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
   }
 
   return (
-    <Dialog open={openUserModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+    <Dialog open={openCategoryModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
       <DialogTitle>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>
-            Update User
+            Update Category
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -62,21 +57,21 @@ const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <UserForm
-          user={selectedUser}
+        <CategoryForm
+          category={selectedAuthor}
           formData={formData}
           setFormData={setFormData}
-          onSubmit={handleUpdateUser}
+          onSubmit={handleUpdateCategory}
           setIsSnackbarOpen={setIsSnackbarOpen}
           handleClose={handleClose}
         />
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
-          User updated successfully
+          Category updated successfully
         </MuiAlert>
       </Snackbar>
     </Dialog>
   )
 }
-export default UpdateUser
+export default UpdateCategory

@@ -11,9 +11,8 @@ import Users from './pages/Users'
 import Help from './pages/Help'
 import AddUser from './features/user/components/AddUser'
 import UpdateUser from './features/user/components/UpdateUser'
-import AddBook from './features/admin/components/BookForm'
-import UpdateBook from './features/admin/components/UpdateBook'
-import IssueBook from './features/admin/components/IssueBookForm'
+import AddBook from './features/book/components/BookForm'
+import UpdateBook from './features/book/components/UpdateBook'
 import Book from './pages/Book'
 import User from './pages/User'
 
@@ -30,7 +29,6 @@ function App() {
             <Route path="/admin/users/:userId" element={<UpdateUser />} />
             <Route path="/admin/addbook" element={<AddBook />} />
             <Route path="/admin/books/:id" element={<UpdateBook />} />
-            <Route path="/admin/issuebook" element={<IssueBook />} />
           </Route>
           <Route path="/user" element={<UserRoute />}>
             <Route path="/user/homepage" element={<HomePage />} />

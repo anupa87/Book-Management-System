@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Grid, Box, Button, Container, TextField, Typography } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar'
 
-import { updateBook } from '../../book/slices/bookSlice'
+import { updateBook } from '../slices/bookSlice'
 
 const UpdateBook = () => {
   const { ISBN: bookISBN } = useParams()

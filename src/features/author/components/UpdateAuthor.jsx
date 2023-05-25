@@ -10,35 +10,30 @@ import {
   DialogContent,
   Snackbar
 } from '@mui/material'
-import { Close as CloseIcon, TrendingUp } from '@mui/icons-material'
+import { Close as CloseIcon } from '@mui/icons-material'
 import MuiAlert from '@mui/material/Alert'
 
-import UserForm from './UserForm'
-import { updateUser } from '../slices/userSlice'
+import AuthorForm from './AuthorForm'
+import { updateAuthor } from '../slices/authorSlice'
 
-const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
+const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) => {
   const dispatch = useDispatch()
-  console.log(selectedUser)
+  console.log(selectedAuthor)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
-    firstName: selectedUser?.firstName || '',
-    lastName: selectedUser?.lastName || '',
-    email: selectedUser?.email || '',
-    password: selectedUser?.password || '',
-    role: selectedUser?.role || 'USER'
+    fullName: selectedAuthor?.fullName || '',
+    email: selectedAuthor?.email || ''
   })
 
-  const handleUpdateUser = (updatedUser) => {
-    const updatedUserData = {
-      ...updatedUser,
-      password: selectedUser.password,
-      role: selectedUser.role
+  const handleUpdateAuthor = (updatedAuthor) => {
+    const updatedAuthorData = {
+      ...updatedUser
     }
 
-    dispatch(updateUser({ userId: selectedUser.userId, user: updatedUserData }))
-    console.log('snackbar testing')
+    dispatch(updateAuthor({ authorId: selectedAuthor.authorId, author: updatedAuthorData }))
+    // console.log('snackbar testing')
     setIsSnackbarOpen(true)
-    console.log('snackbar testing end')
+    // console.log('snackbar testing end')
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)
@@ -54,7 +49,7 @@ const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
       <DialogTitle>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>
-            Update User
+            Update Author
           </Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
@@ -62,21 +57,21 @@ const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <UserForm
-          user={selectedUser}
+        <AuthorForm
+          author={selectedAuthor}
           formData={formData}
           setFormData={setFormData}
-          onSubmit={handleUpdateUser}
+          onSubmit={handleUpdateAuthor}
           setIsSnackbarOpen={setIsSnackbarOpen}
           handleClose={handleClose}
         />
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
-          User updated successfully
+          Author updated successfully
         </MuiAlert>
       </Snackbar>
     </Dialog>
   )
 }
-export default UpdateUser
+export default UpdateAuthor

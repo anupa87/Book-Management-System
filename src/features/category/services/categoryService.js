@@ -4,7 +4,7 @@ const categoryService = {
   getAllCategories: async () => {
     try {
       const response = await api.get('/categories')
-      console.log('Category API response: ', response.data)
+      // console.log('Category API response: ', response.data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch categories')

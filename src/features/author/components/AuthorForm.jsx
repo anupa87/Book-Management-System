@@ -1,24 +1,12 @@
 import { useState } from 'react'
 
-import {
-  Box,
-  Grid,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
-} from '@mui/material'
+import { Box, Grid, TextField, Button } from '@mui/material'
 
-const UserForm = ({ user, onSubmit, handleClose }) => {
+const AuthorForm = ({ author, onSubmit, handleClose }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    password: user?.password || '',
-    role: user?.role || 'USER'
+    fullName: author?.fullName || '',
+    email: author?.email || ''
   })
 
   const handleChange = (e) => {
@@ -51,24 +39,13 @@ const UserForm = ({ user, onSubmit, handleClose }) => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-              label="First Name"
-              name="firstName"
-              value={formData.firstName}
+              label="Full Name"
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
               fullWidth
               required
-              disabled={!isEdit && !!user}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Last Name"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              fullWidth
-              required
-              disabled={!isEdit && !!user}
+              disabled={!isEdit && !!author}
             />
           </Grid>
           <Grid item xs={12}>
@@ -79,40 +56,17 @@ const UserForm = ({ user, onSubmit, handleClose }) => {
               onChange={handleChange}
               fullWidth
               required
-              disabled={!isEdit && !!user}
+              disabled={!isEdit && !!author}
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              fullWidth
-              disabled={!!user}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Role</InputLabel>
-              <Select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                required
-                disabled={!!user}>
-                <MenuItem value="USER">USER</MenuItem>
-                <MenuItem value="ADMIN">ADMIN</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+
           <Grid item xs={12}>
             {!user && (
               <Button type="submit" variant="contained" color="secondary">
                 ADD
               </Button>
             )}
-            {user && !isEdit && (
+            {author && !isEdit && (
               <Button variant="contained" color="secondary" onClick={handleEdit}>
                 EDIT
               </Button>
@@ -140,4 +94,4 @@ const UserForm = ({ user, onSubmit, handleClose }) => {
   )
 }
 
-export default UserForm
+export default AuthorForm

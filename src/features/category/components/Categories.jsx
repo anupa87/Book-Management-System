@@ -75,7 +75,6 @@ const Categories = () => {
   const displayedCategories = categories.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (category) => {
-    // Handle edit logic here
     setSnackbarMessage('category updated successfully')
     setIsSnackbarOpen(true)
     console.log('Edit category:', category)

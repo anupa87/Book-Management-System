@@ -4,7 +4,7 @@ const authorService = {
   getAllAuthors: async () => {
     try {
       const response = await api.get('/authors')
-      console.log('Author API response: ', response.data)
+      // console.log('Author API response: ', response.data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch authors')
