@@ -23,7 +23,6 @@ import authService from '../services/authService'
 const Login = ({ modalOpen, onClose }) => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
-  const isLoading = useSelector((state) => state.auth.isLoading)
   const error = useSelector((state) => state.auth.error)
 
   const navigate = useNavigate()

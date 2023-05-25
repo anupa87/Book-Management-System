@@ -27,6 +27,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MuiAlert from '@mui/material/Alert'
 
 import { getAllUsers, deleteUser, setSelectedUser } from '../features/user/slices/userSlice'
+import UpdateUser from '../features/user/components/UpdateUser'
 
 const Users = () => {
   const dispatch = useDispatch()
@@ -38,6 +39,7 @@ const Users = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [openUserModal, setOpenUserModal] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(8)
 
@@ -78,29 +80,31 @@ const Users = () => {
   const displayedUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (user) => {
-    // Handle edit logic here
-    setSnackbarMessage('User updated successfully')
-    setIsSnackbarOpen(true)
-    console.log('Edit user:', user)
+    setOpenUserModal(true)
+    dispatch(setSelectedUser(user))
   }
 
   const handleDelete = (userId) => {
+    console.log('Deleting user with ID:', userId)
     dispatch(setSelectedUser({ userId }))
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = async () => {
-    try {
-      await dispatch(deleteUser(selectedUser.userId))
-      setIsConfirmationOpen(false)
-      setSnackbarMessage('User deleted successfully')
-      setIsSnackbarOpen(true)
-    } catch (error) {
-      console.log('Error deleting user:', error.message)
-      setIsConfirmationOpen(false)
-      setSnackbarMessage(`Error: ${error.message}`)
-      setIsSnackbarOpen(true)
-    }
+  const handleConfirmDelete = () => {
+    console.log('Selected User ID:', selectedUser.userId)
+    dispatch(deleteUser(selectedUser.userId))
+      .then(() => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage('User deleted successfully')
+        setIsSnackbarOpen(true)
+        dispatch(getAllUsers())
+      })
+      .catch((error) => {
+        console.log('Error deleting user:', error.message)
+        setIsConfirmationOpen(false)
+        setSnackbarMessage(`Error: ${error.message}`)
+        setIsSnackbarOpen(true)
+      })
   }
 
   const handleCancelDelete = () => {
@@ -181,6 +185,18 @@ const Users = () => {
             Delete
           </Button>
         </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openUserModal}
+        onClose={() => setOpenUserModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <UpdateUser
+          openUserModal={openUserModal}
+          onClose={() => setOpenUserModal(false)}
+          selectedUser={selectedUser}
+          setOpenUserModal={setOpenUserModal}
+        />
       </Dialog>
 
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>

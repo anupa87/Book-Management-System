@@ -24,8 +24,8 @@ export const updateUser = createAsyncThunk('users/updateUser', async ({ userId, 
 })
 
 export const deleteUser = createAsyncThunk('users/deleteUser', async (userId) => {
-  await userService.deleteUser(userId)
-  return userId
+  const deletedUser = await userService.deleteUser(userId)
+  return deletedUser
 })
 
 const initialState = {
@@ -41,7 +41,7 @@ const userSlice = createSlice({
 
   reducers: {
     setSelectedUser: (state, action) => {
-      state.selectedUser = action.payload.userId
+      state.selectedUser = action.payload
     }
   },
   extraReducers: (builder) => {

@@ -21,7 +21,7 @@ const AuthService = {
   },
 
   logout() {
-    Storage.removeItem('token')
+    localStorage.removeItem('token')
   },
 
   isAuthenticated() {

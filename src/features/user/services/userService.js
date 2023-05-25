@@ -22,7 +22,7 @@ const userService = {
 
   addUser: async (user) => {
     try {
-      const response = await api.post('/users', user)
+      const response = await api.post('/signup', user)
       return response.data
     } catch (error) {
       throw new Error('Failed to add user')
@@ -41,11 +41,7 @@ const userService = {
   deleteUser: async (userId) => {
     try {
       const response = await api.delete(`/users/${userId}`)
-      if (response.status === 204) {
-        return true
-      } else {
-        throw new Error(`Failed to delete user with ID ${userId}`)
-      }
+      return response.data
     } catch (error) {
       throw new Error(`Failed to delete user with ID ${userId}`)
     }

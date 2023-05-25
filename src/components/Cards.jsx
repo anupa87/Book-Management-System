@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { Box, IconButton, Typography, Card, CardContent, Dialog } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import AddUser from '../features/admin/components/AddUserForm'
-import AddBook from '../features/admin/components/AddBook'
+import AddUser from '../features/user/components/AddUser'
+import BookForm from '../features/admin/components/BookForm'
 
 const Cards = () => {
   const [openUserModal, setOpenUserModal] = useState(false)
@@ -56,7 +56,7 @@ const Cards = () => {
         open={OpenBookModal}
         onClose={() => setopenBookModal(false)}
         PaperProps={{ style: { width: '80%' } }}>
-        <AddBook
+        <BookForm
           OpenBookModal={OpenBookModal}
           onClose={() => setopenBookModal(false)}
           setopenBookModal={setopenBookModal}
