@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Box, TextField } from '@mui/material'
+import { Box, TextField, InputAdornment } from '@mui/material'
+import { Search } from '@mui/icons-material'
 import { setSearch } from '../../book/slices/bookSlice'
 
 const SearchBar = () => {
@@ -23,6 +24,13 @@ const SearchBar = () => {
           '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
             borderColor: 'grey.300'
           }
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          )
         }}
         placeholder="Search books by title..."
       />

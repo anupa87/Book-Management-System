@@ -10,17 +10,22 @@ import {
   CardHeader,
   CardMedia,
   CardActions,
-  CardContent
+  CardContent,
+  Chip
 } from '@mui/material'
 
 import SearchBar from '../features/book/components/SearchBar'
 import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
+import { getAllCategories, setSelectedCategory } from '../features/category/slices/categorySlice'
+import { Category } from '@mui/icons-material'
 
 const Library = () => {
   const dispatch = useDispatch()
 
   const books = useSelector((state) => state.books.books)
   const searchInput = useSelector((state) => state.books.search)
+  const categories = useSelector((state) => state.categories.categories)
+  const selectedCategory = useSelector((state) => state.categories.selectedCategory)
 
   useEffect(() => {
     dispatch(getAllBooks())
@@ -30,12 +35,20 @@ const Library = () => {
     dispatch(setSearch(event.target.value))
   }
 
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchInput.toLowerCase())
-  )
+  const handleCategorySelect = (category) => {
+    dispatch(setSelectedCategory({ categoryId: category }))
+  }
+
+  const filteredBooks = selectedCategory
+    ? books.filter(
+        (book) =>
+          book.category === selectedCategory &&
+          book.title.toLowerCase().includes(searchInput.toLowerCase())
+      )
+    : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
   return (
-    <Box sx={{ my: 4 }}>
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -51,6 +64,31 @@ const Library = () => {
           <SearchBar onChange={handleSearchInputChange} />
         </Box>
       </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 10,
+          gap: 6
+        }}>
+        <Chip
+          label="All"
+          clickable
+          color={selectedCategory === null ? 'primary' : 'secondary'}
+          onClick={() => handleCategorySelect(null)}
+          sx={{ minWidth: '100px' }}
+        />
+        {categories.map((category) => (
+          <Chip
+            key={category.categoryId}
+            label={category.name}
+            clickable
+            color={selectedCategory === category.categoryId ? 'primary' : 'secondary'}
+            onClick={() => handleCategorySelect(category.categoryId)}
+            sx={{ minWidth: '100px' }}
+          />
+        ))}
+      </Box>
       <Grid container spacing={2}>
         {filteredBooks.map((book) => (
           <Grid
@@ -59,7 +97,7 @@ const Library = () => {
             xs={12}
             sm={6}
             md={4}
-            lg={3}
+            lg={4}
             sx={{
               mt: 6
             }}>

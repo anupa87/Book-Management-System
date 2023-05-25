@@ -40,7 +40,7 @@ const Login = ({ modalOpen, onClose }) => {
     e.preventDefault()
 
     if (!formData.email || !formData.password) {
-      dispatch(loginFail('Please provide both email and password.'))
+      dispatch(loginFail('Please provide your email and password.'))
       return
     }
 
@@ -82,11 +82,7 @@ const Login = ({ modalOpen, onClose }) => {
         maxWidth="sm"
         fullWidth={true}
         PaperProps={{ sx: { borderRadius: '20px' } }}>
-        <DialogTitle>
-          <Typography variant="h4" align="center" gutterBottom>
-            Login
-          </Typography>
-        </DialogTitle>
+        <DialogTitle sx={{ textAlign: 'center' }}>Login</DialogTitle>
         <DialogContent sx={{ mx: 'auto', p: 6 }}>
           {error && (
             <Typography color="error" sx={{ mt: 1 }}>
@@ -125,7 +121,7 @@ const Login = ({ modalOpen, onClose }) => {
                 )
               }}
             />
-            <Box item sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Typography variant="body2" color="text.secondary">
                 Forgot password?
               </Typography>

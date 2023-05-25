@@ -22,6 +22,7 @@ const AuthService = {
 
   logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('error')
   },
 
   isAuthenticated() {
@@ -36,7 +37,8 @@ const AuthService = {
       return {
         userId: decodedToken.user_id,
         email: decodedToken.email,
-        role: decodedToken.role
+        role: decodedToken.role,
+        firstName: decodedToken.firstName
       }
     } catch (error) {
       throw new Error('Failed to retrieve current user')
