@@ -65,7 +65,7 @@ const AddBook = ({ setOpenBookModal, openBookModal }) => {
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
-          Book added successfully
+          Book issued successfully
         </MuiAlert>
       </Snackbar>
     </Dialog>

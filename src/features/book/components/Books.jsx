@@ -151,7 +151,7 @@ const Books = () => {
                 </TableRow>
               ))}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
+                <TableRow style={{ height: 53 * 5 }}>
                   <TableCell colSpan={3} />
                 </TableRow>
               )}
@@ -160,7 +160,7 @@ const Books = () => {
         </TableContainer>
       </Box>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={books.length}
         rowsPerPage={rowsPerPage}

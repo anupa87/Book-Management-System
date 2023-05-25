@@ -142,7 +142,7 @@ const Categories = () => {
                 </TableRow>
               ))}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
+                <TableRow style={{ height: 53 * 5 }}>
                   <TableCell colSpan={3} />
                 </TableRow>
               )}
@@ -151,7 +151,7 @@ const Categories = () => {
         </TableContainer>
       </Box>
       <TablePagination
-        rowsPerPageOptions={[8, 16, 24]}
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={categories.length}
         rowsPerPage={rowsPerPage}

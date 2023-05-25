@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link as RouterLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   Grid,
@@ -11,21 +11,27 @@ import {
   CardMedia,
   CardActions,
   CardContent,
-  Chip
+  Chip,
+  Button,
+  Snackbar
 } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
 
 import SearchBar from '../features/book/components/SearchBar'
 import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
-import { getAllCategories, setSelectedCategory } from '../features/category/slices/categorySlice'
-import { Category } from '@mui/icons-material'
+import { setSelectedCategory } from '../features/category/slices/categorySlice'
+import { borrowBook } from '../features/borrow/slices/borrowSlice'
 
 const Library = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const books = useSelector((state) => state.books.books)
   const searchInput = useSelector((state) => state.books.search)
   const categories = useSelector((state) => state.categories.categories)
   const selectedCategory = useSelector((state) => state.categories.selectedCategory)
+  const currentUser = useSelector((state) => state.auth.currentUser)
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
   useEffect(() => {
     dispatch(getAllBooks())
@@ -38,7 +44,22 @@ const Library = () => {
   const handleCategorySelect = (category) => {
     dispatch(setSelectedCategory({ categoryId: category }))
   }
-  console.log(books)
+
+  const handleBorrow = (bookId) => {
+    dispatch(borrowBook(bookId))
+    setIsSnackbarOpen(true)
+    setTimeout(() => {
+      setIsSnackbarOpen(false)
+    }, 2000)
+  }
+
+  const handleIssue = (bookId) => {
+    setIsSnackbarOpen(true)
+    setTimeout(() => {
+      setIsSnackbarOpen(false)
+    }, 2000)
+  }
+
   const filteredBooks = selectedCategory
     ? books.filter(
         (book) =>
@@ -47,6 +68,7 @@ const Library = () => {
       )
     : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
+  console.log(currentUser)
   return (
     <Box sx={{ mb: 4 }}>
       <Box
@@ -122,10 +144,13 @@ const Library = () => {
                     overflow: 'hidden',
                     textOverflow: 'ellipsis'
                   },
-                  pb: 0
+                  pb: 0,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    textDecoration: 'underline'
+                  }
                 }}
-                component={RouterLink}
-                to={`/books/${book.bookId}`}
+                onClick={() => navigate(`/books/${book.bookId}`)}
               />
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -133,14 +158,21 @@ const Library = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <RouterLink to={`/books/${book.bookId}`} sx={{ color: 'inherit' }}>
-                  Learn More
-                </RouterLink>
+                {currentUser && currentUser.role === 'ADMIN' ? (
+                  <Button onClick={() => handleIssue(book.bookId)}>Issue book</Button>
+                ) : (
+                  <Button onClick={() => handleBorrow(book.bookId)}>Borrow</Button>
+                )}
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
+      <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
+        <MuiAlert elevation={6} variant="filled" severity="success">
+          Book added successfully
+        </MuiAlert>
+      </Snackbar>
     </Box>
   )
 }
