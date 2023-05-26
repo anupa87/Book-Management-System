@@ -37,18 +37,20 @@ const MyAccount = () => {
   const day = moment().format('dddd')
 
   useEffect(() => {
-    const fetchUserInformation = async () => {
+    const fetchUserInformation = () => {
       try {
         const token = localStorage.getItem('token')
         const decodedToken = jwtDecode(token)
+        console.log(decodedToken)
         const userId = decodedToken.user_id
 
-        await dispatch(getUserById(userId))
+        dispatch(getUserById(userId))
+        console.log('currentUser:', currentUser)
 
         setUserInfo({
-          firstName: currentUser.firstName,
-          lastName: currentUser.lastName,
-          email: currentUser.email
+          firstName: currentUser?.firstName || decodedToken.firstName,
+          lastName: user?.lastName,
+          email: currentUser?.email || decodedToken.email
         })
       } catch (error) {
         console.error('Failed to fetch user information:', error)
@@ -90,17 +92,14 @@ const MyAccount = () => {
 
       <Card sx={{ maxWidth: 570, my: 6 }}>
         <CardContent>
-          <Typography variant="h4" gutterBottom>
-            Personal Information
-          </Typography>
           <Typography variant="h6" gutterBottom>
             First Name: {userInfo?.firstName}
           </Typography>
           <Typography variant="h6" gutterBottom>
-            Last Name: {currentUser.lastName}
+            Last Name: {userInfo?.lastName}
           </Typography>
           <Typography variant="h6" gutterBottom>
-            Email: {currentUser.email}
+            Email: {userInfo?.email}
           </Typography>
         </CardContent>
         <CardActions

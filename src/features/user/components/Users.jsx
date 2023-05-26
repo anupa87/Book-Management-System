@@ -85,13 +85,11 @@ const Users = () => {
   }
 
   const handleDelete = (userId) => {
-    console.log('Deleting user with ID:', userId)
     dispatch(setSelectedUser({ userId }))
     setIsConfirmationOpen(true)
   }
 
   const handleConfirmDelete = () => {
-    console.log('Selected User ID:', selectedUser.userId)
     dispatch(deleteUser(selectedUser.userId))
       .then(() => {
         setIsConfirmationOpen(false)
@@ -100,7 +98,6 @@ const Users = () => {
         dispatch(getAllUsers())
       })
       .catch((error) => {
-        console.log('Error deleting user:', error.message)
         setIsConfirmationOpen(false)
         setSnackbarMessage(`Error: ${error.message}`)
         setIsSnackbarOpen(true)

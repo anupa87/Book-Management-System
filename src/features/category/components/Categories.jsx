@@ -26,6 +26,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MuiAlert from '@mui/material/Alert'
 
 import { getAllCategories, deleteCategory, setSelectedCategory } from '../slices/categorySlice'
+import UpdateCategory from './UpdateCategory'
 
 const Categories = () => {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const Categories = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [openCategoryModal, setOpenCategoryModal] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -75,9 +77,8 @@ const Categories = () => {
   const displayedCategories = categories.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (category) => {
-    setSnackbarMessage('category updated successfully')
-    setIsSnackbarOpen(true)
-    console.log('Edit category:', category)
+    setOpenCategoryModal(true)
+    dispatch(setSelectedCategory(category))
   }
 
   const handleDelete = (categoryId) => {
@@ -85,18 +86,19 @@ const Categories = () => {
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = async () => {
-    try {
-      await dispatch(deleteCategory(selectedCategory.categoryId))
-      setIsConfirmationOpen(false)
-      setSnackbarMessage('category deleted successfully')
-      setIsSnackbarOpen(true)
-    } catch (error) {
-      console.log('Error deleting category:', error.message)
-      setIsConfirmationOpen(false)
-      setSnackbarMessage(`Error: ${error.message}`)
-      setIsSnackbarOpen(true)
-    }
+  const handleConfirmDelete = () => {
+    dispatch(deleteCategory(selectedCategory.categoryId))
+      .then(() => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage('Category deleted successfully')
+        setIsSnackbarOpen(true)
+        dispatch(getAllCategories())
+      })
+      .catch((error) => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage(`Error: ${error.message}`)
+        setIsSnackbarOpen(true)
+      })
   }
 
   const handleCancelDelete = () => {
@@ -173,6 +175,17 @@ const Categories = () => {
         </DialogActions>
       </Dialog>
 
+      <Dialog
+        open={openCategoryModal}
+        onClose={() => setOpenCategoryModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <UpdateCategory
+          openCategoryModal={openCategoryModal}
+          onClose={() => setOpenCategoryModal(false)}
+          selectedCategory={selectedCategory}
+          setOpenCategoryModal={setOpenCategoryModal}
+        />
+      </Dialog>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
         <MuiAlert
           elevation={6}

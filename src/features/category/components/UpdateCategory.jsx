@@ -37,11 +37,11 @@ const UpdateCategory = ({ setOpenCategoryModal, openCategoryModal, selectedCateg
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)
-    setOpenUserModal(false)
+    setOpenCategoryModal(false)
   }
 
   const handleClose = () => {
-    setOpenUserModal(false)
+    setOpenCategoryModal(false)
   }
 
   return (
@@ -58,7 +58,7 @@ const UpdateCategory = ({ setOpenCategoryModal, openCategoryModal, selectedCateg
       </DialogTitle>
       <DialogContent>
         <CategoryForm
-          category={selectedAuthor}
+          category={selectedCategory}
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleUpdateCategory}

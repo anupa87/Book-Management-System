@@ -10,7 +10,7 @@ import {
   DialogContent,
   Snackbar
 } from '@mui/material'
-import { Close as CloseIcon, TrendingUp } from '@mui/icons-material'
+import { Close as CloseIcon } from '@mui/icons-material'
 import MuiAlert from '@mui/material/Alert'
 
 import UserForm from './UserForm'
@@ -36,9 +36,8 @@ const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
     }
 
     dispatch(updateUser({ userId: selectedUser.userId, user: updatedUserData }))
-    console.log('snackbar testing')
+
     setIsSnackbarOpen(true)
-    console.log('snackbar testing end')
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)

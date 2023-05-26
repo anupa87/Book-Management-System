@@ -40,7 +40,7 @@ const AddBook = ({ setOpenBookModal, openBookModal }) => {
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
-      navigate('/admin/books')
+      navigate('/books')
     }, 3000)
   }
 

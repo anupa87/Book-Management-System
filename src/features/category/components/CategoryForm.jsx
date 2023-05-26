@@ -5,7 +5,7 @@ import { Box, Grid, TextField, Button } from '@mui/material'
 const CategoryForm = ({ category, onSubmit, handleClose }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [formData, setFormData] = useState({
-    name: category?.fullName || ''
+    name: category?.name || ''
   })
 
   const handleChange = (e) => {

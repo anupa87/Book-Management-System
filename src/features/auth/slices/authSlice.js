@@ -19,8 +19,8 @@ export const authSlice = createSlice({
       state.isAuthenticated = true
       state.isLoading = false
       state.error = null
-      state.currentUser = action.payload.user
-      state.currentRole = action.payload.user.role
+      state.currentUser = action.payload
+      state.currentRole = action.payload.role
     },
     loginFail: (state, action) => {
       state.isLoading = false
@@ -43,17 +43,9 @@ export const login = (credentials) => async (dispatch) => {
   try {
     const token = await authService.login(credentials)
     const decodedToken = jwt_decode(token)
-    const { role, email, firstName, lastName } = decodedToken
+    const { role } = decodedToken
 
-    const user = {
-      userId: decodedToken.user_id,
-      email,
-      role,
-      firstName,
-      lastName
-    }
-
-    dispatch(loginSuccess({ user }))
+    dispatch(loginSuccess({ role }))
 
     return token
   } catch (error) {

@@ -76,27 +76,28 @@ const Books = () => {
   const displayedBooks = books.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (book) => {
-    setSnackbarMessage('Book updated successfully')
-    setIsSnackbarOpen(true)
-    console.log('Edit book:', book)
+    setOpenBookModal(true)
+    dispatch(setSelectedBook(book))
   }
 
   const handleDelete = (bookId) => {
-    dispatch(setSelectedBook(bookId))
+    dispatch(setSelectedBook({ bookId }))
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = async () => {
-    try {
-      await dispatch(deleteBook(selectedBook.bookId))
-      setIsConfirmationOpen(false)
-      setSnackbarMessage('Book deleted successfully')
-      setIsSnackbarOpen(true)
-    } catch (error) {
-      setIsConfirmationOpen(false)
-      setSnackbarMessage(`Error: ${error.message}`)
-      setIsSnackbarOpen(true)
-    }
+  const handleConfirmDelete = () => {
+    dispatch(deleteBook(selectedBook.bookId))
+      .then(() => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage('Book deleted successfully')
+        setIsSnackbarOpen(true)
+        dispatch(getAllBooks())
+      })
+      .catch((error) => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage(`Error: ${error.message}`)
+        setIsSnackbarOpen(true)
+      })
   }
 
   const handleCancelDelete = () => {
@@ -125,8 +126,8 @@ const Books = () => {
             <TableHead sx={{ backgroundColor: 'secondary.main' }}>
               <TableRow>
                 <TableCell sx={{ color: 'white' }}>Title</TableCell>
-                {/* <TableCell sx={{ color: 'white' }}>Category</TableCell> */}
-                {/* <TableCell sx={{ color: 'white' }}>Author</TableCell> */}
+                <TableCell sx={{ color: 'white' }}>Category</TableCell>
+                <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
                 <TableCell sx={{ color: 'white' }}>Published Year</TableCell>
                 <TableCell sx={{ color: 'white' }}>Actions</TableCell>
@@ -136,8 +137,8 @@ const Books = () => {
               {displayedBooks.map((book) => (
                 <TableRow key={book.bookId}>
                   <TableCell>{book.title}</TableCell>
-                  {/* <TableCell>{book.category}</TableCell> */}
-                  {/* <TableCell>{book.author}</TableCell> */}
+                  <TableCell>{book.category.name}</TableCell>
+                  <TableCell>{book.author.fullName}</TableCell>
                   <TableCell>{book.publisher}</TableCell>
                   <TableCell>{book.publishedYear}</TableCell>
                   <TableCell>

@@ -115,7 +115,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
                 disabled={!isEdit && !!book}>
                 {authors.map((author) => (
                   <MenuItem key={author.authorId} value={author.authorId}>
-                    {author.name}
+                    {author.fullName}
                   </MenuItem>
                 ))}
               </Select>

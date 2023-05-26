@@ -40,7 +40,7 @@ const authorSlice = createSlice({
 
   reducers: {
     setSelectedAuthor: (state, action) => {
-      state.selectedAuthor = action.payload.authorId
+      state.selectedAuthor = action.payload
     }
   },
 
