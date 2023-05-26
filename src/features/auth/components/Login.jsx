@@ -65,7 +65,7 @@ const Login = ({ modalOpen, onClose }) => {
         if (role === 'ADMIN') {
           navigate('admin/dashboard')
         } else {
-          navigate('user/homepage')
+          navigate('/books')
         }
       } else {
         throw new Error('Invalid response data.')
@@ -142,7 +142,7 @@ const Login = ({ modalOpen, onClose }) => {
                 }}>
                 Cancel
               </Button>
-              <Button variant="contained" type="submit">
+              <Button variant="contained" color="primary" type="submit">
                 Login
               </Button>
             </DialogActions>

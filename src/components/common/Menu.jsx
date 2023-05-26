@@ -14,7 +14,7 @@ import {
   IconButton
 } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-import HomeIcon from '@mui/icons-material/Home'
+// import HomeIcon from '@mui/icons-material/Home'
 import BookIcon from '@mui/icons-material/Book'
 import PeopleIcon from '@mui/icons-material/People'
 import PersonIcon from '@mui/icons-material/Person'
@@ -29,20 +29,20 @@ import { logoutUser } from '../../features/auth/slices/authSlice'
 const drawerWidth = 240
 
 const getMenuItems = (currentUser) => [
-  { label: 'Home', icon: React.createElement(HomeIcon), path: '/user/homepage', role: 'USER' },
+  // { label: 'Home', icon: React.createElement(HomeIcon), path: '/user/homepage', role: 'USER' },
   {
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
     path: '/admin/dashboard',
     role: 'ADMIN'
   },
-  { label: 'Books', icon: React.createElement(BookIcon), path: '/books', role: 'BOTH' },
+  { label: 'Library', icon: React.createElement(BookIcon), path: '/books', role: 'BOTH' },
   { label: 'Users', icon: React.createElement(PeopleIcon), path: '/admin/users', role: 'ADMIN' },
   {
-    label: 'Profile',
+    label: 'My Account',
     icon: React.createElement(PersonIcon),
-    path: `/user/${currentUser?.id}`,
-    role: 'USER'
+    path: '/my_account',
+    role: 'BOTH'
   },
 
   { label: 'Help', icon: React.createElement(HelpIcon), path: '/help', role: 'BOTH' },

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import AuthService from '../services/authService'
+import authService from '../services/authService'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -19,8 +19,8 @@ export const authSlice = createSlice({
       state.isAuthenticated = true
       state.isLoading = false
       state.error = null
-      state.currentUser = action.payload
-      state.currentRole = action.payload.role
+      state.currentUser = action.payload.user
+      state.currentRole = action.payload.user.role
     },
     loginFail: (state, action) => {
       state.isLoading = false
@@ -41,11 +41,19 @@ export const { loginStart, loginSuccess, loginFail, logout } = authSlice.actions
 export const login = (credentials) => async (dispatch) => {
   dispatch(loginStart())
   try {
-    const token = await AuthService.login(credentials)
+    const token = await authService.login(credentials)
     const decodedToken = jwt_decode(token)
-    const { role } = decodedToken
+    const { role, email, firstName, lastName } = decodedToken
 
-    dispatch(loginSuccess({ role }))
+    const user = {
+      userId: decodedToken.user_id,
+      email,
+      role,
+      firstName,
+      lastName
+    }
+
+    dispatch(loginSuccess({ user }))
 
     return token
   } catch (error) {
@@ -54,7 +62,7 @@ export const login = (credentials) => async (dispatch) => {
 }
 
 export const logoutUser = () => async (dispatch) => {
-  AuthService.logout()
+  authService.logout()
   dispatch(logout())
 }
 

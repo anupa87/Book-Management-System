@@ -170,7 +170,9 @@ const Library = () => {
       </Grid>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
-          Book added successfully
+          {currentUser && currentUser.role === 'ADMIN'
+            ? 'Book issued successfully'
+            : 'Book borrowed successfully'}
         </MuiAlert>
       </Snackbar>
     </Box>

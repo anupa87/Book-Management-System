@@ -165,7 +165,7 @@ const Users = () => {
         </TableContainer>
       </Box>
       <TablePagination
-        rowsPerPageOptions={[8, 16, 24]}
+        rowsPerPageOptions={[5, 10, 15]}
         component="div"
         count={filteredUsers.length}
         rowsPerPage={rowsPerPage}

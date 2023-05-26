@@ -34,12 +34,12 @@ const AuthService = {
     try {
       const token = localStorage.getItem('token')
       const decodedToken = jwtDecode(token)
-      return {
+      const currentUser = {
         userId: decodedToken.user_id,
         email: decodedToken.email,
-        role: decodedToken.role,
-        firstName: decodedToken.firstName
+        role: decodedToken.role
       }
+      return currentUser
     } catch (error) {
       throw new Error('Failed to retrieve current user')
     }

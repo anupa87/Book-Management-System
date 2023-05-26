@@ -18,7 +18,7 @@ const Dashboard = () => {
   const day = moment().format('dddd')
 
   return (
-    <Grid>
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -47,7 +47,7 @@ const Dashboard = () => {
         <Categories />
         <Books />
       </Box>
-    </Grid>
+    </Box>
   )
 }
 export default Dashboard
