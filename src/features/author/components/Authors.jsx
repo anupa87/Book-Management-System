@@ -37,6 +37,7 @@ const Authors = () => {
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
+  const [openAuthorModal, setOpenAuthorModal] = useState(false)
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
@@ -75,9 +76,11 @@ const Authors = () => {
   const displayedAuthors = authors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (author) => {
-    setSnackbarMessage('Author updated successfully')
-    setIsSnackbarOpen(true)
+    // setIsSnackbarOpen(true)
+    setOpenAuthorModal(true)
+    dispatch(setSelectedAuthor(author))
     console.log('Edit author:', author)
+    // setSnackbarMessage('Author updated successfully')
   }
 
   const handleDelete = (authorId) => {

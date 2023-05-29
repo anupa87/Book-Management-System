@@ -28,8 +28,8 @@ const AddUser = ({ setOpenUserModal, openUserModal }) => {
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
-      navigate('/admin/users')
     }, 3000)
+    setOpenUserModal(false)
   }
 
   const handleClose = () => {

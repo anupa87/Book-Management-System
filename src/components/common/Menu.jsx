@@ -29,7 +29,6 @@ import { logoutUser } from '../../features/auth/slices/authSlice'
 const drawerWidth = 240
 
 const getMenuItems = (currentUser) => [
-  // { label: 'Home', icon: React.createElement(HomeIcon), path: '/user/homepage', role: 'USER' },
   {
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),
@@ -37,7 +36,6 @@ const getMenuItems = (currentUser) => [
     role: 'ADMIN'
   },
   { label: 'Library', icon: React.createElement(BookIcon), path: '/books', role: 'BOTH' },
-  { label: 'Users', icon: React.createElement(PeopleIcon), path: '/admin/users', role: 'ADMIN' },
   {
     label: 'My Account',
     icon: React.createElement(PersonIcon),
@@ -64,7 +62,9 @@ const Menu = () => {
   const handleMenuClick = (item) => {
     if (item.label === 'Logout') {
       dispatch(logoutUser())
+      console.log('logginout')
       navigate('/')
+      console.log('logginout end')
     } else {
       navigate(item.path)
     }

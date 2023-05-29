@@ -29,7 +29,6 @@ const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) =
     const updatedAuthorData = {
       ...updatedUser
     }
-
     dispatch(updateAuthor({ authorId: selectedAuthor.authorId, author: updatedAuthorData }))
     // console.log('snackbar testing')
     setIsSnackbarOpen(true)
@@ -37,15 +36,14 @@ const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) =
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)
-    setOpenUserModal(false)
   }
 
   const handleClose = () => {
-    setOpenUserModal(false)
+    setOpenAuthorModal(false)
   }
 
   return (
-    <Dialog open={openUserModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
+    <Dialog open={openAuthorModal} onClose={handleClose} PaperProps={{ style: { width: '80%' } }}>
       <DialogTitle>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h4" gutterBottom>

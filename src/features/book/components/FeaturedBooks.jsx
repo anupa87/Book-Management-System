@@ -40,7 +40,7 @@ const FeaturedBooks = () => {
         {featuredBooks.map((book) => (
           <Grid
             item
-            key={book.id}
+            key={book.bookId}
             xs={12}
             sm={6}
             md={4}
@@ -61,7 +61,7 @@ const FeaturedBooks = () => {
               <CardHeader title={book.title} />
               <CardContent>
                 <Typography variant="subtitle1" color="text.secondary">
-                  {book.author}
+                  {book.author.fullName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {book.description}

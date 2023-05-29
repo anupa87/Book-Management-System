@@ -21,8 +21,9 @@ const AuthService = {
   },
 
   logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('error')
+    // localStorage.removeItem('token')
+    // localStorage.removeItem('error')
+    localStorage.clear()
   },
 
   isAuthenticated() {

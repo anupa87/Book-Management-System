@@ -19,7 +19,7 @@ import MuiAlert from '@mui/material/Alert'
 
 import SearchBar from '../features/book/components/SearchBar'
 import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
-import { setSelectedCategory } from '../features/category/slices/categorySlice'
+import { getAllCategories, setSelectedCategory } from '../features/category/slices/categorySlice'
 import { borrowBook } from '../features/borrow/slices/borrowSlice'
 
 const Library = () => {
@@ -35,6 +35,7 @@ const Library = () => {
 
   useEffect(() => {
     dispatch(getAllBooks())
+    dispatch(getAllCategories())
   }, [dispatch])
 
   const handleSearchInputChange = (event) => {
@@ -42,7 +43,9 @@ const Library = () => {
   }
 
   const handleCategorySelect = (category) => {
+    console.log('testing category', category)
     dispatch(setSelectedCategory({ categoryId: category }))
+    console.log('testing category', category)
   }
 
   const handleBorrow = (bookId) => {
@@ -60,14 +63,15 @@ const Library = () => {
     }, 2000)
   }
 
-  const filteredBooks = selectedCategory
+  const filteredBooks = selectedCategory.categoryId
     ? books.filter(
         (book) =>
-          book.category.categoryId === selectedCategory &&
+          book.category.categoryId === selectedCategory.categoryId &&
           book.title.toLowerCase().includes(searchInput.toLowerCase())
       )
     : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
+  console.log('selected cat-----', selectedCategory)
   console.log(currentUser)
   return (
     <Box sx={{ mb: 4 }}>
@@ -105,7 +109,7 @@ const Library = () => {
             key={category.categoryId}
             label={category.name}
             clickable
-            color={selectedCategory === category.categoryId ? 'primary' : 'secondary'}
+            color={selectedCategory.categoryId === category.categoryId ? 'primary' : 'secondary'}
             onClick={() => handleCategorySelect(category.categoryId)}
             sx={{ minWidth: '100px' }}
           />

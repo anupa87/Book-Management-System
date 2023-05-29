@@ -4,10 +4,8 @@ import PublicPage from './pages/PublicPage'
 import ErrorPage from './pages/ErrorPage'
 import Layout from './components/common/Layout'
 import { AdminRoute, CommonRoute } from './routes/Routes'
-// import HomePage from './pages/Homepage'
 import Dashboard from './pages/Dashboard'
 import Books from './pages/Library'
-import Users from './features/user/components/Users'
 import Help from './pages/Help'
 import AddUser from './features/user/components/AddUser'
 import UpdateUser from './features/user/components/UpdateUser'
@@ -24,15 +22,13 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/admin" element={<AdminRoute />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/users" element={<Users />} />
+
             <Route path="/admin/adduser" element={<AddUser />} />
             <Route path="/admin/users/:userId" element={<UpdateUser />} />
             <Route path="/admin/addbook" element={<AddBook />} />
             <Route path="/admin/books/:id" element={<UpdateBook />} />
           </Route>
-          {/* <Route path="/user" element={<UserRoute />}>
-            <Route path="/user/homepage" element={<HomePage />} />
-          </Route> */}
+
           <Route path="/" element={<CommonRoute />}>
             <Route path="/books" element={<Books />} />
             <Route path="/my_account" element={<MyAccount />} />
