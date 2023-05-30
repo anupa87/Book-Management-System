@@ -18,7 +18,7 @@ import { updateAuthor } from '../slices/authorSlice'
 
 const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) => {
   const dispatch = useDispatch()
-  console.log(selectedAuthor)
+
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
     fullName: selectedAuthor?.fullName || '',
@@ -27,15 +27,14 @@ const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) =
 
   const handleUpdateAuthor = (updatedAuthor) => {
     const updatedAuthorData = {
-      ...updatedUser
+      ...updatedAuthor
     }
     dispatch(updateAuthor({ authorId: selectedAuthor.authorId, author: updatedAuthorData }))
-    // console.log('snackbar testing')
     setIsSnackbarOpen(true)
-    // console.log('snackbar testing end')
     setTimeout(() => {
       setIsSnackbarOpen(false)
     }, 3000)
+    setOpenAuthorModal(false)
   }
 
   const handleClose = () => {

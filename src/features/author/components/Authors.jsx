@@ -26,6 +26,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import MuiAlert from '@mui/material/Alert'
 
 import { getAllAuthors, deleteAuthor, setSelectedAuthor } from '../slices/authorSlice'
+import UpdateAuthor from './UpdateAuthor'
 
 const Authors = () => {
   const dispatch = useDispatch()
@@ -76,11 +77,8 @@ const Authors = () => {
   const displayedAuthors = authors.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
   const handleEdit = (author) => {
-    // setIsSnackbarOpen(true)
     setOpenAuthorModal(true)
     dispatch(setSelectedAuthor(author))
-    console.log('Edit author:', author)
-    // setSnackbarMessage('Author updated successfully')
   }
 
   const handleDelete = (authorId) => {
@@ -88,17 +86,19 @@ const Authors = () => {
     setIsConfirmationOpen(true)
   }
 
-  const handleConfirmDelete = async () => {
-    try {
-      await dispatch(deleteAuthor(selectedAuthor.authorId))
-      setIsConfirmationOpen(false)
-      setSnackbarMessage('Author deleted successfully')
-      setIsSnackbarOpen(true)
-    } catch (error) {
-      setIsConfirmationOpen(false)
-      setSnackbarMessage(`Error: ${error.message}`)
-      setIsSnackbarOpen(true)
-    }
+  const handleConfirmDelete = () => {
+    dispatch(deleteAuthor(selectedAuthor.authorId))
+      .then(() => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage('Author deleted successfully')
+        setIsSnackbarOpen(true)
+        dispatch(getAllAuthors())
+      })
+      .catch((error) => {
+        setIsConfirmationOpen(false)
+        setSnackbarMessage(`Error: ${error.message}`)
+        setIsSnackbarOpen(true)
+      })
   }
 
   const handleCancelDelete = () => {
@@ -175,6 +175,18 @@ const Authors = () => {
             Delete
           </Button>
         </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={openAuthorModal}
+        onClose={() => setOpenAuthorModal(false)}
+        PaperProps={{ style: { width: '80%' } }}>
+        <UpdateAuthor
+          openAuthorModal={openAuthorModal}
+          onClose={() => setOpenAuthorModal(false)}
+          selectedAuthor={selectedAuthor}
+          setOpenAuthorModal={setOpenAuthorModal}
+        />
       </Dialog>
 
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>

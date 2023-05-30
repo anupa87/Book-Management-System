@@ -21,6 +21,7 @@ import SearchBar from '../features/book/components/SearchBar'
 import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
 import { getAllCategories, setSelectedCategory } from '../features/category/slices/categorySlice'
 import { borrowBook } from '../features/borrow/slices/borrowSlice'
+import Borrow from '../features/borrow/components/Borrow'
 
 const Library = () => {
   const dispatch = useDispatch()
@@ -71,8 +72,6 @@ const Library = () => {
       )
     : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
-  console.log('selected cat-----', selectedCategory)
-  console.log(currentUser)
   return (
     <Box sx={{ mb: 4 }}>
       <Box
@@ -165,7 +164,7 @@ const Library = () => {
                 {currentUser && currentUser.role === 'ADMIN' ? (
                   <Button onClick={() => handleIssue(book.bookId)}>Issue book</Button>
                 ) : (
-                  <Button onClick={() => handleBorrow(book.bookId)}>Borrow</Button>
+                  <Borrow bookId={book.bookId} onBorrow={handleBorrow} />
                 )}
               </CardActions>
             </Card>

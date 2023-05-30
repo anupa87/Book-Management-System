@@ -4,7 +4,7 @@ const userService = {
   getAllUsers: async () => {
     try {
       const response = await api.get('/users')
-      console.log('API response:', response.data)
+      // console.log('API response:', response.data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch users')

@@ -130,6 +130,7 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
                 <TableCell sx={{ color: 'white' }}>Published Year</TableCell>
+                <TableCell sx={{ color: 'white' }}>Status</TableCell>
                 <TableCell sx={{ color: 'white' }}>Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -141,6 +142,7 @@ const Books = () => {
                   <TableCell>{book.author.fullName}</TableCell>
                   <TableCell>{book.publisher}</TableCell>
                   <TableCell>{book.publishedYear}</TableCell>
+                  <TableCell>{book.status}</TableCell>
                   <TableCell>
                     <IconButton onClick={() => handleEdit(book)}>
                       <EditIcon />

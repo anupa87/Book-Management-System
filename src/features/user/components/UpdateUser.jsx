@@ -18,7 +18,7 @@ import { updateUser } from '../slices/userSlice'
 
 const UpdateUser = ({ setOpenUserModal, openUserModal, selectedUser }) => {
   const dispatch = useDispatch()
-  console.log(selectedUser)
+
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
     firstName: selectedUser?.firstName || '',

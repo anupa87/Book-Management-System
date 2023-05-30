@@ -7,12 +7,12 @@ export const getAllBorrows = createAsyncThunk('borrows/getAllBorrows', async () 
   return borrows
 })
 
-export const getBorrowById = createAsyncThunk('borrows/getBorrowById', async (borrowId) => {
+export const getBorrowById = createAsyncThunk('borrow/getBorrowById', async (borrowId) => {
   const borrow = await borrowService.getBorrowById(borrowId)
   return borrow
 })
 
-export const borrowBook = createAsyncThunk('borrows/borrowBook', async ({ bookId, userId }) => {
+export const borrowBook = createAsyncThunk('borrow/borrowBook', async ({ bookId, userId }) => {
   try {
     const newBorrow = await borrowService.borrowBook(bookId, userId)
     return newBorrow
@@ -21,7 +21,7 @@ export const borrowBook = createAsyncThunk('borrows/borrowBook', async ({ bookId
   }
 })
 
-export const returnBook = createAsyncThunk('borrows/returnBook', async (borrowId) => {
+export const returnBook = createAsyncThunk('return/returnBook', async (borrowId) => {
   try {
     const returnedBorrow = await borrowService.returnBook(borrowId)
     return returnedBorrow

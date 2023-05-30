@@ -14,19 +14,15 @@ import {
 const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [formData, setFormData] = useState({
-    category: book?.category || null,
+    category: book?.categoryId || null,
     title: book?.title || '',
     imageURL: book?.imageURL || '',
     description: book?.description || '',
-    author: book?.author || null,
+    author: book?.authorId || null,
     publisher: book?.publisher || '',
     publishedYear: book?.publishedYear || '',
-    numberOfCopies: book?.numberOfCopies || '',
-    availableCopies: book?.availableCopies || ''
+    status: book?.status || null
   })
-
-  console.log(categories)
-  console.log(authors)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -142,24 +138,18 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              label="Number of Copies"
-              name="numberOfCopies"
-              value={formData.numberOfCopies}
-              onChange={handleChange}
-              fullWidth
-              disabled={!isEdit && !!book}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Available Copies"
-              name="availableCopies"
-              value={formData.availableCopies}
-              onChange={handleChange}
-              fullWidth
-              disabled={!isEdit && !!book}
-            />
+            <FormControl fullWidth>
+              <InputLabel>Status</InputLabel>
+              <Select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+                required
+                disabled={!!book}>
+                <MenuItem value="AVAILABLE">Available</MenuItem>
+                <MenuItem value="BORROWED">Borrowed</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             {!book && (

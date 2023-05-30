@@ -89,7 +89,31 @@ const MyAccount = () => {
         {moment().format('MMMM DD YYYY')} | {moment().format('dddd')},{' '}
         {moment().format('h:mm:ss a')}
       </Typography>
-
+      <Card sx={{ maxWidth: 570, my: 6 }}>
+        <CardContent>
+          <Typography variant="h4" gutterBottom>
+            Transaction
+          </Typography>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>2023-05-25</TableCell>
+                  <TableCell>Book Title</TableCell>
+                  <TableCell>Borrowed</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </CardContent>
+      </Card>
       <Card sx={{ maxWidth: 570, my: 6 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
@@ -162,32 +186,6 @@ const MyAccount = () => {
           <Button variant="contained">Update Password</Button>
           <Button variant="contained">Save</Button>
         </CardActions>
-      </Card>
-
-      <Card sx={{ maxWidth: 570, my: 6 }}>
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            Transaction
-          </Typography>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow>
-                  <TableCell>2023-05-25</TableCell>
-                  <TableCell>Book Title</TableCell>
-                  <TableCell>Borrowed</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
       </Card>
     </Box>
   )

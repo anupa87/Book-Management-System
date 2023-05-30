@@ -13,7 +13,7 @@ const borrowService = {
 
   getBorrowById: async (borrowId) => {
     try {
-      const response = await api.get(`/borrows/${borrowId}`)
+      const response = await api.get(`/borrow/${borrowId}`)
       return response.data
     } catch (error) {
       throw new Error(`Failed to fetch borrow with ID ${borrowId}`)
@@ -22,7 +22,7 @@ const borrowService = {
 
   borrowBook: async (bookId, userId) => {
     try {
-      const response = await api.post(`/borrows/borrow`, { bookId, userId })
+      const response = await api.post('/borrow', { bookId, userId })
       return response.data
     } catch (error) {
       throw new Error(`Failed to borrow book: ${error.message}`)
@@ -31,7 +31,7 @@ const borrowService = {
 
   returnBook: async (borrowId) => {
     try {
-      const response = await api.post(`/borrows/return`, { borrowId })
+      const response = await api.post('/return', { borrowId })
       return response.data
     } catch (error) {
       throw new Error(`Failed to return book: ${error.message}`)

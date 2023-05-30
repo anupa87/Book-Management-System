@@ -3,7 +3,7 @@ import authorService from '../../author/services/authorService'
 
 export const getAllAuthors = createAsyncThunk('authors/getAllAuthors', async () => {
   const authors = await authorService.getAllAuthors()
-  console.log(authors)
+  // console.log(authors)
   return authors
 })
 
@@ -18,13 +18,13 @@ export const addAuthor = createAsyncThunk('authors/addAuthor', async (author) =>
 })
 
 export const updateAuthor = createAsyncThunk('authors/updateAuthor', async (authorId, author) => {
-  const updateAuthor = await authorService.updateAuthor(authorId, author)
-  return updateAuthor
+  const updatedAuthor = await authorService.updateAuthor(authorId, author)
+  return updatedAuthor
 })
 
 export const deleteAuthor = createAsyncThunk('authors/deleteAuthor', async (authorId) => {
-  const deleteAuthor = await authorService.deleteAuthor(authorId)
-  return deleteAuthor
+  const deletedAuthor = await authorService.deleteAuthor(authorId)
+  return deletedAuthor
 })
 
 const initialState = {
@@ -87,7 +87,7 @@ const authorSlice = createSlice({
       .addCase(updateAuthor.fulfilled, (state, action) => {
         state.status = 'succeeded'
         const updatedAuthorIndex = state.authors.findIndex(
-          (authorId) => authorId.authorId === action.payload.authorId
+          (author) => author.authorId === action.payload.authorId
         )
         state.authors[updatedAuthorIndex] = action.payload
       })
@@ -100,7 +100,7 @@ const authorSlice = createSlice({
       })
       .addCase(deleteAuthor.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.authors = state.authors.filter((authorId) => authorId.authorId !== action.payload)
+        state.authors = state.authors.filter((author) => author.authorId !== action.payload)
       })
       .addCase(deleteAuthor.rejected, (state, action) => {
         state.status = 'failed'

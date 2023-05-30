@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import {
   Box,
@@ -19,7 +18,6 @@ import { addAuthor } from '../slices/authorSlice'
 
 const AddAuthor = ({ setOpenAuthorModal, openAuthorModal }) => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
@@ -28,9 +26,8 @@ const AddAuthor = ({ setOpenAuthorModal, openAuthorModal }) => {
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
-      setOpenAuthorModal(false)
-      navigate('/admin/dashboard')
     }, 3000)
+    setOpenAuthorModal(false)
   }
 
   const handleClose = () => {
@@ -50,7 +47,7 @@ const AddAuthor = ({ setOpenAuthorModal, openAuthorModal }) => {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <AuthorForm onSubmit={handleSubmit} handleClose={handleClose} />
+        <AuthorForm onSubmit={handleSubmit} />
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 import {
   Box,
@@ -19,7 +18,6 @@ import { addUser } from '../slices/userSlice'
 
 const AddUser = ({ setOpenUserModal, openUserModal }) => {
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 

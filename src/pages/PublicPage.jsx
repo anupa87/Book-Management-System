@@ -5,7 +5,6 @@ import { Grid, Box, Typography, Button, Dialog } from '@mui/material'
 import heroImage from '../assets/images/heroImage.jpg'
 import Login from '../features/auth/components/Login'
 import FeaturedBooks from '../features/book/components/FeaturedBooks'
-import FeaturedPopular from '../features/book/components/FeaturedPopular'
 import Footer from '../components/common/Footer'
 
 const PublicPage = () => {
@@ -69,9 +68,6 @@ const PublicPage = () => {
 
       <Grid item xs={10}>
         <FeaturedBooks />
-      </Grid>
-      <Grid item xs={10}>
-        <FeaturedPopular />
       </Grid>
       <Grid
         item

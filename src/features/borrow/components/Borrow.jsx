@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Borrows = () => {
+const Borrow = () => {
   return <div>Borrows</div>
 }
 
-export default Borrows
+export default Borrow
