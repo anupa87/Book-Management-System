@@ -14,11 +14,11 @@ import {
 const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [formData, setFormData] = useState({
-    category: book?.categoryId || null,
+    categoryId: book?.category?.categoryId || '',
     title: book?.title || '',
     imageURL: book?.imageURL || '',
     description: book?.description || '',
-    author: book?.authorId || null,
+    authorId: book?.author?.authorId || '',
     publisher: book?.publisher || '',
     publishedYear: book?.publishedYear || '',
     status: book?.status || null
@@ -26,7 +26,14 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
+
+    if (name === 'category') {
+      dispatch(setSelectedCategory(value))
+    } else if (name === 'author') {
+      dispatch(setSelectedAuthor(value))
+    } else {
+      setFormData((prevState) => ({ ...prevState, [name]: value }))
+    }
   }
 
   const handleSubmit = (e) => {

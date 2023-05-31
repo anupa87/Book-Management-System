@@ -43,7 +43,7 @@ const bookSlice = createSlice({
 
   reducers: {
     setSelectedBook: (state, action) => {
-      state.selectedBook = action.payload.bookId
+      state.selectedBook = action.payload
     },
     setBorrowedBook: (state, action) => {
       state.borrowedBook = action.payload.bookId

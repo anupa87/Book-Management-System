@@ -17,10 +17,13 @@ export const addAuthor = createAsyncThunk('authors/addAuthor', async (author) =>
   return newAuthor
 })
 
-export const updateAuthor = createAsyncThunk('authors/updateAuthor', async (authorId, author) => {
-  const updatedAuthor = await authorService.updateAuthor(authorId, author)
-  return updatedAuthor
-})
+export const updateAuthor = createAsyncThunk(
+  'authors/updateAuthor',
+  async ({ authorId, author }) => {
+    const updatedAuthor = await authorService.updateAuthor(authorId, author)
+    return updatedAuthor
+  }
+)
 
 export const deleteAuthor = createAsyncThunk('authors/deleteAuthor', async (authorId) => {
   const deletedAuthor = await authorService.deleteAuthor(authorId)

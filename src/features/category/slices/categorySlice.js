@@ -22,7 +22,7 @@ export const addCategory = createAsyncThunk('categories/addCategory', async (cat
 
 export const updateCategory = createAsyncThunk(
   'categories/updateCategory',
-  async (categoryId, category) => {
+  async ({ categoryId, category }) => {
     const updateCategory = await categoryService.updateCategory(categoryId, category)
     return updateCategory
   }
