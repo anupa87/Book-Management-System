@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const Backend_URL = 'https://library-management-system-backend-8dm6.onrender.com/api/v1'
+const isLocal = process.env.NODE_ENV === 'development'
+const Backend_URL = isLocal
+  ? 'http://localhost:8080/api/v1'
+  : 'https://library-management-system-backend-8dm6.onrender.com/api/v1'
 
 const api = axios.create({
   baseURL: Backend_URL,
