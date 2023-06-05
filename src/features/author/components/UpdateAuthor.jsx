@@ -59,7 +59,6 @@ const UpdateAuthor = ({ setOpenAuthorModal, openAuthorModal, selectedAuthor }) =
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleUpdateAuthor}
-          setIsSnackbarOpen={setIsSnackbarOpen}
           handleClose={handleClose}
         />
       </DialogContent>

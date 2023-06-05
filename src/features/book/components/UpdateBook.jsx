@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   Box,
@@ -15,34 +15,39 @@ import MuiAlert from '@mui/material/Alert'
 
 import BookForm from './BookForm'
 import { updateBook } from '../slices/bookSlice'
+import { getAllCategories } from '../../category/slices/categorySlice'
+import { getAllAuthors } from '../../author/slices/authorSlice'
 
 const UpdateBook = ({ setOpenBookModal, openBookModal, selectedBook }) => {
   const dispatch = useDispatch()
 
+  const categories = useSelector((state) => state.categories.categories)
+  const authors = useSelector((state) => state.authors.authors)
+
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
-    category: selectedBook?.category || null,
+    categoryId: selectedBook?.category?.categoryId || '',
     title: selectedBook?.title || '',
     imageURL: selectedBook?.imageURL || '',
     description: selectedBook?.description || '',
-    author: selectedBook?.author || null,
+    authorId: selectedBook?.author?.authorId || '',
     publisher: selectedBook?.publisher || '',
     publishedYear: selectedBook?.publishedYear || '',
     status: selectedBook?.status || null
   })
 
+  useEffect(() => {
+    dispatch(getAllCategories())
+    dispatch(getAllAuthors())
+  }, [dispatch])
+
   const handleUpdateBook = (updatedBook) => {
-    const updatedBookData = {
-      ...updatedBook
-    }
-
-    dispatch(updateBook({ bookId: selectedBook.bookId, book: updatedBookData }))
-
+    dispatch(updateBook({ bookId: selectedBook.bookId, book: updatedBook }))
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
+      setOpenBookModal(false)
     }, 3000)
-    setOpenBookModal(false)
   }
 
   const handleClose = () => {
@@ -64,10 +69,11 @@ const UpdateBook = ({ setOpenBookModal, openBookModal, selectedBook }) => {
       <DialogContent>
         <BookForm
           book={selectedBook}
+          categories={categories}
+          authors={authors}
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleUpdateBook}
-          setIsSnackbarOpen={setIsSnackbarOpen}
           handleClose={handleClose}
         />
       </DialogContent>

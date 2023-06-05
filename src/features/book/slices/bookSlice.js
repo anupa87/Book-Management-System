@@ -18,8 +18,8 @@ export const addBook = createAsyncThunk('books/addBook', async (book) => {
 })
 
 export const updateBook = createAsyncThunk('books/updateBook', async ({ bookId, book }) => {
-  const updateBook = await bookService.updateBook(bookId, book)
-  return updateBook
+  const updatedBook = await bookService.updateBook(bookId, book)
+  return updatedBook
 })
 
 export const deleteBook = createAsyncThunk('books/deleteBook', async (bookId) => {

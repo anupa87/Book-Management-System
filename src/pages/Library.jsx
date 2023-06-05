@@ -44,11 +44,10 @@ const Library = () => {
   }
 
   const handleCategorySelect = (category) => {
-    console.log('testing category', category)
     dispatch(setSelectedCategory({ categoryId: category }))
-    console.log('testing category', category)
   }
 
+  console.log(selectedCategory)
   const handleBorrow = (bookId) => {
     dispatch(borrowBook(bookId))
     setIsSnackbarOpen(true)
@@ -64,13 +63,14 @@ const Library = () => {
     }, 2000)
   }
 
-  const filteredBooks = selectedCategory.categoryId
-    ? books.filter(
-        (book) =>
-          book.category.categoryId === selectedCategory.categoryId &&
-          book.title.toLowerCase().includes(searchInput.toLowerCase())
-      )
-    : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
+  const filteredBooks =
+    selectedCategory && selectedCategory.categoryId
+      ? books.filter(
+          (book) =>
+            book.category.categoryId === selectedCategory.categoryId &&
+            book.title.toLowerCase().includes(searchInput.toLowerCase())
+        )
+      : books.filter((book) => book.title.toLowerCase().includes(searchInput.toLowerCase()))
 
   return (
     <Box sx={{ mb: 4 }}>
@@ -108,7 +108,11 @@ const Library = () => {
             key={category.categoryId}
             label={category.name}
             clickable
-            color={selectedCategory.categoryId === category.categoryId ? 'primary' : 'secondary'}
+            color={
+              selectedCategory && selectedCategory.categoryId === category.categoryId
+                ? 'primary'
+                : 'secondary'
+            }
             onClick={() => handleCategorySelect(category.categoryId)}
             sx={{ minWidth: '100px' }}
           />

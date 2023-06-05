@@ -24,13 +24,16 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
     status: book?.status || null
   })
 
+  console.log('categories from BookForm', categories)
+  console.log('authors from BookForm', authors)
+
   const handleChange = (e) => {
     const { name, value } = e.target
 
     if (name === 'category') {
-      dispatch(setSelectedCategory(value))
+      setFormData((prevState) => ({ ...prevState, categoryId: value }))
     } else if (name === 'author') {
-      dispatch(setSelectedAuthor(value))
+      setFormData((prevState) => ({ ...prevState, authorId: value }))
     } else {
       setFormData((prevState) => ({ ...prevState, [name]: value }))
     }
@@ -53,6 +56,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
   const handleSave = () => {
     setIsEdit(false)
     onSubmit(formData)
+    handleClose()
   }
 
   return (
@@ -64,7 +68,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
               <InputLabel>Category</InputLabel>
               <Select
                 name="category"
-                value={formData.category}
+                value={formData.categoryId}
                 onChange={handleChange}
                 required
                 disabled={!isEdit && !!book}>
@@ -112,7 +116,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
               <InputLabel>Author</InputLabel>
               <Select
                 name="author"
-                value={formData.author}
+                value={formData.authorId}
                 onChange={handleChange}
                 required
                 disabled={!isEdit && !!book}>

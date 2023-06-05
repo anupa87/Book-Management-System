@@ -3,7 +3,6 @@ import authorService from '../../author/services/authorService'
 
 export const getAllAuthors = createAsyncThunk('authors/getAllAuthors', async () => {
   const authors = await authorService.getAllAuthors()
-  // console.log(authors)
   return authors
 })
 

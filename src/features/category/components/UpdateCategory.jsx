@@ -62,7 +62,6 @@ const UpdateCategory = ({ setOpenCategoryModal, openCategoryModal, selectedCateg
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleUpdateCategory}
-          setIsSnackbarOpen={setIsSnackbarOpen}
           handleClose={handleClose}
         />
       </DialogContent>
