@@ -21,11 +21,10 @@ const Borrow = ({ book }) => {
   }, [dispatch])
 
   const handleBorrow = () => {
-    const borrowedDate = new Date().toISOString()
     const transactionData = {
       bookId: book.bookId,
       userId: currentUser.userId,
-      borrowedDate: borrowedDate
+      borrowedDate: new Date().toISOString()
     }
     dispatch(borrowBook(transactionData))
       .then((action) => {
@@ -35,14 +34,16 @@ const Borrow = ({ book }) => {
         setTimeout(() => {
           setIsSnackbarOpen(false)
           navigate('/my_account')
-        }, 3000)
+        }, 2000)
       })
       .catch((error) => {
         console.log(error)
       })
   }
+  console.log('Current User : ', currentUser)
+  console.log('Selected Transaction: ', selectedTransaction)
 
-  const isBorrowed = selectedTransaction && selectedTransaction.borrowed
+  const isBorrowed = selectedTransaction && selectedTransaction.borrowed === true
 
   return (
     <Box mt={2} display="flex" justifyContent="flex-end">

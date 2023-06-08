@@ -21,9 +21,9 @@ export const getTransactionById = createAsyncThunk(
 
 export const returnBook = createAsyncThunk(
   'transactions/returnBook',
-  async ({ transactionId, returnedDate }) => {
-    const returnedTransaction = await transactionService.returnBook(transactionId, returnedDate)
-    return { transactionId: returnedTransaction.transactionId }
+  async ({ transactionId, updatedTransaction }) => {
+    await transactionService.returnBook(transactionId, updatedTransaction)
+    return updatedTransaction
   }
 )
 
@@ -85,10 +85,10 @@ const transactionSlice = createSlice({
       })
       .addCase(returnBook.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        const { transactionId, returnedDate } = action.payload
+        const updatedTransaction = action.payload
         state.transactions = state.transactions.map((transaction) =>
-          transaction.transactionId === transactionId
-            ? { ...transaction, returnedDate, borrowed: false }
+          transaction.transactionId === updatedTransaction.transactionId
+            ? updatedTransaction
             : transaction
         )
       })

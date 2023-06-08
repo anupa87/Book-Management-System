@@ -20,8 +20,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
     description: book?.description || '',
     authorId: book?.author?.authorId || '',
     publisher: book?.publisher || '',
-    publishedYear: book?.publishedYear || '',
-    status: book?.status || null
+    publishedYear: book?.publishedYear || ''
   })
 
   console.log('categories from BookForm', categories)
@@ -148,20 +147,7 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
               disabled={!isEdit && !!book}
             />
           </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Status</InputLabel>
-              <Select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-                required
-                disabled={!!book}>
-                <MenuItem value="AVAILABLE">Available</MenuItem>
-                <MenuItem value="BORROWED">Borrowed</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+
           <Grid item xs={12}>
             {!book && (
               <Button type="submit" variant="contained" color="secondary">

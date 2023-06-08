@@ -17,13 +17,14 @@ import {
 } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
 
-import { getAllTransactions, setSelectedTransaction, returnBook } from '../slices/transactionSlice'
+import { getAllTransactions, returnBook } from '../slices/transactionSlice'
 
 const Transaction = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const transactions = useSelector((state) => state.transactions.transactions)
+  const selectedTransaction = useSelector((state) => state.transactions.selectedTransaction)
   const currentUser = useSelector((state) => state.auth.currentUser)
   const status = useSelector((state) => state.books.status)
   const error = useSelector((state) => state.books.error)
@@ -54,17 +55,19 @@ const Transaction = () => {
 
   const getReturnDate = (borrowedDate) => {
     const borrowed = new Date(borrowedDate)
-    const returnDate = new Date(borrowed.getTime() + 30 * 24 * 60 * 60 * 1000)
-    return returnDate.toLocaleDateString()
+    borrowed.setDate(borrowed.getDate() + 30)
+
+    const returnDateString = borrowed.toISOString().split('T')[0]
+    return returnDateString
   }
 
-  const handleReturn = (transactionId) => {
-    const foundTransaction = transactions.find(
-      (transaction) => transaction.transactionId === transactionId
-    )
-    dispatch(setSelectedTransaction(foundTransaction))
-    const returnedDate = new Date().toISOString()
-    dispatch(returnBook({ transactionId: foundTransaction.transactionId, returnedDate }))
+  const handleReturn = () => {
+    const updatedTransaction = {
+      ...selectedTransaction,
+      returnedDate: new Date().toISOString(),
+      isBorrowed: false
+    }
+    dispatch(returnBook({ transactionId: selectedTransaction.transactionId, updatedTransaction }))
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
@@ -74,7 +77,7 @@ const Transaction = () => {
   }
 
   const filteredTransactions = transactions.filter(
-    (transaction) => transaction.user.userId === currentUser.userId && transaction.borrowed === true
+    (transaction) => transaction.user.userId === currentUser.userId
   )
 
   return (
@@ -103,7 +106,7 @@ const Transaction = () => {
                 <TableCell>{transaction.borrowedDate}</TableCell>
                 <TableCell>{getReturnDate(transaction.borrowedDate)}</TableCell>
                 <TableCell>
-                  {getReturnDate(transaction.borrowedDate) < new Date().toLocaleDateString() ? (
+                  {getReturnDate(transaction.borrowedDate) < new Date().toISOString() ? (
                     <span style={{ color: 'red' }}>OVERDUE</span>
                   ) : (
                     <span style={{ color: 'green' }}>VALID</span>

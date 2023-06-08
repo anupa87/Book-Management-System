@@ -142,19 +142,6 @@ const Library = () => {
                 <Typography variant="subtitle2" color="text.secondary">
                   {book.author.fullName}
                 </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color="text.secondary"
-                  sx={{
-                    position: 'absolute',
-                    bottom: '8px',
-                    right: '8px',
-                    background: book.status === 'AVAILABLE' ? '#80B98F' : '#f5f5f5',
-                    padding: '4px 8px',
-                    borderRadius: '4px'
-                  }}>
-                  {book.status}
-                </Typography>
               </CardContent>
             </Card>
           </Grid>

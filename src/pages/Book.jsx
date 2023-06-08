@@ -10,6 +10,7 @@ const Book = () => {
   const navigate = useNavigate()
 
   const selectedBook = useSelector((state) => state.books.selectedBook)
+  console.log(selectedBook)
 
   return (
     <Box sx={{ mb: 4 }}>
