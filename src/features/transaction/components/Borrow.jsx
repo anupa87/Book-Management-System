@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Button, Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
 
-import { borrowBook } from '../slices/transactionSlice'
+import { borrowBook, setSelectedTransaction } from '../slices/transactionSlice'
 import { fetchCurrentUser, selectCurrentUser } from '../../../features/auth/slices/authSlice'
 
 const Borrow = ({ book }) => {
@@ -12,6 +12,7 @@ const Borrow = ({ book }) => {
   const navigate = useNavigate()
 
   const currentUser = useSelector(selectCurrentUser)
+  const selectedTransaction = useSelector((state) => state.transactions.selectedTransaction)
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
@@ -27,18 +28,33 @@ const Borrow = ({ book }) => {
       borrowedDate: borrowedDate
     }
     dispatch(borrowBook(transactionData))
-    setIsSnackbarOpen(true)
-    setTimeout(() => {
-      setIsSnackbarOpen(false)
-      navigate('/my_account')
-    }, 3000)
+      .then((action) => {
+        const borrowedTransaction = action.payload
+        dispatch(setSelectedTransaction(borrowedTransaction))
+        setIsSnackbarOpen(true)
+        setTimeout(() => {
+          setIsSnackbarOpen(false)
+          navigate('/my_account')
+        }, 3000)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
+
+  const isBorrowed = selectedTransaction && selectedTransaction.borrowed
 
   return (
     <Box mt={2} display="flex" justifyContent="flex-end">
-      <Button variant="contained" onClick={handleBorrow}>
-        Borrow
-      </Button>
+      {isBorrowed ? (
+        <Button variant="contained" disabled>
+          Borrowed
+        </Button>
+      ) : (
+        <Button variant="contained" onClick={handleBorrow}>
+          Borrow
+        </Button>
+      )}
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
           Book borrowed successfully!

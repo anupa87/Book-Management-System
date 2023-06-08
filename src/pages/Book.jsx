@@ -5,7 +5,6 @@ import { Box, Grid, Typography, Card, CardMedia, Button } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
 
 import Borrow from '../features/transaction/components/Borrow'
-import Return from '../features/transaction/components/Return'
 
 const Book = () => {
   const navigate = useNavigate()
@@ -51,10 +50,10 @@ const Book = () => {
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 8, fontSize: 'bold' }}>
         <Button
-          variant="contained"
+          variant="text"
           startIcon={<ArrowBack />}
           color="secondary"
-          sx={{ height: '50px' }}
+          sx={{ height: '50px', fontWeight: 'bold', fontSize: '16px' }}
           onClick={() => {
             navigate('/books')
           }}>

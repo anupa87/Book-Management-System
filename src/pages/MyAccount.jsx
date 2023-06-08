@@ -1,163 +1,60 @@
-import { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import moment from 'moment'
-import jwtDecode from 'jwt-decode'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import {
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  TextField,
-  Button,
-  IconButton,
-  CardActions,
-  Snackbar
-} from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import MuiAlert from '@mui/material/Alert'
+import { Typography, Box, Button } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
 
-import { updateUser, getUserById } from '../features/user/slices/userSlice'
 import Transaction from '../features/transaction/components/Transaction'
+import PersonalInformation from '../features/user/components/PersonalInformation'
 
 const MyAccount = () => {
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const currentUser = useSelector((state) => state.auth.currentUser)
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
-  const [userInfo, setUserInfo] = useState(null)
+  const [showTransactions, setShowTransactions] = useState(true)
 
-  const date = moment().format('Do MMMM YYYY')
-  const time = moment().format('h:mm A')
-  const day = moment().format('dddd')
-
-  useEffect(() => {
-    const fetchUserInformation = () => {
-      try {
-        const token = localStorage.getItem('token')
-        const decodedToken = jwtDecode(token)
-        console.log(decodedToken)
-        const userId = decodedToken.user_id
-
-        dispatch(getUserById(userId))
-        console.log('currentUser:', currentUser)
-
-        setUserInfo({
-          firstName: currentUser?.firstName || decodedToken.firstName,
-          lastName: user?.lastName,
-          email: currentUser?.email || decodedToken.email
-        })
-      } catch (error) {
-        console.error('Failed to fetch user information:', error)
-      }
-    }
-    fetchUserInformation()
-  }, [currentUser, dispatch])
-
-  const handleEdit = (updatedUser) => {
-    const updatedUserData = {
-      ...updatedUser,
-      password: selectedUser.password,
-      role: selectedUser.role
-    }
-    dispatch(updateUser({ userId: selectedUser.userId, user: updatedUserData }))
-    setIsSnackbarOpen(true)
-    setTimeout(() => {
-      setIsSnackbarOpen(false)
-    }, 3000)
+  const toggleComponent = () => {
+    setShowTransactions(!showTransactions)
   }
-  console.log(userInfo)
+
   return (
     <Box>
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
+          justifyContent: 'space-between'
         }}>
-        <Typography variant="h3" sx={{ mb: 2 }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
           My Account
         </Typography>
       </Box>
       <hr />
-      <Typography sx={{ mt: 1 }}>
-        {moment().format('MMMM DD YYYY')} | {moment().format('dddd')},{' '}
-        {moment().format('h:mm:ss a')}
-      </Typography>
-      <Transaction />
-      <Card sx={{ maxWidth: 570, my: 6 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            First Name: {userInfo?.firstName}
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            Last Name: {userInfo?.lastName}
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            Email: {userInfo?.email}
-          </Typography>
-        </CardContent>
-        <CardActions
+      <Box sx={{ mt: 10, mb: 2, display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h5" gutterBottom>
+          {showTransactions ? 'Transactions' : 'Personal Information'}
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={toggleComponent}
           sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            m: 2
+            fontWeight: 'bold',
+            height: '50px'
           }}>
-          <Button variant="contained" onClick={handleEdit}>
-            EDIT
-          </Button>
-          <Button variant="contained">SAVE</Button>
-        </CardActions>
-        <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
-          <MuiAlert elevation={6} variant="filled" severity="success">
-            Info updated successfully
-          </MuiAlert>
-        </Snackbar>
-      </Card>
-
-      <Card sx={{ maxWidth: 570, mt: 4 }}>
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            Change Password
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField label="Current Password" type="password" sx={{ mt: 2 }} />
-            <TextField
-              label="New Password"
-              InputProps={{
-                endAdornment: (
-                  <IconButton onClick={() => setShowNewPassword()}>
-                    <Visibility />
-                  </IconButton>
-                )
-              }}
-              sx={{ mt: 2 }}
-            />
-            <TextField
-              label="Confirm New Password"
-              InputProps={{
-                endAdornment: (
-                  <IconButton onClick={() => setShowNewPassword()}>
-                    <Visibility />
-                  </IconButton>
-                )
-              }}
-              sx={{ mt: 2 }}
-            />
-          </Box>
-        </CardContent>
-        <CardActions
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            m: 2
+          {showTransactions ? 'Personal Information' : 'Transactions'}
+        </Button>
+      </Box>
+      <Box>{showTransactions ? <Transaction /> : <PersonalInformation />}</Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 8, fontSize: 'bold' }}>
+        <Button
+          variant="text"
+          startIcon={<ArrowBack />}
+          color="secondary"
+          sx={{ height: '50px', fontWeight: 'bold', fontSize: '16px' }}
+          onClick={() => {
+            navigate('/books')
           }}>
-          <Button variant="contained">Update Password</Button>
-          <Button variant="contained">Save</Button>
-        </CardActions>
-      </Card>
+          Back to Library
+        </Button>
+      </Box>
     </Box>
   )
 }

@@ -19,14 +19,13 @@ export const getTransactionById = createAsyncThunk(
   }
 )
 
-export const returnBook = createAsyncThunk('transactions/returnBook', async (transactionId) => {
-  try {
-    await transactionService.returnBook(transactionId)
-    return transactionId
-  } catch (error) {
-    throw new Error(`Failed to return book with ID ${transactionId}`)
+export const returnBook = createAsyncThunk(
+  'transactions/returnBook',
+  async ({ transactionId, returnedDate }) => {
+    const returnedTransaction = await transactionService.returnBook(transactionId, returnedDate)
+    return { transactionId: returnedTransaction.transactionId }
   }
-})
+)
 
 const initialState = {
   transactions: [],
@@ -86,10 +85,10 @@ const transactionSlice = createSlice({
       })
       .addCase(returnBook.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        const transactionId = action.payload
+        const { transactionId, returnedDate } = action.payload
         state.transactions = state.transactions.map((transaction) =>
           transaction.transactionId === transactionId
-            ? { ...transaction, isBorrowed: false }
+            ? { ...transaction, returnedDate, borrowed: false }
             : transaction
         )
       })

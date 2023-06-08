@@ -60,9 +60,7 @@ const Menu = () => {
   const handleMenuClick = (item) => {
     if (item.label === 'Logout') {
       dispatch(logoutUser())
-      console.log('logginout')
       navigate('/')
-      console.log('logginout end')
     } else {
       navigate(item.path)
     }

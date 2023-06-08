@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Typography, TextField, Button, Grid, Paper } from '@mui/material'
+import { Box, Typography, TextField, Button, Grid } from '@mui/material'
 
 const Help = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const Help = () => {
     <Grid container item xs={10} spacing={2}>
       <Grid item xs={10}>
         <Box>
-          <Typography variant="h3" sx={{ mt: 2, mb: 2 }}>
+          <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>
             Contact Us
           </Typography>
           <hr />
@@ -30,7 +30,7 @@ const Help = () => {
       </Grid>
       <Grid item xs={10} md={6}>
         <Box>
-          <Typography variant="h4" sx={{ mt: 2, mb: 2 }}>
+          <Typography variant="h5" sx={{ mt: 2, mb: 2 }}>
             Our address
           </Typography>
           <Typography variant="subtitle1" sx={{ mb: 1 }}>
@@ -52,14 +52,14 @@ const Help = () => {
       </Grid>
       <Grid item xs={10} md={6}>
         <Box>
-          <Typography variant="h4" sx={{ mt: 2 }}>
+          <Typography variant="h5" sx={{ mt: 2 }}>
             Questions or feedback?
           </Typography>
           <form style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <TextField label="Name" fullWidth margin="normal" />
             <TextField label="Email" fullWidth margin="normal" />
             <TextField label="Message" fullWidth margin="normal" multiline rows={4} />
-            <Button variant="contained" sx={{ backgroundColor: 'secondary.main', mt: 2 }}>
+            <Button variant="contained" sx={{ mt: 2, fontWeight: 'bold' }}>
               Submit
             </Button>
           </form>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Box, Button, Snackbar } from '@mui/material'
 import MuiAlert from '@mui/material/Alert'
@@ -12,33 +12,17 @@ const Return = ({ selectedTransaction }) => {
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 
-  const handleReturn = async () => {
-    try {
-      const returnedDate = new Date().toISOString()
-
-      const transactionData = {
-        transactionId: selectedTransaction.transactionId,
-        bookId: selectedTransaction.bookId,
-        userId: selectedTransaction.userId,
-        returnedDate: returnedDate
-      }
-
-      await dispatch(returnBook(transactionData.transactionId))
-      setIsSnackbarOpen(true)
-      setTimeout(() => {
-        setIsSnackbarOpen(false)
-        navigate('/books')
-      }, 3000)
-    } catch (error) {
-      console.error('Failed to return book:', error)
-    }
+  const handleReturn = () => {
+    const returnedDate = new Date().toISOString()
+    dispatch(returnBook({ transactionId: selectedTransaction.transactionId, returnedDate }))
+    setIsSnackbarOpen(true)
+    setTimeout(() => {
+      setIsSnackbarOpen(false)
+      navigate('/my_account')
+    }, 3000)
   }
-
   return (
     <Box mt={2} display="flex" justifyContent="flex-end">
-      <Button variant="contained" onClick={handleReturn}>
-        Return
-      </Button>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
         <MuiAlert elevation={6} variant="filled" severity="success">
           Book returned successfully!
