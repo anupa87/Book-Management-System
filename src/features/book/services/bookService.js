@@ -4,7 +4,6 @@ const bookService = {
   getAllBooks: async () => {
     try {
       const response = await api.get('/books')
-      console.log('Book API response: ', response.data)
       return response.data
     } catch (error) {
       throw new Error('Failed to fetch books')

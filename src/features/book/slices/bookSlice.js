@@ -3,7 +3,6 @@ import bookService from '../../book/services/bookService'
 
 export const getAllBooks = createAsyncThunk('books/getAllBooks', async () => {
   const books = await bookService.getAllBooks()
-  console.log(books)
   return books
 })
 
@@ -32,8 +31,6 @@ const initialState = {
   status: 'idle',
   error: null,
   selectedBook: null,
-  borrowedBook: null,
-  issuedBook: null,
   search: ''
 }
 
@@ -44,12 +41,6 @@ const bookSlice = createSlice({
   reducers: {
     setSelectedBook: (state, action) => {
       state.selectedBook = action.payload
-    },
-    setBorrowedBook: (state, action) => {
-      state.borrowedBook = action.payload.bookId
-    },
-    setIssuedBook: (state, action) => {
-      state.issuedBook = action.payload.bookId
     },
     setSearch: (state, action) => {
       state.search = action.payload
@@ -63,12 +54,10 @@ const bookSlice = createSlice({
       .addCase(getAllBooks.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.books = action.payload
-        console.log('getAllBooks.fulfilled:', action.payload)
       })
       .addCase(getAllBooks.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
-        console.log('getAllBooks.rejected:', action.error.message)
       })
       .addCase(getBookById.pending, (state) => {
         state.status = 'loading'

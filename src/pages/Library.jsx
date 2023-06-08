@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,30 +9,22 @@ import {
   Card,
   CardHeader,
   CardMedia,
-  CardActions,
   CardContent,
-  Chip,
-  Button,
-  Snackbar
+  Chip
 } from '@mui/material'
-import MuiAlert from '@mui/material/Alert'
 
 import SearchBar from '../features/book/components/SearchBar'
-import { setSearch, getAllBooks } from '../features/book/slices/bookSlice'
+import { setSearch, getAllBooks, setSelectedBook } from '../features/book/slices/bookSlice'
 import { getAllCategories, setSelectedCategory } from '../features/category/slices/categorySlice'
-import { borrowBook } from '../features/borrow/slices/borrowSlice'
-import Borrow from '../features/borrow/components/Borrow'
 
 const Library = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const books = useSelector((state) => state.books.books)
-  const searchInput = useSelector((state) => state.books.search)
   const categories = useSelector((state) => state.categories.categories)
   const selectedCategory = useSelector((state) => state.categories.selectedCategory)
-  const currentUser = useSelector((state) => state.auth.currentUser)
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const searchInput = useSelector((state) => state.books.search)
 
   useEffect(() => {
     dispatch(getAllBooks())
@@ -47,20 +39,9 @@ const Library = () => {
     dispatch(setSelectedCategory({ categoryId: category }))
   }
 
-  console.log(selectedCategory)
-  const handleBorrow = (bookId) => {
-    dispatch(borrowBook(bookId))
-    setIsSnackbarOpen(true)
-    setTimeout(() => {
-      setIsSnackbarOpen(false)
-    }, 2000)
-  }
-
-  const handleIssue = (bookId) => {
-    setIsSnackbarOpen(true)
-    setTimeout(() => {
-      setIsSnackbarOpen(false)
-    }, 2000)
+  const handleBookClick = (book) => {
+    dispatch(setSelectedBook(book))
+    navigate(`/books/${book.bookId}`)
   }
 
   const filteredBooks =
@@ -76,9 +57,6 @@ const Library = () => {
     <Box sx={{ mb: 4 }}>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
           mb: 2
         }}>
         <Typography variant="h4">Books</Typography>
@@ -130,13 +108,14 @@ const Library = () => {
             sx={{
               mt: 6
             }}>
-            <Card sx={{ width: 300, height: 350 }}>
+            <Card sx={{ width: 300, height: 350, position: 'relative' }}>
               <CardMedia
                 component="img"
                 image={book.imageURL}
                 alt={book.title}
                 sx={{
                   objectFit: 'cover',
+                  width: '100%',
                   height: '60%'
                 }}
               />
@@ -157,31 +136,30 @@ const Library = () => {
                     textDecoration: 'underline'
                   }
                 }}
-                onClick={() => navigate(`/books/${book.bookId}`)}
+                onClick={() => handleBookClick(book)}
               />
               <CardContent>
                 <Typography variant="subtitle2" color="text.secondary">
                   {book.author.fullName}
                 </Typography>
+                <Typography
+                  variant="subtitle2"
+                  color="text.secondary"
+                  sx={{
+                    position: 'absolute',
+                    bottom: '8px',
+                    right: '8px',
+                    background: book.status === 'AVAILABLE' ? '#80B98F' : '#f5f5f5',
+                    padding: '4px 8px',
+                    borderRadius: '4px'
+                  }}>
+                  {book.status}
+                </Typography>
               </CardContent>
-              <CardActions>
-                {currentUser && currentUser.role === 'ADMIN' ? (
-                  <Button onClick={() => handleIssue(book.bookId)}>Issue book</Button>
-                ) : (
-                  <Borrow bookId={book.bookId} onBorrow={handleBorrow} />
-                )}
-              </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
-      <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
-        <MuiAlert elevation={6} variant="filled" severity="success">
-          {currentUser && currentUser.role === 'ADMIN'
-            ? 'Book issued successfully'
-            : 'Book borrowed successfully'}
-        </MuiAlert>
-      </Snackbar>
     </Box>
   )
 }

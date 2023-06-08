@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import authService from '../services/authService'
+import jwtDecode from 'jwt-decode'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -19,7 +20,13 @@ export const authSlice = createSlice({
       state.isAuthenticated = true
       state.isLoading = false
       state.error = null
-      state.currentUser = action.payload
+      state.currentUser = {
+        userId: action.payload.userId,
+        email: action.payload.email,
+        role: action.payload.role,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName
+      }
       state.currentRole = action.payload.role
     },
     loginFail: (state, action) => {
@@ -32,20 +39,25 @@ export const authSlice = createSlice({
       state.error = null
       state.currentUser = null
       state.currentRole = null
+    },
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload
     }
   }
 })
 
-export const { loginStart, loginSuccess, loginFail, logout } = authSlice.actions
+export const { loginStart, loginSuccess, loginFail, logout, setCurrentUser } = authSlice.actions
 
 export const login = (credentials) => async (dispatch) => {
   dispatch(loginStart())
   try {
-    const token = await authService.login(credentials)
-    const decodedToken = jwt_decode(token)
-    const { role } = decodedToken
+    const response = await authService.login(credentials)
 
-    dispatch(loginSuccess({ role }))
+    const { token } = response.data
+    const decodedToken = jwtDecode(token)
+    const { userId, firstName, lastName, email, role } = decodedToken
+
+    dispatch(loginSuccess({ userId, firstName, lastName, email, role }))
 
     return token
   } catch (error) {
@@ -57,5 +69,17 @@ export const logoutUser = () => async (dispatch) => {
   authService.logout()
   dispatch(logout())
 }
+
+export const fetchCurrentUser = () => async (dispatch) => {
+  try {
+    const currentUser = await authService.getCurrentUser()
+    const { userId, email, role, firstName, lastName } = currentUser
+    dispatch(setCurrentUser({ userId, email, role, firstName, lastName }))
+  } catch (error) {
+    console.error('Failed to fetch current user', error)
+  }
+}
+
+export const selectCurrentUser = (state) => state.auth.currentUser
 
 export default authSlice.reducer

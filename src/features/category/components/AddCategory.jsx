@@ -28,8 +28,8 @@ const AddCategory = ({ setOpenCategoryModal, openCategoryModal }) => {
     setIsSnackbarOpen(true)
     setTimeout(() => {
       setIsSnackbarOpen(false)
-      navigate('/admin/dashboard')
-    }, 3000)
+      setOpenCategoryModal(false)
+    }, 2000)
   }
 
   const handleClose = () => {

@@ -8,13 +8,14 @@ import userReducer from '../features/user/slices/userSlice'
 import authReducer from '../features/auth/slices/authSlice'
 import authorReducer from '../features/author/slices/authorSlice'
 import categoryReducer from '../features/category/slices/categorySlice'
-
+import transactionReducer from '../features/transaction/slices/transactionSlice'
 const rootReducer = combineReducers({
   books: bookReducer,
   users: userReducer,
   auth: authReducer,
   authors: authorReducer,
-  categories: categoryReducer
+  categories: categoryReducer,
+  transactions: transactionReducer
 })
 
 const persistedReducer = persistReducer(reduxPersistConfig, rootReducer)

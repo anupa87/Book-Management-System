@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import jwt_decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
 
 import {
   Box,
@@ -17,8 +17,7 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import { loginFail, loginSuccess } from '../slices/authSlice'
-import authService from '../services/authService'
+import { loginFail, loginStart, loginSuccess, login } from '../slices/authSlice'
 
 const Login = ({ modalOpen, onClose }) => {
   const [formData, setFormData] = useState({ email: '', password: '' })
@@ -38,29 +37,20 @@ const Login = ({ modalOpen, onClose }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-
     if (!formData.email || !formData.password) {
       dispatch(loginFail('Please provide your email and password.'))
       return
     }
-
     try {
-      const response = await authService.login(formData)
-      console.log('Response:', response)
-
-      if (response && response.data) {
-        const { token } = response.data
-        console.log('Token:', token)
-
+      dispatch(loginStart())
+      const token = await (async () => {
+        return dispatch(login(formData))
+      })()
+      if (token) {
         localStorage.setItem('token', token)
 
-        // Decode the token to extract the role
-        const decodedToken = jwt_decode(token)
+        const decodedToken = jwtDecode(token)
         const { role } = decodedToken
-
-        dispatch(loginSuccess({ token, role }))
-
-        console.log('Role:', role)
 
         if (role === 'ADMIN') {
           navigate('admin/dashboard')
@@ -72,8 +62,14 @@ const Login = ({ modalOpen, onClose }) => {
       }
     } catch (error) {
       dispatch(loginFail(error.message))
+      setFormData({ email: '', password: '' })
     }
   }
+
+  const handleRegister = () => {
+    navigate('/register')
+  }
+
   return (
     <Box>
       <Dialog
@@ -128,7 +124,10 @@ const Login = ({ modalOpen, onClose }) => {
             </Box>
             <Box sx={{ textAlign: 'center', mt: 3 }}>
               <Typography variant="body2">
-                Don't have an account? <Link to="/register">Register</Link>
+                Don't have an account?{' '}
+                <Button variant="text" onClick={handleRegister}>
+                  Register
+                </Button>
               </Typography>
             </Box>
             <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>

@@ -3,7 +3,6 @@ import categoryService from '../../category/services/categoryService'
 
 export const getAllCategories = createAsyncThunk('categories/getAllCategories', async () => {
   const categories = await categoryService.getAllCategories()
-  console.log(categories)
   return categories
 })
 
@@ -58,12 +57,10 @@ const categorySlice = createSlice({
       .addCase(getAllCategories.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.categories = action.payload
-        console.log('getAllCategories.fulfilled: ', action.payload)
       })
       .addCase(getAllCategories.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
-        console.log('getAllCategories.rejected:', action.error.message)
       })
       .addCase(getCategoryById.pending, (state) => {
         state.status = 'loading'

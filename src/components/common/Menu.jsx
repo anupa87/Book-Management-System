@@ -14,9 +14,7 @@ import {
   IconButton
 } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
-// import HomeIcon from '@mui/icons-material/Home'
 import BookIcon from '@mui/icons-material/Book'
-import PeopleIcon from '@mui/icons-material/People'
 import PersonIcon from '@mui/icons-material/Person'
 import HelpIcon from '@mui/icons-material/Help'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -28,7 +26,7 @@ import { logoutUser } from '../../features/auth/slices/authSlice'
 
 const drawerWidth = 240
 
-const getMenuItems = (currentUser) => [
+const getMenuItems = () => [
   {
     label: 'Dashboard',
     icon: React.createElement(DashboardIcon),

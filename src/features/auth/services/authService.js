@@ -1,4 +1,5 @@
 import api from '../../../api/api'
+import jwtDecode from 'jwt-decode'
 
 const AuthService = {
   async signup(user) {

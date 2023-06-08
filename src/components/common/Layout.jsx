@@ -9,14 +9,18 @@ const Layout = ({ CurrentUser }) => {
   return (
     <ThemeProvider theme={theme}>
       <Grid container sx={{ padding: 0 }}>
-        <Grid item xs={12} md={3} sx={{ width: 'auto', padding: 0 }}>
+        <Grid item xs={12} md={1} sx={{ width: 'auto' }}>
           <Menu foundUser={CurrentUser} />
         </Grid>
         <Grid
           item
           xs={12}
-          md={9}
-          sx={{ mt: `calc(${theme.mixins.toolbar.minHeight}px)`, width: 'auto', padding: 0 }}>
+          md={11}
+          sx={{
+            mt: `calc(${theme.mixins.toolbar.minHeight}px)`,
+            width: 'auto',
+            px: 10
+          }}>
           <Outlet />
         </Grid>
       </Grid>
