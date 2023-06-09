@@ -50,12 +50,12 @@ const PublicPage = () => {
             <Button variant="contained" onClick={handleLogin} sx={{ backgroundColor: '#70334E' }}>
               Login
             </Button>
-            <Button
+            {/* <Button
               variant="contained"
               onClick={handleRegister}
               sx={{ backgroundColor: '#70334E' }}>
               Register
-            </Button>
+            </Button> */}
           </Box>
           <Box
             sx={{
