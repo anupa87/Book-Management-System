@@ -43,9 +43,9 @@ const PublicPage = () => {
               right: 0,
               transform: 'translate(-50%, 50%)',
               textAlign: 'center',
-              opacity: 1,
-              display: 'flex',
-              justifyContent: 'space-between'
+              opacity: 1
+              // display: 'flex',
+              // justifyContent: 'space-between'
             }}>
             <Button variant="contained" onClick={handleLogin} sx={{ backgroundColor: '#70334E' }}>
               Login
