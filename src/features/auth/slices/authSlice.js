@@ -42,11 +42,41 @@ export const authSlice = createSlice({
     },
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload
+    },
+    signupStart: (state) => {
+      state.isLoading = true
+      state.error = null
+    },
+    signupSuccess: (state, action) => {
+      state.isAuthenticated = true
+      state.isLoading = false
+      state.error = null
+      state.currentUser = {
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        password: action.payload.password,
+        role: action.payload.role
+      }
+      state.currentRole = action.payload.role
+    },
+    signupFail: (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
     }
   }
 })
 
-export const { loginStart, loginSuccess, loginFail, logout, setCurrentUser } = authSlice.actions
+export const {
+  loginStart,
+  loginSuccess,
+  loginFail,
+  logout,
+  setCurrentUser,
+  signupStart,
+  signupSuccess,
+  signupFail
+} = authSlice.actions
 
 export const login = (credentials) => async (dispatch) => {
   dispatch(loginStart())
@@ -77,6 +107,23 @@ export const fetchCurrentUser = () => async (dispatch) => {
     dispatch(setCurrentUser({ userId, email, role, firstName, lastName }))
   } catch (error) {
     console.error('Failed to fetch current user', error)
+  }
+}
+export const signup = (user) => async (dispatch) => {
+  dispatch(signupStart())
+  try {
+    const response = await authService.signup(user)
+
+    const { token } = response.data
+    const decodedToken = jwtDecode(token)
+    const { userId, firstName, lastName, email, role } = decodedToken
+
+    dispatch(signupSuccess({ userId, firstName, lastName, email, role }))
+
+    return token
+  } catch (error) {
+    dispatch(signupFail(error.message))
+    throw new Error(error.response.data.error)
   }
 }
 

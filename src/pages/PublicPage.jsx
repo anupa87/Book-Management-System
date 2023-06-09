@@ -6,15 +6,24 @@ import heroImage from '../assets/images/heroImage.jpg'
 import Login from '../features/auth/components/Login'
 import FeaturedBooks from '../features/book/components/FeaturedBooks'
 import Footer from '../components/common/Footer'
+import Register from '../features/auth/components/Register'
 
 const PublicPage = () => {
   const [modalOpen, setModalOpen] = useState(false)
+  const [registerModalOpen, setRegisterModalOpen] = useState(false)
 
   const handleLogin = () => {
     setModalOpen(true)
   }
-  const handleClose = () => {
+  const handleModalClose = () => {
     setModalOpen(false)
+  }
+
+  const handleRegister = () => {
+    setRegisterModalOpen(true)
+  }
+  const handleRegisterModalClose = () => {
+    setRegisterModalOpen(false)
   }
 
   return (
@@ -28,16 +37,24 @@ const PublicPage = () => {
           />
           <Box
             sx={{
+              width: '15%',
               position: 'absolute',
               top: 0,
               right: 0,
               transform: 'translate(-50%, 50%)',
-              backgroundColor: '#70334E',
               textAlign: 'center',
-              opacity: 1
+              opacity: 1,
+              display: 'flex',
+              justifyContent: 'space-between'
             }}>
             <Button variant="contained" onClick={handleLogin} sx={{ backgroundColor: '#70334E' }}>
               Login
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleRegister}
+              sx={{ backgroundColor: '#70334E' }}>
+              Register
             </Button>
           </Box>
           <Box
@@ -84,7 +101,7 @@ const PublicPage = () => {
       </Grid>
       <Dialog
         open={modalOpen}
-        onClose={handleClose}
+        onClose={handleModalClose}
         sx={{
           display: 'flex',
           justifyContent: 'center',
@@ -97,7 +114,24 @@ const PublicPage = () => {
             opacity: 1
           }
         }}>
-        <Login modalOpen={modalOpen} onClose={handleClose} />
+        <Login modalOpen={modalOpen} onClose={handleModalClose} />
+      </Dialog>
+      <Dialog
+        open={registerModalOpen}
+        onClose={handleRegisterModalClose}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          '& .MuiDialog-paper': {
+            opacity: 0,
+            transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
+          },
+          '& .MuiDialog-paper.MuiDialog-paperOpen': {
+            opacity: 1
+          }
+        }}>
+        <Register modalOpen={registerModalOpen} onClose={handleRegisterModalClose} />
       </Dialog>
     </Grid>
   )

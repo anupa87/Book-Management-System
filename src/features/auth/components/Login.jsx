@@ -17,15 +17,15 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import { loginFail, loginStart, loginSuccess, login } from '../slices/authSlice'
+import { loginFail, loginStart, login } from '../slices/authSlice'
 
 const Login = ({ modalOpen, onClose }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const error = useSelector((state) => state.auth.error)
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const handleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -64,10 +64,6 @@ const Login = ({ modalOpen, onClose }) => {
       dispatch(loginFail(error.message))
       setFormData({ email: '', password: '' })
     }
-  }
-
-  const handleRegister = () => {
-    navigate('/register')
   }
 
   return (
@@ -122,14 +118,7 @@ const Login = ({ modalOpen, onClose }) => {
                 Forgot password?
               </Typography>
             </Box>
-            <Box sx={{ textAlign: 'center', mt: 3 }}>
-              <Typography variant="body2">
-                Don't have an account?{' '}
-                <Button variant="text" onClick={handleRegister}>
-                  Register
-                </Button>
-              </Typography>
-            </Box>
+
             <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>
               <Button
                 onClick={onClose}
