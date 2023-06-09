@@ -63,9 +63,6 @@ const FeaturedBooks = () => {
                 <Typography variant="subtitle1" color="text.secondary">
                   {book.author.fullName}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {book.description}
-                </Typography>
               </CardContent>
             </Card>
           </Grid>
