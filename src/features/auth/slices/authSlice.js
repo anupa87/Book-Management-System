@@ -51,13 +51,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true
       state.isLoading = false
       state.error = null
-      state.currentUser = {
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        email: action.payload.email,
-        password: action.payload.password,
-        role: action.payload.role
-      }
+      state.currentUser = action.payload
       state.currentRole = action.payload.role
     },
     signupFail: (state, action) => {
@@ -113,17 +107,11 @@ export const signup = (user) => async (dispatch) => {
   dispatch(signupStart())
   try {
     const response = await authService.signup(user)
-
-    const { token } = response.data
-    const decodedToken = jwtDecode(token)
-    const { userId, firstName, lastName, email, role } = decodedToken
-
-    dispatch(signupSuccess({ userId, firstName, lastName, email, role }))
-
-    return token
+    dispatch(signupSuccess(response))
+    return response
   } catch (error) {
     dispatch(signupFail(error.message))
-    throw new Error(error.response.data.error)
+    throw new Error(error.message)
   }
 }
 

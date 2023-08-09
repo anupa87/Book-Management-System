@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Grid, Box, Typography, Button, Dialog } from '@mui/material'
+import { Grid, Box, Typography, Button, Dialog, Link } from '@mui/material'
 
 import heroImage from '../assets/images/heroImage.jpg'
 import Login from '../features/auth/components/Login'
@@ -37,28 +37,6 @@ const PublicPage = () => {
           />
           <Box
             sx={{
-              width: '15%',
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              transform: 'translate(-50%, 50%)',
-              textAlign: 'center',
-              opacity: 1
-              // display: 'flex',
-              // justifyContent: 'space-between'
-            }}>
-            <Button variant="contained" onClick={handleLogin} sx={{ backgroundColor: '#70334E' }}>
-              Login
-            </Button>
-            {/* <Button
-              variant="contained"
-              onClick={handleRegister}
-              sx={{ backgroundColor: '#70334E' }}>
-              Register
-            </Button> */}
-          </Box>
-          <Box
-            sx={{
               position: 'absolute',
               bottom: '60%',
               left: '50%',
@@ -74,10 +52,23 @@ const PublicPage = () => {
               color="#FFFFFF">
               BookSphere
             </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column', mb: 2, underline: 'none' }}>
-              <Typography variant="h6" gutterBottom color="#FFFFFF">
-                Opening: Monday - Friday ( 9:00 - 16:00)
-              </Typography>
+            <Box sx={{ mt: 2 }}>
+              <Link
+                component="button"
+                variant="h6"
+                color="#000000"
+                onClick={handleLogin}
+                sx={{ cursor: 'pointer', textDecoration: 'none', mr: 2 }}>
+                Login
+              </Link>
+              <Link
+                component="button"
+                variant="h6"
+                color="#000000"
+                onClick={handleRegister}
+                sx={{ cursor: 'pointer', textDecoration: 'none' }}>
+                Register
+              </Link>
             </Box>
           </Box>
         </Box>

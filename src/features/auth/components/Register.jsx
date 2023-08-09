@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Box,
-  Grid,
   TextField,
   Button,
   FormControl,
@@ -17,6 +16,8 @@ import {
   DialogContent,
   DialogActions
 } from '@mui/material'
+
+import { signupStart, signupSuccess, signupFail, signup } from '../slices/authSlice'
 
 const Register = ({ modalOpen, onClose }) => {
   const dispatch = useDispatch()
@@ -32,30 +33,24 @@ const Register = ({ modalOpen, onClose }) => {
   const error = useSelector((state) => state.auth.error)
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prevState) => ({ ...prevState, [name]: value }))
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault()
+    console.log('Register button clicked')
     try {
       dispatch(signupStart())
 
-      const response = await authService.signup(formData)
+      const response = await dispatch(signup(formData))
 
-      const { token } = response.data
-      const decodedToken = jwtDecode(token)
-      const { userId, firstName, lastName, email, role } = decodedToken
-
-      dispatch(signupSuccess({ userId, firstName, lastName, email, role }))
-
-      if (role === 'ADMIN') {
+      if (response.role === 'ADMIN') {
         navigate('admin/dashboard')
       } else {
         navigate('/books')
       }
     } catch (error) {
       dispatch(signupFail(error.message))
-      setError(error.response.data.error)
     }
   }
 
