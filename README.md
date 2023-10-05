@@ -33,7 +33,7 @@ Admin can:
 - npm install to install dependencies
 - vite to start the server
 - http:/localhost:5173/ to view the project in your browser
-- admin login (email: "admin@gmail.com" and password:"12345") and user login (email: "user@gmail.com" and password:"12345")
+- admin login (email: "admin@gmail.com" and password:"admin") and user login register
 
 ### `Deployment`
 
