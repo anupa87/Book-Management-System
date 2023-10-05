@@ -41,14 +41,8 @@ const Register = ({ modalOpen, onClose }) => {
     console.log('Register button clicked')
     try {
       dispatch(signupStart())
-
-      const response = await dispatch(signup(formData))
-
-      if (response.role === 'ADMIN') {
-        navigate('admin/dashboard')
-      } else {
-        navigate('/books')
-      }
+      const response = await dispatch(signup({ ...formData, role: 'USER' }))
+      navigate('/books')
     } catch (error) {
       dispatch(signupFail(error.message))
     }
@@ -56,6 +50,7 @@ const Register = ({ modalOpen, onClose }) => {
 
   return (
     <Box>
+      vite
       <Dialog
         open={modalOpen}
         onClose={onClose}
@@ -109,7 +104,6 @@ const Register = ({ modalOpen, onClose }) => {
               <InputLabel>Role</InputLabel>
               <Select name="role" value={formData.role} onChange={handleChange} required>
                 <MenuItem value="USER">USER</MenuItem>
-                <MenuItem value="ADMIN">ADMIN</MenuItem>
               </Select>
             </FormControl>
             <DialogActions sx={{ justifyContent: 'space-between', p: 3 }}>

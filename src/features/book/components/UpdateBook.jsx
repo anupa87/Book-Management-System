@@ -23,6 +23,7 @@ const UpdateBook = ({ setOpenBookModal, openBookModal, selectedBook }) => {
 
   const categories = useSelector((state) => state.categories.categories)
   const authors = useSelector((state) => state.authors.authors)
+  const error = useSelector((state) => state.books.error)
 
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -78,9 +79,15 @@ const UpdateBook = ({ setOpenBookModal, openBookModal, selectedBook }) => {
         />
       </DialogContent>
       <Snackbar open={isSnackbarOpen} autoHideDuration={3000}>
-        <MuiAlert elevation={6} variant="filled" severity="success">
-          Book updated successfully
-        </MuiAlert>
+        {error ? (
+          <MuiAlert elevation={6} variant="filled" severity="error">
+            {error}
+          </MuiAlert>
+        ) : (
+          <MuiAlert elevation={6} variant="filled" severity="success">
+            Book updated successfully
+          </MuiAlert>
+        )}
       </Snackbar>
     </Dialog>
   )

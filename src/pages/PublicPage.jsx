@@ -56,17 +56,30 @@ const PublicPage = () => {
               <Link
                 component="button"
                 variant="h6"
-                color="#000000"
+                color="#FFFFFF"
                 onClick={handleLogin}
-                sx={{ cursor: 'pointer', textDecoration: 'none', mr: 2 }}>
+                sx={{
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  mr: 2,
+                  backgroundColor: '#FF5733',
+                  padding: '8px 16px',
+                  borderRadius: '4px'
+                }}>
                 Login
               </Link>
               <Link
                 component="button"
                 variant="h6"
-                color="#000000"
+                color="#FFFFFF"
                 onClick={handleRegister}
-                sx={{ cursor: 'pointer', textDecoration: 'none' }}>
+                sx={{
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  backgroundColor: '#FF5733',
+                  padding: '8px 16px',
+                  borderRadius: '4px'
+                }}>
                 Register
               </Link>
             </Box>

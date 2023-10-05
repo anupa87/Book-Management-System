@@ -20,7 +20,8 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
     description: book?.description || '',
     authorId: book?.author?.authorId || '',
     publisher: book?.publisher || '',
-    publishedYear: book?.publishedYear || ''
+    publishedYear: book?.publishedYear || '',
+    status: 'AVAILABLE'
   })
 
   console.log('categories from BookForm', categories)
@@ -40,7 +41,15 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    onSubmit(formData)
+
+    // If it's a new entry (not in edit mode), set the status to "AVAILABLE"
+    if (!isEdit) {
+      const updatedFormData = { ...formData, status: 'AVAILABLE' }
+      onSubmit(updatedFormData)
+    } else {
+      // If it's in edit mode, no need to change status
+      onSubmit(formData)
+    }
   }
 
   const handleEdit = () => {
