@@ -1,16 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 import { Box, Grid, Typography, Card, CardMedia, Button } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
 
-import Borrow from '../features/transaction/components/Borrow'
+import Borrow from '../features/transaction/components/Transaction'
 
 const Book = () => {
   const navigate = useNavigate()
 
   const selectedBook = useSelector((state) => state.books.selectedBook)
-  console.log(selectedBook)
 
   return (
     <Box sx={{ mb: 4 }}>
@@ -23,7 +23,7 @@ const Book = () => {
       <hr />
       <Grid container spacing={10} sx={{ mt: 1, justifyContent: 'center' }}>
         <Grid item xs={12} md={6} lg={4}>
-          <Card sx={{ maxWidth: 400 }}>
+          <Card sx={{ maxWidth: 500 }}>
             <CardMedia
               component="img"
               image={selectedBook.imageURL}
@@ -34,7 +34,9 @@ const Book = () => {
           <Typography variant="subtitle1" sx={{ mt: 2 }}>
             Author: {selectedBook.author.fullName}
           </Typography>
-          <Typography variant="subtitle1">Published Year: {selectedBook.publishedYear}</Typography>
+          <Typography variant="subtitle1">
+            Published Date: {moment(selectedBook.publishedDate).format('DD-MM-YYYY')}
+          </Typography>
           <Typography variant="subtitle1">Publisher: {selectedBook.publisher}</Typography>
         </Grid>
         <Grid item xs={12} md={6} lg={8}>

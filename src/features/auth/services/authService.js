@@ -36,6 +36,10 @@ const AuthService = {
   async getCurrentUser() {
     try {
       const token = localStorage.getItem('token')
+      if (!token) {
+        throw new Error('Token not found in local storage')
+      }
+
       const decodedToken = jwtDecode(token)
       return {
         userId: decodedToken.user_id,
@@ -45,6 +49,7 @@ const AuthService = {
         lastName: decodedToken.lastName
       }
     } catch (error) {
+      console.error('Failed to retrieve current user:', error)
       throw new Error('Failed to retrieve current user')
     }
   }

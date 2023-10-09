@@ -54,12 +54,10 @@ const authorSlice = createSlice({
       .addCase(getAllAuthors.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.authors = action.payload
-        console.log('getAllAuthors.fulfilled: ', action.payload)
       })
       .addCase(getAllAuthors.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
-        console.log('getAllAuthors.rejected:', action.error.message)
       })
       .addCase(getAuthorById.pending, (state) => {
         state.status = 'loading'

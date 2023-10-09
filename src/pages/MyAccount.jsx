@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Typography, Box, Button } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
 
-import Transaction from '../features/transaction/components/Transaction'
+import Transaction from '../features/transaction/components/MyTransactions'
 import PersonalInformation from '../features/user/components/PersonalInformation'
 
 const MyAccount = () => {

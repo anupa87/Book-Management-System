@@ -11,7 +11,6 @@ import Books from '../features/book/components/Books'
 
 const Dashboard = () => {
   const currentUser = useSelector((state) => state.auth.currentUser)
-  console.log(currentUser)
 
   const date = moment().format('Do MMMM YYYY')
   const time = moment().format('h:mm A')

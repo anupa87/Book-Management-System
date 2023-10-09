@@ -28,8 +28,6 @@ const AddBook = ({ setOpenBookModal, openBookModal }) => {
   const categories = useSelector((state) => state.categories.categories)
   const authors = useSelector((state) => state.authors.authors)
 
-  console.log({ authors })
-
   useEffect(() => {
     dispatch(getAllCategories())
     dispatch(getAllAuthors())

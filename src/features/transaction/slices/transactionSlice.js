@@ -1,31 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import transactionService from '../services/transactionService'
 
-export const borrowBook = createAsyncThunk('transactions/borrow', async (transaction) => {
-  const newTransaction = await transactionService.borrowBook(transaction)
-  return newTransaction
+export const borrowBook = createAsyncThunk('transactions/borrow', async (borrowData) => {
+  const newBorrow = await transactionService.borrowBook(borrowData)
+  return newBorrow
 })
 
-export const getAllTransactions = createAsyncThunk('transactions/getAllTransactions', async () => {
-  const transactions = await transactionService.getAllTransactions()
-  return transactions
+export const returnBook = createAsyncThunk('transactions/return', async (returnData) => {
+  const newReturn = await transactionService.returnBook(returnData)
+  return newReturn
 })
 
 export const getTransactionById = createAsyncThunk(
-  'transactions/getTransactionById',
+  'borrows/getTransactionById',
   async (transactionId) => {
     const transaction = await transactionService.getTransactionById(transactionId)
     return transaction
   }
 )
 
-export const returnBook = createAsyncThunk(
-  'transactions/returnBook',
-  async ({ transactionId, updatedTransaction }) => {
-    await transactionService.returnBook(transactionId, updatedTransaction)
-    return updatedTransaction
-  }
-)
+export const getAllTransactions = createAsyncThunk('borrows/getAllTransactions', async () => {
+  const transactions = await transactionService.getAllTransactions()
+  return transactions
+})
 
 const initialState = {
   transactions: [],
@@ -49,10 +46,21 @@ const transactionSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(borrowBook.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        state.transactions.push(action.payload)
+        const borrowedBook = action.payload
+        state.selectedTransaction = borrowedBook
       })
       .addCase(borrowBook.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+      .addCase(returnBook.pending, (state) => {
+        state.status = 'loading'
+      })
+      .addCase(returnBook.fulfilled, (state, action) => {
+        const returnedBook = action.payload
+        state.selectedTransaction = returnedBook
+      })
+      .addCase(returnBook.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
@@ -62,12 +70,10 @@ const transactionSlice = createSlice({
       .addCase(getAllTransactions.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.transactions = action.payload
-        console.log('getAllTransactions.fulfilled:', action.payload)
       })
       .addCase(getAllTransactions.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
-        console.log('getAllTransactions.rejected:', action.error.message)
       })
       .addCase(getTransactionById.pending, (state) => {
         state.status = 'loading'
@@ -77,22 +83,6 @@ const transactionSlice = createSlice({
         state.selectedTransaction = action.payload
       })
       .addCase(getTransactionById.rejected, (state, action) => {
-        state.status = 'failed'
-        state.error = action.error.message
-      })
-      .addCase(returnBook.pending, (state) => {
-        state.status = 'loading'
-      })
-      .addCase(returnBook.fulfilled, (state, action) => {
-        state.status = 'succeeded'
-        const updatedTransaction = action.payload
-        state.transactions = state.transactions.map((transaction) =>
-          transaction.transactionId === updatedTransaction.transactionId
-            ? updatedTransaction
-            : transaction
-        )
-      })
-      .addCase(returnBook.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })

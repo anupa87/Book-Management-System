@@ -129,7 +129,7 @@ const Books = () => {
                 <TableCell sx={{ color: 'white' }}>Category</TableCell>
                 <TableCell sx={{ color: 'white' }}>Author</TableCell>
                 <TableCell sx={{ color: 'white' }}>Publisher</TableCell>
-                <TableCell sx={{ color: 'white' }}>Published Year</TableCell>
+                <TableCell sx={{ color: 'white' }}>Published Date</TableCell>
                 <TableCell sx={{ color: 'white' }}>Status</TableCell>
                 <TableCell sx={{ color: 'white' }}>Actions</TableCell>
               </TableRow>
@@ -141,7 +141,7 @@ const Books = () => {
                   <TableCell>{book.category.name}</TableCell>
                   <TableCell>{book.author.fullName}</TableCell>
                   <TableCell>{book.publisher}</TableCell>
-                  <TableCell>{book.publishedYear}</TableCell>
+                  <TableCell>{book.publishedDate}</TableCell>
                   <TableCell>{book.status}</TableCell>
                   <TableCell>
                     <IconButton onClick={() => handleEdit(book)}>
