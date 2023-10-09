@@ -1,39 +1,43 @@
 import api from '../../../api/api'
 
 const transactionService = {
-  borrowBook: async (transaction) => {
+  borrowBook: async (borrowData) => {
     try {
-      const response = await api.post('/transactions/borrow', transaction)
+      const response = await api.post('/transactions/borrow', borrowData)
+      const updatedBook = response.data
       return response.data
     } catch (error) {
+      console.error('Error while borrowing book:', error)
       throw new Error('Failed to borrow book')
     }
   },
 
-  getAllTransactions: async () => {
+  returnBook: async (returnData) => {
     try {
-      const response = await api.get('/transactions')
-      console.log('Transaction API response: ', response.data)
+      const { transactionId } = returnData
+      const response = await api.put(`/transactions/${transactionId}/return`, returnData)
       return response.data
     } catch (error) {
-      throw new Error('Failed to fetch transactions')
+      console.error('Error while returning book:', error)
+      throw new Error(`Failed to return book with ID ${transactionId}`)
     }
   },
 
   getTransactionById: async (transactionId) => {
     try {
       const response = await api.get(`/transactions/${transactionId}`)
-      return response.data
+      console.log('Transaction API Response:', response)
     } catch (error) {
       throw new Error(`Failed to fetch transaction with ID ${transactionId}`)
     }
   },
 
-  returnBook: async (transactionId) => {
+  getAllTransactions: async () => {
     try {
-      await api.put(`/transactions/${transactionId}/return`)
+      const response = await api.get('/transactions')
+      return response.data
     } catch (error) {
-      throw new Error(`Failed to return book for transaction with ID ${transactionId}`)
+      throw new Error('Failed to fetch transactions')
     }
   }
 }

@@ -20,12 +20,9 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
     description: book?.description || '',
     authorId: book?.author?.authorId || '',
     publisher: book?.publisher || '',
-    publishedYear: book?.publishedYear || '',
+    publishedDate: book?.publishedDate || '',
     status: 'AVAILABLE'
   })
-
-  console.log('categories from BookForm', categories)
-  console.log('authors from BookForm', authors)
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -148,12 +145,17 @@ const BookForm = ({ book, onSubmit, handleClose, categories, authors }) => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Published Year"
-              name="publishedYear"
-              value={formData.publishedYear}
+              label="Published Date"
+              name="publishedDate"
+              type="date"
+              value={formData.publishedDate}
               onChange={handleChange}
               fullWidth
+              required
               disabled={!isEdit && !!book}
+              InputLabelProps={{
+                shrink: true
+              }}
             />
           </Grid>
 

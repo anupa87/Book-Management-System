@@ -5,8 +5,6 @@ import Layout from '../components/common/Layout.jsx'
 const AdminRoute = ({ element: Element }) => {
   const { isAuthenticated, currentRole: role } = useSelector((state) => state.auth)
 
-  console.log('isAuthenticated:', isAuthenticated)
-  console.log('role:', role)
   if (isAuthenticated && role === 'ADMIN') {
     return <Layout>{Element}</Layout>
   }
